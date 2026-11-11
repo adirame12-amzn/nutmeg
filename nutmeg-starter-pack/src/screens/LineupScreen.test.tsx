@@ -17,12 +17,12 @@ describe('Lineup mobile interaction', () => {
     const guess = fc27Players.find(player => player.id !== target.id)!
     render(<LineupScreen onResult={vi.fn()} />)
 
-    const search = screen.getByRole('textbox', { name: /search the demo player pool/i })
+    const search = screen.getByRole('textbox', { name: /search the suspect pool/i })
     await user.type(search, guess.displayName)
     await user.click(screen.getByRole('option', { name: new RegExp(guess.displayName, 'i') }))
 
-    expect(screen.getByRole('article', { name: new RegExp(`Guess 1: ${guess.displayName}`, 'i') })).toBeInTheDocument()
-    expect(screen.getByText('Attempt 2 of 6')).toBeInTheDocument()
+    expect(screen.getByRole('article', { name: new RegExp(`Suspect 1: ${guess.displayName}`, 'i') })).toBeInTheDocument()
+    expect(screen.getByText('Suspect 2 of 6')).toBeInTheDocument()
 
     await user.type(search, guess.displayName)
     expect(screen.queryByRole('option', { name: new RegExp(guess.displayName, 'i') })).not.toBeInTheDocument()
@@ -38,9 +38,9 @@ describe('Lineup mobile interaction', () => {
 
     const reveal = screen.getByRole('dialog', { name: new RegExp(target.displayName, 'i') })
     expect(reveal).toBeInTheDocument()
-    expect(screen.getByText('CORRECT!')).toBeInTheDocument()
+    expect(screen.getAllByText('CASE CLOSED').length).toBeGreaterThan(0)
     expect(screen.getByText('+110')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /View match card/i })).toHaveFocus()
+    expect(screen.getByRole('button', { name: /View case report/i })).toHaveFocus()
   })
 
   it('advances to a different answer when playing again', async () => {
@@ -51,7 +51,7 @@ describe('Lineup mobile interaction', () => {
 
     await user.type(screen.getByRole('textbox'), firstTarget.displayName)
     await user.click(screen.getByRole('option', { name: new RegExp(firstTarget.displayName, 'i') }))
-    await user.click(screen.getByRole('button', { name: /play another player/i }))
+    await user.click(screen.getByRole('button', { name: /open another case/i }))
     await user.type(screen.getByRole('textbox'), nextTarget.displayName)
     await user.click(screen.getByRole('option', { name: new RegExp(nextTarget.displayName, 'i') }))
 
@@ -69,8 +69,8 @@ describe('Lineup mobile interaction', () => {
     }
 
     const reveal = screen.getByRole('dialog', { name: new RegExp(target.displayName, 'i') })
-    expect(reveal).toHaveTextContent('ANSWER REVEALED')
+    expect(reveal).toHaveTextContent('CASE UNSOLVED')
     expect(reveal).toHaveTextContent('+0')
-    expect(screen.getByRole('button', { name: /View result/i })).toHaveFocus()
+    expect(screen.getByRole('button', { name: /View case report/i })).toHaveFocus()
   })
 })

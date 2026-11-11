@@ -9,9 +9,9 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
-        name: 'Nutmeg — Football Trivia Daily',
-        short_name: 'Nutmeg',
-        description: 'Two daily football trivia games for your group chat.',
+        name: 'Player Press — Football Case Files',
+        short_name: 'Player Press',
+        description: 'Every player leaves clues. Crack football cases with your group chat.',
         theme_color: '#f5f0e6',
         background_color: '#f5f0e6',
         display: 'standalone',

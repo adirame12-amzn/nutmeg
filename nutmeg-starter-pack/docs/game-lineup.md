@@ -1,4 +1,4 @@
-# Game 1 — The Lineup
+# Game 1 — Prime Suspect
 
 ## Rules
 
@@ -12,7 +12,7 @@
 
 ## UI
 
-- Editorial masthead, `The Lineup`, attempt dots, sticky keyboard-safe search field.
+- Editorial masthead, `Prime Suspect`, attempt dots, sticky keyboard-safe suspect search field.
 - Search results with text, not necessarily portraits or club trademarks.
 - Recent guess as a large elegant card; older cards can collapse. Each has a header and attribute chips.
 - End screen shows answer, guesses used, points and shareable spoiler-free result.

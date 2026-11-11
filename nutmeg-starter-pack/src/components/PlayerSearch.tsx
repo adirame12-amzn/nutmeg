@@ -23,11 +23,11 @@ export function PlayerSearch({ excludedIds, onSelect, disabled = false, accent =
     <div className={`player-search ${accent}`}>
       <label className="search-box">
         <Search size={20} aria-hidden="true" />
-        <span className="sr-only">Search the demo player pool</span>
+        <span className="sr-only">Search the suspect pool</span>
         <input
           value={query}
           onChange={event => setQuery(event.target.value)}
-          placeholder={disabled ? 'Game complete' : 'Search a demo player…'}
+          placeholder={disabled ? 'Case complete' : 'Search for a suspect…'}
           autoComplete="off"
           disabled={disabled}
         />
@@ -40,7 +40,7 @@ export function PlayerSearch({ excludedIds, onSelect, disabled = false, accent =
               {player.portraitUrl ? <PlayerPortrait player={player} size="search" /> : <span className="mini-shirt">{player.shirtNumber}</span>}
               <span><strong>{player.displayName}</strong><small>{player.currentClub} · {player.position}</small></span>
             </button>
-          )) : <p>No fresh matches in this player pool.</p>}
+          )) : <p>No matching suspects in this player pool.</p>}
         </div>
       )}
     </div>

@@ -1,4 +1,4 @@
-# Nutmeg architecture
+# Player Press architecture
 
 ## Phase 1: static proof of concept
 

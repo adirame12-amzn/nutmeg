@@ -27,7 +27,7 @@ export function CreditsScreen() {
       </section>
       <section className="data-notes">
         <h2>Data note</h2>
-        <p>Attributes cover all 96 men's records rated 85–91 in the EA FC Analysis repository’s 12 September 2026 snapshot. That repository currently exposes no redistribution licence, so Nutmeg marks these records as review-required and does not treat them as production data.</p>
+        <p>Attributes cover all 96 men's records rated 85–91 in the EA FC Analysis repository’s 12 September 2026 snapshot. That repository currently exposes no redistribution licence, so Player Press marks these records as review-required and does not treat them as production data.</p>
         <p>Wikidata identifiers are used for identity resolution. Wikimedia Commons images are resized to 400 × 500 WebP; approved CC BY-SA derivatives remain under their source licence. Gameplay uses separately reviewed transparent cutouts where available and falls back to the editorial crop when extraction is unavailable.</p>
       </section>
     </div>

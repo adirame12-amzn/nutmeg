@@ -17,19 +17,19 @@ export function HomeScreen({ onNavigate }: { onNavigate: (screen: Screen) => voi
   return (
     <div className="home-page">
       <section className="home-hero">
-        <div><p className="edition">EDITION № 001 · DEMO</p><h1>Today’s<br/><em>Games</em></h1><p>Pick your challenge. Trust your football instincts.</p></div>
+        <div><p className="edition">CASEBOOK № 001 · DEMO</p><h1>Today’s<br/><em>Cases</em></h1><p>Every player leaves clues. Follow the evidence.</p></div>
         <div className="hero-player" aria-hidden="true"><span>10</span></div>
       </section>
 
       <section className="game-tiles" aria-label="Daily games">
         <button className="game-tile orange" onClick={() => onNavigate('lineup')}>
           <GameTicket />
-          <span><small>GAME 01 · 6 GUESSES</small><strong>THE LINEUP</strong><em>Guess. Compare the cards. Close in on the hidden footballer.</em></span>
+          <span><small>CASE 01 · 6 SUSPECTS</small><strong>PRIME SUSPECT</strong><em>Name a suspect. Compare profiles. Track down the hidden player.</em></span>
           <ArrowRight className="tile-arrow" />
         </button>
         <button className="game-tile blue" onClick={() => onNavigate('mystery')}>
           <GameTicket mystery />
-          <span><small>GAME 02 · 3 CLUES</small><strong>THE MYSTERY</strong><em>Three clues. Three questions. One player to unmask.</em></span>
+          <span><small>CASE 02 · 3 CLUES</small><strong>COLD CASE</strong><em>Study the evidence. Ask three questions. Crack the case.</em></span>
           <ArrowRight className="tile-arrow" />
         </button>
       </section>
@@ -45,7 +45,7 @@ export function HomeScreen({ onNavigate }: { onNavigate: (screen: Screen) => voi
           <button onClick={() => onNavigate('credits')}>Sources, methodology &amp; portrait credits <ArrowRight size={14}/></button>
         </div>
       </aside>
-      <p className="local-note">The Mystery uses fictional demo clues. Progress stays on this device.</p>
+      <p className="local-note">Cold Case uses fictional demo evidence. Progress stays on this device.</p>
       <div className="coming-soon"><LockKeyhole size={18} /><span><strong>Friends league</strong> is a visual demo for now. Shared scores come after server validation.</span></div>
     </div>
   )

@@ -18,7 +18,7 @@ const combinedPlayers = [
   ...(rating85PlusPlayers as GeneratedPlayer[]),
 ].map(toPlayablePlayer)
 
-/** All reviewed prototype records currently available to The Lineup. */
+/** All reviewed prototype records currently available to Prime Suspect. */
 export const fc27Players = Array.from(
   new Map(combinedPlayers.map(player => [player.id, player])).values(),
 )

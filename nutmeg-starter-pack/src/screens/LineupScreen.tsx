@@ -61,13 +61,13 @@ export function LineupScreen({ onResult }: { onResult: (payload: ResultPayload) 
 
   return (
     <div className="game-page lineup-page">
-      <div className="game-heading"><p className="eyebrow">THE LINEUP</p><p className="demo-pill">MEN'S 96-PLAYER POOL</p></div>
-      <h1>Guess the Player</h1>
-      <p className="game-intro">Compare real FC 27 snapshot attributes. Arrows point toward the hidden player.</p>
+      <div className="game-heading"><p className="eyebrow">PRIME SUSPECT</p><p className="demo-pill">MEN'S 96-PLAYER POOL</p></div>
+      <h1>Find the Player</h1>
+      <p className="game-intro">Name a suspect and compare their profile. The evidence points toward the hidden player.</p>
       <aside className="data-preview-note"><strong>Prototype data · 12 Sep 2026</strong><span>FC source licence and 2026 eligibility still require publication review.</span></aside>
       <div className="attempt-row">
-        <strong>{status === 'playing' ? `Attempt ${guesses.length + 1} of ${LINEUP_GUESS_LIMIT}` : status === 'won' ? 'Solved!' : 'Full time'}</strong>
-        <div className="attempts" aria-label={`${LINEUP_GUESS_LIMIT - guesses.length} guesses remaining`}>
+        <strong>{status === 'playing' ? `Suspect ${guesses.length + 1} of ${LINEUP_GUESS_LIMIT}` : status === 'won' ? 'Case closed!' : 'Case unsolved'}</strong>
+        <div className="attempts" aria-label={`${LINEUP_GUESS_LIMIT - guesses.length} suspects remaining`}>
           {dots.map(index => <span className={index < guesses.length ? guesses[index].isCorrect ? 'won' : 'used' : ''} key={index} />)}
         </div>
       </div>
@@ -75,7 +75,7 @@ export function LineupScreen({ onResult }: { onResult: (payload: ResultPayload) 
       <PlayerSearch excludedIds={usedIds} onSelect={submitGuess} disabled={status !== 'playing'} pool={fc27Players} />
       {guesses.length === 0 && (
         <div className="how-to-card">
-          <span className="big-number">6</span><div><small>HOW TO PLAY</small><h2>One guess at a time.</h2><p>Green means an exact match. Age and FC 27 rating arrows point toward the answer.</p><p className="try-names">Try: <strong>Haaland</strong>, <strong>Rodri</strong>, or <strong>Mbappé</strong>.</p></div>
+          <span className="big-number">6</span><div><small>CASE BRIEFING</small><h2>Name your first suspect.</h2><p>Green evidence is an exact match. Age and FC 27 rating arrows point toward the prime suspect.</p><p className="try-names">Try: <strong>Haaland</strong>, <strong>Rodri</strong>, or <strong>Mbappé</strong>.</p></div>
         </div>
       )}
       <div className="guess-stack">
@@ -86,12 +86,12 @@ export function LineupScreen({ onResult }: { onResult: (payload: ResultPayload) 
         <section className={`correct-reveal ${status === 'lost' ? 'lost-reveal' : ''}`} role="dialog" aria-modal="true" aria-labelledby="revealed-player-name">
           <div className={`reveal-art ${lineupTarget.portraitCutoutEditorialUrl ? 'has-cutout' : ''}`} aria-hidden="true"><span className="reveal-paint"/><img src={lineupTarget.portraitCutoutEditorialUrl || lineupTarget.portraitEditorialUrl || lineupTarget.portraitUrl} alt="" /></div>
           <div className="reveal-content">
-            <p className="reveal-stamp">{status === 'won' ? 'CORRECT!' : 'ANSWER REVEALED'}</p>
+            <p className="reveal-stamp">{status === 'won' ? 'CASE CLOSED' : 'CASE UNSOLVED'}</p>
             <h2 id="revealed-player-name">{lineupTarget.displayName}</h2>
-            {status === 'lost' && <p className="reveal-message">No points this round — have another go.</p>}
-            <div className="reveal-stats"><span><b>{guesses.length}</b><small>{guesses.length === 1 ? 'guess' : 'guesses'}</small></span><span><b>+{lineupScore(guesses.length, status === 'won')}</b><small>points</small></span></div>
-            <button ref={revealButtonRef} className="reveal-primary" onClick={showResult}>{status === 'won' ? 'View match card' : 'View result'}</button>
-            <button className="reveal-secondary" onClick={reset}><RotateCcw size={17}/> Play another player</button>
+            {status === 'lost' && <p className="reveal-message">The trail went cold. The prime suspect was:</p>}
+            <div className="reveal-stats"><span><b>{guesses.length}</b><small>{guesses.length === 1 ? 'suspect' : 'suspects'}</small></span><span><b>+{lineupScore(guesses.length, status === 'won')}</b><small>points</small></span></div>
+            <button ref={revealButtonRef} className="reveal-primary" onClick={showResult}>View case report</button>
+            <button className="reveal-secondary" onClick={reset}><RotateCcw size={17}/> Open another case</button>
           </div>
         </section>
       , document.body)}

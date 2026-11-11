@@ -1,26 +1,26 @@
-# Nutmeg
+# Player Press
 
-**Daily football trivia. Uncover stories. Compete with friends.**
+**Every player leaves clues.**
 
-Nutmeg is a mobile-first browser game with two local demo modes: **The Lineup**, which uses stacked player comparison cards, and **The Mystery**, which combines three fictional clues with fixed yes/no questions. The visual direction is a warm football newspaper with high-energy orange and cobalt accents.
+Player Press is a mobile-first football case-solving game with two local demo modes: **Prime Suspect**, which uses stacked player comparison cards, and **Cold Case**, which combines three fictional clues with fixed yes/no questions. The visual direction is a warm investigative football newspaper with high-energy orange and cobalt accents.
 
 ## Current implementation status
 
-Milestone A is playable as a static proof of concept. The Lineup currently includes a 96-player real-data prototype pool:
+Milestone A is playable as a static proof of concept. Prime Suspect currently includes a 96-player real-data prototype pool:
 
-- Home, The Lineup, The Mystery, result, and friends-leaderboard demo screens.
-- Six-guess Lineup using 96 imported FC 27 snapshot records, accent-insensitive aliases, reviewed portraits, deterministic comparisons, age/OVR directions, stacked player cards, scoring, and replay.
-- Mystery with three explicitly fictional demo facts, three predetermined yes/no questions, three player guesses, deterministic scoring, and a result screen.
+- Home, Prime Suspect, Cold Case, case-report, and friends-leaderboard demo screens.
+- Six-suspect Prime Suspect using 96 imported FC 27 snapshot records, accent-insensitive aliases, reviewed portraits, deterministic comparisons, age/OVR directions, stacked player cards, scoring, and replay.
+- Cold Case with three explicitly fictional demo facts, three predetermined yes/no questions, three player guesses, deterministic scoring, and a case-report screen.
 - Responsive mobile shell designed at 390px and adapted for 320px, 768px, and desktop.
 - Installable PWA assets and offline shell generated at build time.
 - GitHub Pages workflow using the repository base path `/nutmeg/`.
-- Unit tests for comparisons, guess limits, reveal limits, scores, and the core Lineup interaction.
+- Unit tests for comparisons, guess limits, reveal limits, scores, and the core Prime Suspect interaction.
 
-The 96-player Lineup prototype contains every men's record rated 85–91 in the source snapshot. Each new local game randomly selects an answer from the full pool; the previous answer is excluded from the next round. Ingestion is restricted to the source dataset's `Men's Football` category and rejects other categories. Records come from the [EA FC Analysis repository](https://github.com/LakshmiKanth11/EA_FC_ANALYSIS), snapshot 2026-09-12. That repository currently exposes no redistribution licence, so the app visibly marks this data as **prototype / licence review required**. These records also have not completed Nutmeg's separate 2026 senior-appearance eligibility review and are not production answer candidates.
+The 96-player Prime Suspect prototype contains every men's record rated 85–91 in the source snapshot. Each new local case randomly selects an answer from the full pool; the previous answer is excluded from the next case. Ingestion is restricted to the source dataset's `Men's Football` category and rejects other categories. Records come from the [EA FC Analysis repository](https://github.com/LakshmiKanth11/EA_FC_ANALYSIS), snapshot 2026-09-12. That repository currently exposes no redistribution licence, so the app visibly marks this data as **prototype / licence review required**. These records also have not completed Player Press's separate 2026 senior-appearance eligibility review and are not production answer candidates.
 
-The Mystery names, clubs, and facts remain **synthetic fixtures**. They are not real football claims.
+The Cold Case names, clubs, and facts remain **synthetic fixtures**. They are not real football claims.
 
-All 96 portraits were identity-matched with Wikidata and reviewed from Wikimedia Commons metadata. The pipeline publishes both a clean 400 × 500 WebP and a deterministic warm-duotone, ink-contrast and halftone editorial derivative. The clean crop is retained for review and credits. Image attribution is exposed on the in-app Credits screen. Nutmeg's original neutral fallback remains available whenever a future record lacks an approved image.
+All 96 portraits were identity-matched with Wikidata and reviewed from Wikimedia Commons metadata. The pipeline publishes both a clean 400 × 500 WebP and a deterministic warm-duotone, ink-contrast and halftone editorial derivative. The clean crop is retained for review and credits. Image attribution is exposed on the in-app Credits screen. Player Press's original neutral fallback remains available whenever a future record lacks an approved image.
 
 The leaderboard is visual sample data only. There is no authentication, shared state, server score validation, anti-cheat, public leaderboard, or production puzzle secrecy in this static build.
 
@@ -72,13 +72,13 @@ https://adirame12-amzn.github.io/nutmeg/
 ## Architecture
 
 - `src/domain/`: framework-independent rules, comparisons, limits, and scoring.
-- `src/data/`: separate synthetic Mystery fixtures and generated Lineup adapter.
+- `src/data/`: separate synthetic Cold Case fixtures and generated Prime Suspect adapter.
 - `ingestion/`: source adapter, identity resolution, Commons metadata/licence policy, image processing, and offline unit tests.
 - `data/generated/`: public player JSON, mappings, attributions, SQLite catalogue, and ingestion reports.
 - `src/components/`: reusable app chrome, search, and stacked guess cards.
 - `src/screens/`: home and game experiences.
 - `docs/`: product, design, data, and future backend specifications.
 
-For shared play, move puzzle targets, attempt enforcement, and score calculation to the planned Cloudflare Worker/D1 backend before treating results as authoritative. See the [product specification](docs/product-requirements.md), [architecture](docs/architecture.md), [data plan](docs/data-pipeline.md), [Lineup rules](docs/game-lineup.md), [Mystery rules](docs/game-mystery.md), [design system](docs/design-system.md), and [roadmap](docs/roadmap.md).
+For shared play, move puzzle targets, attempt enforcement, and score calculation to the planned Cloudflare Worker/D1 backend before treating results as authoritative. See the [product specification](docs/product-requirements.md), [architecture](docs/architecture.md), [data plan](docs/data-pipeline.md), [Prime Suspect rules](docs/game-lineup.md), [Cold Case rules](docs/game-mystery.md), [design system](docs/design-system.md), and [roadmap](docs/roadmap.md).
 
 Reference images: [mobile cards](design/mobile-card-layout.png) and [original editorial direction](design/mobile-editorial-reference.png). They are concept mockups, not production player-data truth or licensed player imagery.

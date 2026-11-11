@@ -30,14 +30,14 @@ export function MysteryScreen({ onResult }: { onResult: (payload: ResultPayload)
 
   return (
     <div className="game-page mystery-page">
-      <div className="game-heading"><p className="eyebrow">THE MYSTERY</p><p className="demo-pill">FICTIONAL CLUES</p></div>
-      <h1>Who Am I?</h1>
-      <p className="game-intro">Reveal up to three clues. Ask three fixed questions. Make three guesses.</p>
+      <div className="game-heading"><p className="eyebrow">COLD CASE</p><p className="demo-pill">FICTIONAL EVIDENCE</p></div>
+      <h1>Crack the Case</h1>
+      <p className="game-intro">Reveal three pieces of evidence. Ask three questions. Name the hidden player.</p>
       <div className="clue-stack">
         {mysteryFacts.map((fact, index) => index < cluesSeen ? (
-          <article className="clue-card" key={fact.id}><small>CLUE {index + 1} OF 3</small><p>{fact.text}</p><span>FICTIONAL DEMO FACT</span></article>
+          <article className="clue-card" key={fact.id}><small>EVIDENCE {index + 1} OF 3</small><p>{fact.text}</p><span>FICTIONAL CASE FILE</span></article>
         ) : (
-          <button className="locked-clue" key={fact.id} onClick={() => setCluesSeen(revealCount(cluesSeen))} disabled={status !== 'playing'}><LockKeyhole size={19}/> Reveal clue {index + 1}</button>
+          <button className="locked-clue" key={fact.id} onClick={() => setCluesSeen(revealCount(cluesSeen))} disabled={status !== 'playing'}><LockKeyhole size={19}/> Reveal evidence {index + 1}</button>
         ))}
       </div>
 
@@ -49,11 +49,11 @@ export function MysteryScreen({ onResult }: { onResult: (payload: ResultPayload)
         <div className="mystery-actions">
           <button className="primary mystery-primary" onClick={() => setPanel(panel === 'questions' ? null : 'questions')} disabled={asked.length >= MYSTERY_QUESTION_LIMIT}><MessageCircleQuestion/> Ask a question {panel === 'questions' ? <ChevronUp/> : <ChevronDown/>}</button>
           {panel === 'questions' && <div className="question-menu">{mysteryQuestions.filter(question => !askedIds.includes(question.id)).map(question => <button key={question.id} onClick={() => ask(question)}>{question.text}<span>Ask</span></button>)}</div>}
-          <button onClick={() => setPanel(panel === 'guess' ? null : 'guess')}><Search/> Guess the player {panel === 'guess' ? <ChevronUp/> : <ChevronDown/>}</button>
+          <button onClick={() => setPanel(panel === 'guess' ? null : 'guess')}><Search/> Name a suspect {panel === 'guess' ? <ChevronUp/> : <ChevronDown/>}</button>
           {panel === 'guess' && <PlayerSearch excludedIds={guessIds} onSelect={guess} />}
         </div>
       ) : (
-        <section className={`game-over-card ${status}`}><small>{status === 'won' ? 'MYSTERY SOLVED' : 'THE REVEAL'}</small><h2>{mysteryTarget.displayName}</h2><p>{status === 'won' ? `${mysteryScore(cluesSeen, asked.length, guessIds.length, true)} points` : 'Not this time — the answer was fictional, too.'}</p><button className="primary mystery-primary" onClick={finish}>See result</button></section>
+        <section className={`game-over-card ${status}`}><small>{status === 'won' ? 'CASE CLOSED' : 'CASE UNSOLVED'}</small><h2>{mysteryTarget.displayName}</h2><p>{status === 'won' ? `${mysteryScore(cluesSeen, asked.length, guessIds.length, true)} points` : 'The trail went cold — this case uses a fictional answer.'}</p><button className="primary mystery-primary" onClick={finish}>View case report</button></section>
       )}
     </div>
   )

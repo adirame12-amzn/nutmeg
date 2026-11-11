@@ -1,10 +1,10 @@
-# Design direction — Nutmeg mobile editorial / Ultra Club
+# Design direction — Player Press investigative editorial / Ultra Club
 
 Reference: `design/mobile-card-layout.png` is the chosen updated mobile mockup. `design/mobile-editorial-reference.png` is the earlier design reference. Mockup factual labels/player faces are illustrative only.
 
 ## Identity
 
-Modern football newspaper that behaves like a native mobile browser game. Warm paper surfaces, nearly-black ink, vibrant orange for Nutmeg editorial marks, cobalt for Game 2, and lime as a rare positive/reward highlight. Football match programmes, ticket stubs, pitch diagrams, halftone photography, tears, printed edition numbers.
+Modern investigative football newspaper that behaves like a native mobile browser game. Warm paper surfaces, nearly-black ink, vibrant orange for Player Press editorial marks, cobalt for Cold Case, and lime as a rare positive/reward highlight. Football match programmes, case files, ticket stubs, pitch diagrams, halftone photography, tears and numbered evidence cards.
 
 ## Approximate palette
 
@@ -29,8 +29,8 @@ Expressive editorial serif/italic headlines (e.g. open-license editorial face or
 - Standard app-like header (back, masthead, context icon). Primary navigation simple and touch friendly.
 - 44–48px minimum tap targets where practicable, readable 14–16px body, visible focus states, `prefers-reduced-motion` support.
 - Search anchored comfortably above keyboard, with scroll and autocomplete behavior tested on mobile Safari and Chrome.
-- **Lineup: stack individual guessed-player cards**; each card includes name, optional licensed portrait/silhouette, compact 2x3 attribute chips (club, league, nation, position, age, foot). No wide comparison table.
-- Mystery: tactile paper-cutting clue cards, clean remaining-questions/guesses counters, question bank and player lookup as bottom sheet.
+- **Prime Suspect: stack individual suspect profile cards**; each card includes name, optional licensed portrait/silhouette, compact 2x3 attribute chips (club, league, nation, position, age, foot). No wide comparison table.
+- Cold Case: tactile evidence cards, clean remaining-questions/guesses counters, question bank and player lookup as bottom sheet.
 - Leaderboard: editorial numbered rankings, personal highlight, tabs Today/Week/All Time.
 - Results: large football-stamp moment, player reveal, compact clue/guess summary, share-without-spoilers.
 
