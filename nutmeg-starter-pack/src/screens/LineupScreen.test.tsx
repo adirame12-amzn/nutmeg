@@ -22,7 +22,7 @@ describe('Lineup mobile interaction', () => {
     await user.click(screen.getByRole('option', { name: new RegExp(guess.displayName, 'i') }))
 
     expect(screen.getByRole('article', { name: new RegExp(`Suspect 1: ${guess.displayName}`, 'i') })).toBeInTheDocument()
-    expect(screen.getByText('Suspect 2 of 6')).toBeInTheDocument()
+    expect(screen.getByText('1 of 6 suspects tried')).toBeInTheDocument()
 
     await user.type(search, guess.displayName)
     expect(screen.queryByRole('option', { name: new RegExp(guess.displayName, 'i') })).not.toBeInTheDocument()

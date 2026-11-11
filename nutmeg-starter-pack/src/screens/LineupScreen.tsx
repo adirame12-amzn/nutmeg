@@ -16,6 +16,8 @@ export interface ResultPayload {
   clues?: number
   questions?: number
   portraitUrl?: string
+  ranked?: boolean
+  date?: string
 }
 
 const LAST_TARGET_KEY = 'nutmeg-last-lineup-target'
@@ -66,7 +68,7 @@ export function LineupScreen({ onResult }: { onResult: (payload: ResultPayload) 
       <p className="game-intro">Name a suspect and compare their profile. The evidence points toward the hidden player.</p>
       <aside className="data-preview-note"><strong>Prototype data · 12 Sep 2026</strong><span>FC source licence and 2026 eligibility still require publication review.</span></aside>
       <div className="attempt-row">
-        <strong>{status === 'playing' ? `Suspect ${guesses.length + 1} of ${LINEUP_GUESS_LIMIT}` : status === 'won' ? 'Case closed!' : 'Case unsolved'}</strong>
+        <strong>{status === 'playing' ? `${guesses.length} of ${LINEUP_GUESS_LIMIT} suspects tried` : status === 'won' ? 'Case closed!' : 'Case unsolved'}</strong>
         <div className="attempts" aria-label={`${LINEUP_GUESS_LIMIT - guesses.length} suspects remaining`}>
           {dots.map(index => <span className={index < guesses.length ? guesses[index].isCorrect ? 'won' : 'used' : ''} key={index} />)}
         </div>

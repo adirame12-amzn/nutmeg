@@ -14,7 +14,15 @@
     "ingest:rating-85": "python3 -m ingestion.rating_catalog --rating 85",
     "merge:rating-85-plus": "python3 -m ingestion.merge_catalogs --min-rating 85 --max-rating 91",
     "process:cutouts": "python3 -m ingestion.cutout_catalog",
-    "test:ingestion": "python3 -m unittest discover -s ingestion/tests -p 'test_*.py'"
+    "test:ingestion": "python3 -m unittest discover -s ingestion/tests -p 'test_*.py'",
+    "worker:seed": "python3 -m ingestion.export_worker_seed",
+    "worker:typecheck": "tsc -p worker/tsconfig.json",
+    "worker:migrate:local": "wrangler d1 migrations apply player-press-ranked --local --config worker/wrangler.jsonc",
+    "worker:seed:local": "wrangler d1 execute player-press-ranked --local --config worker/wrangler.jsonc --file worker/seed.sql",
+    "worker:dev": "wrangler dev --config worker/wrangler.jsonc --port 8787",
+    "worker:migrate": "wrangler d1 migrations apply player-press-ranked --remote --config worker/wrangler.jsonc",
+    "worker:seed:remote": "wrangler d1 execute player-press-ranked --remote --config worker/wrangler.jsonc --file worker/seed.sql",
+    "worker:deploy": "wrangler deploy --config worker/wrangler.jsonc"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",
@@ -41,6 +49,7 @@
     "typescript-eslint": "^8.18.2",
     "vite": "^6.0.5",
     "vite-plugin-pwa": "^0.21.1",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.8",
+    "wrangler": "^4.160.1"
   }
 }

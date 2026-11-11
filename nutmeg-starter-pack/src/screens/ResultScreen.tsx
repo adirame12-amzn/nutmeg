@@ -7,7 +7,7 @@ export function ResultScreen({ result, onNavigate }: { result: ResultPayload | n
 
   const share = async () => {
     const guessLimit = result.mode === 'lineup' ? 6 : 3
-    const text = `PLAYER PRESS // ${result.mode === 'lineup' ? 'PRIME SUSPECT' : 'COLD CASE'}\n${result.won ? 'Case closed' : 'Case unsolved'} · ${result.guesses}/${guessLimit} suspects · ${result.score} pts\nDemo case — no spoilers.`
+    const text = `PLAYER PRESS // ${result.mode === 'lineup' ? 'PRIME SUSPECT' : 'COLD CASE'}${result.date ? ` // ${result.date}` : ''}\n${result.won ? 'Case closed' : 'Case unsolved'} · ${result.guesses}/${guessLimit} suspects · ${result.score} pts\n${result.ranked ? 'Daily ranked case' : 'Quick case'} — no spoilers.`
     if (navigator.share) await navigator.share({ title: 'My Player Press case report', text })
     else await navigator.clipboard?.writeText(text)
   }
@@ -25,7 +25,7 @@ export function ResultScreen({ result, onNavigate }: { result: ResultPayload | n
       </div>
       <strong className="points">+{result.score} pts</strong>
       <button className="primary dark" onClick={share}><Share2/> Share without spoilers</button>
-      <button onClick={() => onNavigate(result.mode)}><RotateCcw/> Reopen this case</button>
+      <button onClick={() => onNavigate(result.mode)}><RotateCcw/> {result.ranked ? 'Review today’s case' : 'Reopen this case'}</button>
       <button className="text-button" onClick={() => onNavigate('home')}><Home/> Back to today’s cases</button>
     </div>
   )

@@ -1,4 +1,5 @@
-import { ArrowRight, Flame, LockKeyhole, Sparkles } from 'lucide-react'
+import { ArrowRight, CalendarCheck, Flame, Sparkles, UserRoundCheck } from 'lucide-react'
+import type { RankedIdentity } from '../api/ranked'
 import type { Screen } from '../components/Chrome'
 
 function GameTicket({ mystery = false }: { mystery?: boolean }) {
@@ -13,18 +14,18 @@ function GameTicket({ mystery = false }: { mystery?: boolean }) {
   )
 }
 
-export function HomeScreen({ onNavigate }: { onNavigate: (screen: Screen) => void }) {
+export function HomeScreen({ onNavigate, ranked, identity }: { onNavigate: (screen: Screen) => void; ranked: boolean; identity: RankedIdentity | null }) {
   return (
     <div className="home-page">
       <section className="home-hero">
-        <div><p className="edition">CASEBOOK № 001 · DEMO</p><h1>Today’s<br/><em>Cases</em></h1><p>Every player leaves clues. Follow the evidence.</p></div>
+        <div><p className="edition">CASEBOOK № 001 · DAILY</p><h1>Today’s<br/><em>Cases</em></h1><p>Every player leaves clues. Follow the evidence.</p></div>
         <div className="hero-player" aria-hidden="true"><span>10</span></div>
       </section>
 
       <section className="game-tiles" aria-label="Daily games">
         <button className="game-tile orange" onClick={() => onNavigate('lineup')}>
           <GameTicket />
-          <span><small>CASE 01 · 6 SUSPECTS</small><strong>PRIME SUSPECT</strong><em>Name a suspect. Compare profiles. Track down the hidden player.</em></span>
+          <span><small>CASE 01 · 6 SUSPECTS · {ranked ? 'RANKED' : 'QUICK CASE'}</small><strong>PRIME SUSPECT</strong><em>{ranked ? 'The same hidden player for everyone. Close the case in six.' : 'Name a suspect. Compare profiles. Track down the hidden player.'}</em></span>
           <ArrowRight className="tile-arrow" />
         </button>
         <button className="game-tile blue" onClick={() => onNavigate('mystery')}>
@@ -35,7 +36,7 @@ export function HomeScreen({ onNavigate }: { onNavigate: (screen: Screen) => voi
       </section>
 
       <section className="streak-strip">
-        <span><Flame size={21} /> <strong>4 day streak</strong></span><span>Local demo <ArrowRight size={16} /></span>
+        <span><Flame size={21} /> <strong>Daily case</strong></span><span>{ranked ? 'Resets 00:00 UTC' : 'Local quick play'} <ArrowRight size={16} /></span>
       </section>
       <aside className="demo-note pool-note">
         <Sparkles size={18}/>
@@ -45,8 +46,8 @@ export function HomeScreen({ onNavigate }: { onNavigate: (screen: Screen) => voi
           <button onClick={() => onNavigate('credits')}>Sources, methodology &amp; portrait credits <ArrowRight size={14}/></button>
         </div>
       </aside>
-      <p className="local-note">Cold Case uses fictional demo evidence. Progress stays on this device.</p>
-      <div className="coming-soon"><LockKeyhole size={18} /><span><strong>Friends league</strong> is a visual demo for now. Shared scores come after server validation.</span></div>
+      <p className="local-note">Cold Case uses fictional demo evidence. Prime Suspect’s prototype data remains under publication review.</p>
+      <button className="friends-status" onClick={() => onNavigate('leaderboard')}><span>{identity ? <UserRoundCheck/> : <CalendarCheck/>}<span><strong>{identity ? `@${identity.user.username}` : ranked ? 'Claim your detective name' : 'Ranked case desk not connected'}</strong><small>{ranked ? 'Server-validated points · weekly table' : 'Local games are unranked'}</small></span></span><ArrowRight/></button>
     </div>
   )
 }

@@ -1,0 +1,22 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "player-press-ranked",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-11-11",
+  "workers_dev": true,
+  "triggers": {
+    "crons": ["0 0 * * *"]
+  },
+  "vars": {
+    "ALLOWED_ORIGINS": "https://adirame12-amzn.github.io"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "player-press-ranked",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ]
+}
+
