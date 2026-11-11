@@ -6,4 +6,5 @@ dist/
 .DS_Store
 coverage/
 *.log
+*.tsbuildinfo
 data/raw/
