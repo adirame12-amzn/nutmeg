@@ -21,6 +21,8 @@ The API runs on `http://127.0.0.1:8787`. Start Vite with `VITE_API_URL=http://12
 5. Run `npm run worker:deploy`.
 6. Add `VITE_API_URL=https://player-press-ranked.<account>.workers.dev` as a GitHub Actions repository variable, or use it when building locally.
 
+The current production Worker is deployed at `https://player-press-ranked.adirame12.workers.dev` and is bound to the `player-press-ranked` D1 database. The frontend uses this address for production builds unless `VITE_API_URL` overrides it.
+
 The cron runs at 00:00 UTC. `GET /daily/lineup` also creates the day’s row if the cron has not run, so every user still receives the same stored target.
 
 Names are unique case-insensitively. The browser stores a random bearer token; the database stores only its SHA-256 hash. There is intentionally no login or recovery flow in this alpha, so clearing browser storage or changing devices means choosing another name.

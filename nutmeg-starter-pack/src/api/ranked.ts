@@ -1,6 +1,10 @@
 import type { Comparison, GameStatus, LineupGuess, Player } from '../domain/types'
 
-const configuredUrl = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, '')
+const productionApiUrl = 'https://player-press-ranked.adirame12.workers.dev'
+const configuredUrl = (
+  (import.meta.env.VITE_API_URL as string | undefined)
+  || (import.meta.env.PROD ? productionApiUrl : undefined)
+)?.replace(/\/$/, '')
 export const rankedApiEnabled = Boolean(configuredUrl)
 const IDENTITY_KEY = 'player-press-ranked-identity-v1'
 

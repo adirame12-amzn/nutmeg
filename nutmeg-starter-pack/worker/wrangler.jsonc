@@ -14,9 +14,8 @@
     {
       "binding": "DB",
       "database_name": "player-press-ranked",
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "01ba7056-932e-4218-84b6-3aee0e03da24",
       "migrations_dir": "migrations"
     }
   ]
 }
-

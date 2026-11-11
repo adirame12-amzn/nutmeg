@@ -18,7 +18,7 @@ def sql(value: object) -> str:
 
 def main() -> None:
     players = json.loads(SOURCE.read_text())
-    lines = ["-- Generated from the reviewed 85+ prototype catalogue.", "BEGIN TRANSACTION;"]
+    lines = ["-- Generated from the reviewed 85+ prototype catalogue."]
     for player in players:
         values = [
             player["id"], player["displayName"], player["currentClub"], player["league"],
@@ -31,11 +31,10 @@ def main() -> None:
             "(id, display_name, club, league, nation, position, age, fc_overall, portrait_url, portrait_editorial_url, portrait_cutout_editorial_url, eligible_answer) VALUES "
             f"({', '.join(sql(value) for value in values)});"
         )
-    lines.extend(["COMMIT;", ""])
+    lines.append("")
     OUTPUT.write_text("\n".join(lines))
     print(f"wrote {len(players)} players to {OUTPUT}")
 
 
 if __name__ == "__main__":
     main()
-

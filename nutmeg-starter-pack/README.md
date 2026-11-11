@@ -6,7 +6,7 @@ Player Press is a mobile-first football case-solving game. **Prime Suspect** now
 
 ## Current implementation status
 
-Milestone A is playable and the shared Prime Suspect alpha is implemented locally. Production Cloudflare deployment still needs an account-owned D1 database:
+Milestone A is playable and the shared Prime Suspect alpha is deployed with an account-owned Cloudflare Worker and D1 database:
 
 - Home, Prime Suspect, Cold Case, case-report, unique-name onboarding, and weekly leaderboard screens.
 - One server-stored Prime Suspect per UTC date for everyone, created by a 00:00 UTC cron with an idempotent first-request fallback.
@@ -25,7 +25,7 @@ The Cold Case names, clubs, and facts remain **synthetic fixtures**. They are no
 
 All 96 portraits were identity-matched with Wikidata and reviewed from Wikimedia Commons metadata. The pipeline publishes a clean 400 × 500 WebP, a transparent local U²-Net cutout, and deterministic warm-duotone, ink-contrast and halftone editorial derivatives. Automated cutouts are marked `auto_review_pending` until their generated contact sheet is visually approved; the underlying source crop is retained for review and credits. Image attribution is exposed on the in-app Credits screen. Player Press's original neutral fallback remains available whenever a future record lacks an approved image.
 
-When `VITE_API_URL` is absent, the GitHub Pages build deliberately falls back to unranked local play and explains that the case desk is disconnected. The implemented Worker keeps the target secret until the attempt ends and validates scores, but anonymous browser identities are not strong authentication or full anti-cheat.
+Production builds default to the deployed Player Press Worker; `VITE_API_URL` can override its origin. Local development without that variable deliberately falls back to unranked play. The Worker keeps the target secret until the attempt ends and validates scores, but anonymous browser identities are not strong authentication or full anti-cheat.
 
 ## Run locally
 
@@ -78,10 +78,16 @@ The rating-catalogue command builds every men's record at one exact FC rating. C
 
 ## GitHub Pages
 
-The workflow in `.github/workflows/deploy-pages.yml` tests and builds on pushes to `main`, then uploads `dist/` with GitHub's official Pages actions. Pages uses **GitHub Actions** as its build source. Add the deployed Worker origin (without `/api`) as the repository Actions variable `VITE_API_URL`; without it, Pages remains safely playable in unranked mode. The current static prototype is available at:
+The workflow in `.github/workflows/deploy-pages.yml` tests and builds on pushes to `main`, then uploads `dist/` with GitHub's official Pages actions. Pages uses **GitHub Actions** as its build source. Production builds use the deployed Worker below by default; the repository Actions variable `VITE_API_URL` can override that origin. The public app is available at:
 
 ```text
 https://adirame12-amzn.github.io/nutmeg/
+```
+
+Ranked API health endpoint:
+
+```text
+https://player-press-ranked.adirame12.workers.dev/api/health
 ```
 
 ## Architecture
