@@ -30,8 +30,16 @@ export function App() {
   }, [])
 
   const navigate = (next: Screen) => {
+    if (next === 'lineup') setQuickCase(false)
     window.location.hash = next
     setScreen(next)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const openPracticeLineup = () => {
+    setQuickCase(true)
+    window.location.hash = 'lineup'
+    setScreen('lineup')
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -40,7 +48,7 @@ export function App() {
 
   return (
     <ScreenFrame screen={screen} onNavigate={navigate} noNav={screen === 'result'}>
-      {screen === 'home' && <HomeScreen onNavigate={navigate} ranked={rankedApiEnabled} identity={identity} />}
+      {screen === 'home' && <HomeScreen onNavigate={navigate} onOpenPracticeLineup={openPracticeLineup} ranked={rankedApiEnabled} identity={identity} />}
       {needsIdentity && <UsernameOnboarding onComplete={setIdentity} />}
       {screen === 'lineup' && !needsIdentity && (rankedApiEnabled && identity && !quickCase ? <RankedLineupScreen identity={identity} onResult={showResult} onQuickCase={() => setQuickCase(true)} /> : <LineupScreen onResult={showResult} />)}
       {screen === 'mystery' && <MysteryScreen onResult={showResult} />}
