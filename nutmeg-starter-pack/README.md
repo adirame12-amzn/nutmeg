@@ -63,13 +63,11 @@ The rating-catalogue command builds every men's record at one exact FC rating. C
 
 ## GitHub Pages
 
-The workflow in `.github/workflows/deploy-pages.yml` tests and builds on pushes to `main`, then uploads `dist/` with GitHub's official Pages actions. In repository settings, set **Pages → Build and deployment → Source** to **GitHub Actions**. The expected project URL shape is:
+The workflow in `.github/workflows/deploy-pages.yml` tests and builds on pushes to `main`, then uploads `dist/` with GitHub's official Pages actions. Pages uses **GitHub Actions** as its build source. The live prototype is available at:
 
 ```text
-https://<account>.github.io/nutmeg/
+https://adirame12-amzn.github.io/nutmeg/
 ```
-
-This repository has not been deployed by the implementation task, so no live URL is claimed here.
 
 ## Architecture
 
