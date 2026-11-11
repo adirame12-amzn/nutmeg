@@ -17,11 +17,13 @@ export const players: Player[] = [
 export const lineupTarget = players[0]
 export const mysteryTarget = players[4]
 
-export function searchPlayers(query: string, excludedIds: string[] = []) {
-  const normalized = query.trim().toLocaleLowerCase()
+const normalizeSearch = (value: string) => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
+
+export function searchPlayers(query: string, excludedIds: string[] = [], pool: Player[] = players) {
+  const normalized = normalizeSearch(query.trim())
   if (!normalized) return []
-  return players
+  return pool
     .filter(player => !excludedIds.includes(player.id))
-    .filter(player => [player.displayName, ...player.aliases].some(name => name.toLocaleLowerCase().includes(normalized)))
+    .filter(player => [player.displayName, ...player.aliases].some(name => normalizeSearch(name).includes(normalized)))
     .slice(0, 5)
 }

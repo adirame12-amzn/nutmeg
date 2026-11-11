@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { lineupTarget, players } from '../data/players'
+import { fc27Players } from '../data/fc27Players'
 import { canSubmitGuess, comparePlayers, lineupScore, mysteryScore, revealCount } from './game'
 
 describe('Lineup comparisons', () => {
@@ -14,6 +15,11 @@ describe('Lineup comparisons', () => {
 
   it('wins only on canonical player id', () => {
     expect(comparePlayers(lineupTarget, lineupTarget).isCorrect).toBe(true)
+  })
+
+  it('uses FC 27 OVR with a directional hint for imported preview players', () => {
+    const result = comparePlayers(fc27Players.find(player => player.id === 'mohamed-salah')!, fc27Players[0])
+    expect(result.comparisons.find(item => item.label === 'FC 27 OVR')).toMatchObject({ value: '87', status: 'higher', hint: 'Target is higher' })
   })
 
   it('blocks duplicate guesses and guesses beyond the limit', () => {

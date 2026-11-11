@@ -1,0 +1,62 @@
+[
+  {
+    "sourcePlayerId": "231747",
+    "displayName": "Kylian Mbappé",
+    "wikidataId": "Q21621995",
+    "resolution": "dob_and_nationality"
+  },
+  {
+    "sourcePlayerId": "239085",
+    "displayName": "Erling Haaland",
+    "wikidataId": "Q28967995",
+    "resolution": "dob_and_nationality"
+  },
+  {
+    "sourcePlayerId": "252371",
+    "displayName": "Jude Bellingham",
+    "wikidataId": "Q66241169",
+    "resolution": "dob_and_nationality"
+  },
+  {
+    "sourcePlayerId": "277643",
+    "displayName": "Lamine Yamal",
+    "wikidataId": "Q113704154",
+    "resolution": "dob_and_nationality"
+  },
+  {
+    "sourcePlayerId": "231866",
+    "displayName": "Rodri",
+    "wikidataId": "Q20994118",
+    "resolution": "dob_and_nationality"
+  },
+  {
+    "sourcePlayerId": "251854",
+    "displayName": "Pedri",
+    "wikidataId": "Q66606355",
+    "resolution": "dob_and_nationality"
+  },
+  {
+    "sourcePlayerId": "158023",
+    "displayName": "Lionel Messi",
+    "wikidataId": "Q615",
+    "resolution": "dob_and_nationality"
+  },
+  {
+    "sourcePlayerId": "209331",
+    "displayName": "Mohamed Salah",
+    "wikidataId": "Q1354960",
+    "resolution": "dob_and_nationality"
+  },
+  {
+    "sourcePlayerId": "203376",
+    "displayName": "Virgil van Dijk",
+    "wikidataId": "Q133903",
+    "resolution": "manual_override_dob_verified"
+  },
+  {
+    "sourcePlayerId": "202126",
+    "displayName": "Harry Kane",
+    "wikidataId": "Q969725",
+    "resolution": "manual_override_dob_verified"
+  }
+]

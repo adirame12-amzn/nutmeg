@@ -15,13 +15,16 @@ const exactComparison = (label: string, value: string, targetValue: string): Com
   }
 }
 
+const directedNumberComparison = (label: string, value: number, targetValue: number): Comparison => ({
+  label,
+  value: String(value),
+  status: value === targetValue ? 'match' : targetValue > value ? 'higher' : 'lower',
+  hint: value === targetValue ? `Exact ${label}` : `Target is ${targetValue > value ? 'higher' : 'lower'}`
+})
+
 export function comparePlayers(guess: Player, target: Player): LineupGuess {
-  const ageStatus = guess.age === target.age ? 'match' : target.age > guess.age ? 'higher' : 'lower'
-  const ageHint = guess.age === target.age
-    ? 'Exact age'
-    : target.age > guess.age
-      ? 'Target is older'
-      : 'Target is younger'
+  const ageComparison = directedNumberComparison('Age', guess.age, target.age)
+  ageComparison.hint = guess.age === target.age ? 'Exact age' : `Target is ${target.age > guess.age ? 'older' : 'younger'}`
 
   return {
     player: guess,
@@ -31,8 +34,10 @@ export function comparePlayers(guess: Player, target: Player): LineupGuess {
       exactComparison('League', guess.league, target.league),
       exactComparison('Nation', guess.nationalTeam, target.nationalTeam),
       exactComparison('Position', guess.position, target.position),
-      { label: 'Age', value: String(guess.age), status: ageStatus, hint: ageHint },
-      exactComparison('Foot', guess.dominantFoot, target.dominantFoot)
+      ageComparison,
+      guess.fcOverall !== undefined && target.fcOverall !== undefined
+        ? directedNumberComparison('FC 27 OVR', guess.fcOverall, target.fcOverall)
+        : exactComparison('Foot', guess.dominantFoot, target.dominantFoot)
     ]
   }
 }

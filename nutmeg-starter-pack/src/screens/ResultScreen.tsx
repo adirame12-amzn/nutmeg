@@ -14,7 +14,7 @@ export function ResultScreen({ result, onNavigate }: { result: ResultPayload | n
 
   return (
     <div className={`result-page ${result.won ? 'won' : 'lost'}`}>
-      <div className="result-burst" aria-hidden="true"><span>{result.won ? '✓' : '×'}</span></div>
+      {result.portraitUrl && result.won ? <div className={`result-player-art ${result.portraitUrl.includes('/cutouts-editorial/') ? 'has-cutout' : ''}`} aria-hidden="true"><span/><img src={result.portraitUrl} alt="" /></div> : <div className="result-burst" aria-hidden="true"><span>{result.won ? '✓' : '×'}</span></div>}
       <p className="result-stamp">{result.won ? 'CORRECT!' : 'FULL TIME'}</p>
       <small>{result.mode === 'lineup' ? 'THE LINEUP' : 'THE MYSTERY'} · DEMO</small>
       <h1>{result.answer}</h1>

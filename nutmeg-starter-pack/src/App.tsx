@@ -5,8 +5,9 @@ import { LeaderboardScreen } from './screens/LeaderboardScreen'
 import { LineupScreen, type ResultPayload } from './screens/LineupScreen'
 import { MysteryScreen } from './screens/MysteryScreen'
 import { ResultScreen } from './screens/ResultScreen'
+import { CreditsScreen } from './screens/CreditsScreen'
 
-const screens: Screen[] = ['home', 'lineup', 'mystery', 'leaderboard', 'result']
+const screens: Screen[] = ['home', 'lineup', 'mystery', 'leaderboard', 'credits', 'result']
 
 function screenFromHash(): Screen {
   const value = window.location.hash.replace('#', '') as Screen
@@ -37,6 +38,7 @@ export function App() {
       {screen === 'lineup' && <LineupScreen onResult={showResult} />}
       {screen === 'mystery' && <MysteryScreen onResult={showResult} />}
       {screen === 'leaderboard' && <LeaderboardScreen />}
+      {screen === 'credits' && <CreditsScreen />}
       {screen === 'result' && <ResultScreen result={result} onNavigate={navigate} />}
     </ScreenFrame>
   )

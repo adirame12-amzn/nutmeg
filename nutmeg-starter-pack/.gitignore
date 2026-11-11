@@ -7,4 +7,9 @@ dist/
 coverage/
 *.log
 *.tsbuildinfo
+__pycache__/
+*.py[cod]
 data/raw/
+data/cache/
+data/generated/portraits/
+src/assets/players/

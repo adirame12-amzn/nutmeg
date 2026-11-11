@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-labelledby="title desc">
+  <title id="title">Neutral player portrait</title>
+  <desc id="desc">Editorial silhouette used when a reviewed player photo is unavailable.</desc>
+  <rect width="400" height="500" fill="#e8dfd0"/>
+  <path d="M-30 420 430 60" stroke="#ef5a1b" stroke-width="78" opacity=".92"/>
+  <circle cx="200" cy="157" r="79" fill="#1d1d1b"/>
+  <path d="M70 500c7-130 57-208 130-208s123 78 130 208" fill="#1d1d1b"/>
+  <path d="m114 368 86 76 86-76-26-45-60 28-60-28z" fill="#3456cd"/>
+  <path d="M24 38h352M24 462h352" stroke="#1d1d1b" stroke-width="4" stroke-dasharray="12 11" opacity=".35"/>
+  <text x="200" y="478" text-anchor="middle" fill="#f5f0e6" font-family="Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="3">IMAGE REVIEW</text>
+</svg>

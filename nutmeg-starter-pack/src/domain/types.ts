@@ -12,6 +12,16 @@ export interface Player {
   age: number
   dominantFoot: Foot
   shirtNumber: number
+  fcOverall?: number
+  portraitUrl?: string
+  portraitEditorialUrl?: string
+  portraitCutoutUrl?: string | null
+  portraitCutoutEditorialUrl?: string | null
+  portraitCutoutStatus?: 'reviewed' | 'unavailable'
+  portraitStatus?: 'approved' | 'fallback'
+  sourceSnapshot?: string
+  dataStatus?: string
+  wikidataId?: string | null
 }
 
 export type MatchStatus = 'match' | 'miss' | 'higher' | 'lower' | 'unknown'

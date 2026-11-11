@@ -1,0 +1,92 @@
+[
+  {
+    "playerId": "harry-kane",
+    "wikidataId": "Q969725",
+    "file": "Harry Kane England v Ghana 23 June 2026-219 (cropped).jpg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Harry_Kane_England_v_Ghana_23_June_2026-219_(cropped).jpg",
+    "creator": "Bryan Berlin",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "status": "approved"
+  },
+  {
+    "playerId": "jude-bellingham",
+    "wikidataId": "Q66241169",
+    "file": "Jude Bellingham England v Ghana 23 June 2026-061 (cropped).jpg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Jude_Bellingham_England_v_Ghana_23_June_2026-061_(cropped).jpg",
+    "creator": "Bryan Berlin",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "status": "approved"
+  },
+  {
+    "playerId": "lamine-yamal",
+    "wikidataId": "Q113704154",
+    "file": "Lamine Yamal Argentina v Spain 19 July 2026-214 (new cropped).jpg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Lamine_Yamal_Argentina_v_Spain_19_July_2026-214_(new_cropped).jpg",
+    "creator": "Bryan Berlin",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "status": "approved"
+  },
+  {
+    "playerId": "michael-olise",
+    "wikidataId": "Q62050484",
+    "file": "Michael Olise France v Senegal 16 June 2026-307 (cropped).jpg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Michael_Olise_France_v_Senegal_16_June_2026-307_(cropped).jpg",
+    "creator": "Bryan Berlin",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "status": "approved"
+  },
+  {
+    "playerId": "ousmane-dembele",
+    "wikidataId": "Q20851003",
+    "file": "Ousmane Dembele France v Senegal 16 June 2026-341 (cropped).jpg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Ousmane_Dembele_France_v_Senegal_16_June_2026-341_(cropped).jpg",
+    "creator": "Bryan Berlin",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "status": "approved"
+  },
+  {
+    "playerId": "pedri",
+    "wikidataId": "Q66606355",
+    "file": "Pedri France v Spain 7.24.26-245.jpg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Pedri_France_v_Spain_7.24.26-245.jpg",
+    "creator": "Bryan Berlin",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "status": "approved"
+  },
+  {
+    "playerId": "rodri",
+    "wikidataId": "Q20994118",
+    "file": "Rodri France v Spain 7.24.26-096.jpg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Rodri_France_v_Spain_7.24.26-096.jpg",
+    "creator": "Bryan Berlin",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "status": "approved"
+  },
+  {
+    "playerId": "thibaut-courtois",
+    "wikidataId": "Q73360",
+    "file": "Thibaut Courtois Belgium v USA 6 July 2026-076 (cropped).jpg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Thibaut_Courtois_Belgium_v_USA_6_July_2026-076_(cropped).jpg",
+    "creator": "Bryan Berlin",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "status": "approved"
+  },
+  {
+    "playerId": "vitinha",
+    "wikidataId": "Q66818509",
+    "file": "Vitinha USMNT v Portugal Mar 31 2026-50 (cropped).jpg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Vitinha_USMNT_v_Portugal_Mar_31_2026-50_(cropped).jpg",
+    "creator": "Bryan Berlin",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "status": "approved"
+  }
+]

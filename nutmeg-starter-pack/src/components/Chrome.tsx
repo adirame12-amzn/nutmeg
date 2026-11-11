@@ -1,16 +1,27 @@
-import { ArrowLeft, BarChart3, Home, Trophy } from 'lucide-react'
-import type { ReactNode } from 'react'
+import { ArrowLeft, BarChart3, CircleUserRound, Home, Menu, Trophy, X } from 'lucide-react'
+import { useState, type ReactNode } from 'react'
 
-export type Screen = 'home' | 'lineup' | 'mystery' | 'leaderboard' | 'result'
+export type Screen = 'home' | 'lineup' | 'mystery' | 'leaderboard' | 'credits' | 'result'
 
 export function AppHeader({ screen, onNavigate }: { screen: Screen, onNavigate: (screen: Screen) => void }) {
+  const [menuOpen, setMenuOpen] = useState(false)
+  const navigate = (next: Screen) => { setMenuOpen(false); onNavigate(next) }
+
   return (
-    <header className="masthead">
-      <button className="icon-button" onClick={() => onNavigate(screen === 'home' ? 'leaderboard' : 'home')} aria-label={screen === 'home' ? 'Open leaderboard' : 'Back to home'}>
-        {screen === 'home' ? <Trophy size={21} /> : <ArrowLeft size={23} />}
+    <header className={`masthead ${screen === 'home' ? 'home-masthead' : ''}`}>
+      <button className="icon-button" onClick={() => screen === 'home' ? setMenuOpen(open => !open) : navigate('home')} aria-label={screen === 'home' ? (menuOpen ? 'Close game menu' : 'Open game menu') : 'Back to home'} aria-expanded={screen === 'home' ? menuOpen : undefined}>
+        {screen === 'home' ? menuOpen ? <X size={23} /> : <Menu size={24} /> : <ArrowLeft size={23} />}
       </button>
-      <button className="wordmark" onClick={() => onNavigate('home')} aria-label="Nutmeg home"><span>NUTMEG</span><i>//</i></button>
-      <button className="icon-button" onClick={() => onNavigate('leaderboard')} aria-label="Demo leaderboard"><BarChart3 size={22} /></button>
+      <button className="wordmark" onClick={() => navigate('home')} aria-label="Nutmeg home"><span>NUTMEG <i>//</i></span>{screen === 'home' && <small>FOOTBALL TRIVIA DAILY</small>}</button>
+      <button className="icon-button" onClick={() => navigate('leaderboard')} aria-label={screen === 'home' ? 'Open friends profile' : 'Demo leaderboard'}>{screen === 'home' ? <CircleUserRound size={24} /> : <BarChart3 size={22} />}</button>
+      {screen === 'home' && menuOpen && (
+        <nav className="masthead-menu" aria-label="Game menu">
+          <button onClick={() => navigate('home')}><Home size={18}/> Today’s games</button>
+          <button onClick={() => navigate('lineup')}><span className="menu-ticket">6</span> The Lineup</button>
+          <button onClick={() => navigate('mystery')}><span className="menu-ticket">?</span> The Mystery</button>
+          <button onClick={() => navigate('leaderboard')}><Trophy size={18}/> Friends league</button>
+        </nav>
+      )}
     </header>
   )
 }
@@ -31,7 +42,6 @@ export function ScreenFrame({ screen, onNavigate, children, noNav = false }: { s
     <main className="app-shell">
       <AppHeader screen={screen} onNavigate={onNavigate} />
       <div className={noNav ? 'screen no-nav' : 'screen'}>{children}</div>
-      {!noNav && <BottomNav active={screen} onNavigate={onNavigate} />}
     </main>
   )
 }

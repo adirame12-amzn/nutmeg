@@ -2,7 +2,7 @@
 
 ## Rules
 
-- One daily target selected from the eligible 100-player answer pool.
+- Launch target: one daily player selected by the server from the eligible 100-player answer pool. The current local prototype instead starts each game with a random answer from its 96-player FC 85+ review pool, excluding the previous answer.
 - Six unique valid guesses, searched with aliases/autocomplete from at least the same pool. Consider a broader allowed-guess pool later.
 - After each guess, append an expandable **player profile card**, not a dense row or table. Use 2 columns or 3 compact columns of attributes depending on width.
 - Compare: current club (as-of snapshot), league, national team/nationality, broad position, age at fixed puzzle date, preferred foot if verified.

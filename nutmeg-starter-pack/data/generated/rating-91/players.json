@@ -1,0 +1,52 @@
+[
+  {
+    "id": "erling-haaland",
+    "sourcePlayerId": "239085",
+    "displayName": "Erling Haaland",
+    "aliases": [
+      "Haaland"
+    ],
+    "currentClub": "Manchester City",
+    "league": "Premier League",
+    "nationalTeam": "Norway",
+    "position": "Forward",
+    "rawPosition": "ST",
+    "age": 26,
+    "birthdate": "2000-07-21",
+    "dominantFoot": "Left",
+    "fcOverall": 91,
+    "portraitUrl": "/nutmeg/players/rating-91/erling-haaland.webp",
+    "portraitEditorialUrl": "/nutmeg/players/rating-91/erling-haaland-editorial.webp",
+    "portraitStatus": "reviewed_metadata",
+    "wikidataId": "Q28967995",
+    "identityStatus": "dob_and_nationality",
+    "sourceSnapshot": "2026-09-12",
+    "poolCategory": "men",
+    "dataStatus": "prototype_source_licence_review_pending"
+  },
+  {
+    "id": "kylian-mbappe",
+    "sourcePlayerId": "231747",
+    "displayName": "Kylian Mbappé",
+    "aliases": [
+      "Mbappé"
+    ],
+    "currentClub": "Real Madrid",
+    "league": "LALIGA EA SPORTS",
+    "nationalTeam": "France",
+    "position": "Forward",
+    "rawPosition": "ST",
+    "age": 27,
+    "birthdate": "1998-12-20",
+    "dominantFoot": "Right",
+    "fcOverall": 91,
+    "portraitUrl": "/nutmeg/players/rating-91/kylian-mbappe.webp",
+    "portraitEditorialUrl": "/nutmeg/players/rating-91/kylian-mbappe-editorial.webp",
+    "portraitStatus": "reviewed_metadata",
+    "wikidataId": "Q21621995",
+    "identityStatus": "dob_and_nationality",
+    "sourceSnapshot": "2026-09-12",
+    "poolCategory": "men",
+    "dataStatus": "prototype_source_licence_review_pending"
+  }
+]

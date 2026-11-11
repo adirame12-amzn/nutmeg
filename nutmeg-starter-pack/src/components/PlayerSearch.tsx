@@ -2,15 +2,17 @@ import { Search, X } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { searchPlayers } from '../data/players'
 import type { Player } from '../domain/types'
+import { PlayerPortrait } from './PlayerPortrait'
 
-export function PlayerSearch({ excludedIds, onSelect, disabled = false, accent = 'orange' }: {
+export function PlayerSearch({ excludedIds, onSelect, disabled = false, accent = 'orange', pool }: {
   excludedIds: string[]
   onSelect: (player: Player) => void
   disabled?: boolean
   accent?: 'orange' | 'blue'
+  pool?: Player[]
 }) {
   const [query, setQuery] = useState('')
-  const results = useMemo(() => searchPlayers(query, excludedIds), [query, excludedIds])
+  const results = useMemo(() => searchPlayers(query, excludedIds, pool), [query, excludedIds, pool])
 
   const choose = (player: Player) => {
     onSelect(player)
@@ -35,10 +37,10 @@ export function PlayerSearch({ excludedIds, onSelect, disabled = false, accent =
         <div className="search-results" role="listbox" aria-label="Player suggestions">
           {results.length ? results.map(player => (
             <button type="button" role="option" aria-selected="false" key={player.id} onClick={() => choose(player)}>
-              <span className="mini-shirt">{player.shirtNumber}</span>
+              {player.portraitUrl ? <PlayerPortrait player={player} size="search" /> : <span className="mini-shirt">{player.shirtNumber}</span>}
               <span><strong>{player.displayName}</strong><small>{player.currentClub} · {player.position}</small></span>
             </button>
-          )) : <p>No fresh matches. Try “Mara”, “Theo” or “Nia”.</p>}
+          )) : <p>No fresh matches in this player pool.</p>}
         </div>
       )}
     </div>
