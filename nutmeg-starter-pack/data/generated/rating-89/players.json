@@ -23,7 +23,10 @@
     "identityStatus": "dob_and_nationality",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-89/cutouts/bruno-fernandes.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-89/cutouts-editorial/bruno-fernandes.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "gabriel",
@@ -49,7 +52,10 @@
     "identityStatus": "manual_override_dob_verified",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-89/cutouts/gabriel.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-89/cutouts-editorial/gabriel.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "gianluigi-donnarumma",
@@ -74,7 +80,10 @@
     "identityStatus": "dob_and_nationality",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-89/cutouts/gianluigi-donnarumma.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-89/cutouts-editorial/gianluigi-donnarumma.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "khvicha-kvaratskhelia",
@@ -99,7 +108,10 @@
     "identityStatus": "dob_and_nationality",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-89/cutouts/khvicha-kvaratskhelia.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-89/cutouts-editorial/khvicha-kvaratskhelia.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "lionel-messi",
@@ -124,7 +136,10 @@
     "identityStatus": "dob_and_nationality",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-89/cutouts/lionel-messi.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-89/cutouts-editorial/lionel-messi.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "nuno-mendes",
@@ -150,7 +165,10 @@
     "identityStatus": "dob_and_nationality",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-89/cutouts/nuno-mendes.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-89/cutouts-editorial/nuno-mendes.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "vini-jr",
@@ -176,7 +194,10 @@
     "identityStatus": "dob_and_nationality",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-89/cutouts/vini-jr.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-89/cutouts-editorial/vini-jr.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "willian-pacho",
@@ -201,6 +222,9 @@
     "identityStatus": "dob_and_nationality",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-89/cutouts/willian-pacho.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-89/cutouts-editorial/willian-pacho.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   }
 ]

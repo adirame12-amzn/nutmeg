@@ -166,6 +166,7 @@ def write_database(output: Path, players: list[dict[str, Any]], attributions: li
                 dominant_foot TEXT NOT NULL, birthdate TEXT NOT NULL, age INTEGER NOT NULL,
                 source_snapshot TEXT NOT NULL, wikidata_id TEXT, identity_status TEXT NOT NULL,
                 portrait_url TEXT NOT NULL, editorial_url TEXT NOT NULL, portrait_status TEXT NOT NULL,
+                cutout_url TEXT, cutout_editorial_url TEXT, cutout_status TEXT,
                 pool_category TEXT NOT NULL, data_status TEXT NOT NULL
             );
             CREATE TABLE attributions (
@@ -177,13 +178,14 @@ def write_database(output: Path, players: list[dict[str, Any]], attributions: li
             CREATE INDEX players_name_idx ON players(display_name);
         """)
         connection.executemany(
-            "INSERT INTO players VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            "INSERT INTO players VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
             [(
                 player["id"], player["sourcePlayerId"], player["displayName"], json.dumps(player["aliases"], ensure_ascii=False),
                 player["fcOverall"], player["rawPosition"], player["position"], player["currentClub"], player["league"],
                 player["nationalTeam"], player["dominantFoot"], player["birthdate"], player["age"], player["sourceSnapshot"],
                 player["wikidataId"], player["identityStatus"], player["portraitUrl"], player["portraitEditorialUrl"],
-                player["portraitStatus"], player["poolCategory"], player["dataStatus"],
+                player["portraitStatus"], player.get("portraitCutoutUrl"), player.get("portraitCutoutEditorialUrl"),
+                player.get("portraitCutoutStatus"), player["poolCategory"], player["dataStatus"],
             ) for player in players],
         )
         connection.executemany(

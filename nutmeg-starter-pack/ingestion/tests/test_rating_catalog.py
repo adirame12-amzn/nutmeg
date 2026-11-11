@@ -31,7 +31,9 @@ class RatingCatalogTests(unittest.TestCase):
             "league": "Example League", "nationalTeam": "Example", "dominantFoot": "Right",
             "birthdate": "2000-01-01", "age": 26, "sourceSnapshot": "2026-09-12", "wikidataId": "Q1",
             "identityStatus": "verified", "portraitUrl": "/clean.webp", "portraitEditorialUrl": "/editorial.webp",
-            "portraitStatus": "reviewed_metadata", "poolCategory": "men", "dataStatus": "prototype",
+            "portraitStatus": "reviewed_metadata", "portraitCutoutUrl": "/cutout.png",
+            "portraitCutoutEditorialUrl": "/cutout-editorial.webp", "portraitCutoutStatus": "auto_review_pending",
+            "poolCategory": "men", "dataStatus": "prototype",
         }
         attribution = {
             "playerId": "example", "wikidataId": "Q1", "file": "Example.jpg", "sourcePage": "https://example.com",
@@ -43,6 +45,7 @@ class RatingCatalogTests(unittest.TestCase):
             write_database(output, [player], [attribution])
             with sqlite3.connect(output) as connection:
                 self.assertEqual(connection.execute("SELECT display_name, fc_overall FROM players").fetchone(), ("Example Player", 85))
+                self.assertEqual(connection.execute("SELECT cutout_status FROM players").fetchone()[0], "auto_review_pending")
                 self.assertEqual(connection.execute("SELECT license FROM attributions").fetchone()[0], "CC BY-SA 4.0")
 
 

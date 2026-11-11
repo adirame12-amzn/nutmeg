@@ -22,7 +22,10 @@
     "identityStatus": "dob_and_football_description",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-88/cutouts/achraf-hakimi.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-88/cutouts-editorial/achraf-hakimi.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "david-raya",
@@ -48,7 +51,10 @@
     "identityStatus": "dob_and_nationality",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-88/cutouts/david-raya.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-88/cutouts-editorial/david-raya.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "declan-rice",
@@ -73,7 +79,10 @@
     "identityStatus": "dob_and_football_description",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-88/cutouts/declan-rice.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-88/cutouts-editorial/declan-rice.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "jan-oblak",
@@ -98,7 +107,10 @@
     "identityStatus": "dob_and_nationality",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-88/cutouts/jan-oblak.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-88/cutouts-editorial/jan-oblak.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "joshua-kimmich",
@@ -123,7 +135,10 @@
     "identityStatus": "dob_and_nationality",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-88/cutouts/joshua-kimmich.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-88/cutouts-editorial/joshua-kimmich.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "joao-neves",
@@ -149,7 +164,10 @@
     "identityStatus": "dob_and_nationality",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-88/cutouts/joao-neves.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-88/cutouts-editorial/joao-neves.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "luis-diaz",
@@ -174,7 +192,10 @@
     "identityStatus": "dob_and_nationality",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-88/cutouts/luis-diaz.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-88/cutouts-editorial/luis-diaz.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "raphinha",
@@ -200,7 +221,10 @@
     "identityStatus": "dob_and_nationality",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-88/cutouts/raphinha.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-88/cutouts-editorial/raphinha.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "virgil-van-dijk",
@@ -225,7 +249,10 @@
     "identityStatus": "dob_and_football_description",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-88/cutouts/virgil-van-dijk.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-88/cutouts-editorial/virgil-van-dijk.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "william-saliba",
@@ -250,6 +277,9 @@
     "identityStatus": "dob_and_nationality",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-88/cutouts/william-saliba.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-88/cutouts-editorial/william-saliba.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   }
 ]

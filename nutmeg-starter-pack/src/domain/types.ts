@@ -17,7 +17,7 @@ export interface Player {
   portraitEditorialUrl?: string
   portraitCutoutUrl?: string | null
   portraitCutoutEditorialUrl?: string | null
-  portraitCutoutStatus?: 'reviewed' | 'unavailable'
+  portraitCutoutStatus?: 'reviewed' | 'auto_review_pending' | 'unavailable'
   portraitStatus?: 'approved' | 'fallback'
   sourceSnapshot?: string
   dataStatus?: string

@@ -20,7 +20,7 @@ The 96-player Prime Suspect prototype contains every men's record rated 85–91 
 
 The Cold Case names, clubs, and facts remain **synthetic fixtures**. They are not real football claims.
 
-All 96 portraits were identity-matched with Wikidata and reviewed from Wikimedia Commons metadata. The pipeline publishes both a clean 400 × 500 WebP and a deterministic warm-duotone, ink-contrast and halftone editorial derivative. The clean crop is retained for review and credits. Image attribution is exposed on the in-app Credits screen. Player Press's original neutral fallback remains available whenever a future record lacks an approved image.
+All 96 portraits were identity-matched with Wikidata and reviewed from Wikimedia Commons metadata. The pipeline publishes a clean 400 × 500 WebP, a transparent local U²-Net cutout, and deterministic warm-duotone, ink-contrast and halftone editorial derivatives. Automated cutouts are marked `auto_review_pending` until their generated contact sheet is visually approved; the underlying source crop is retained for review and credits. Image attribution is exposed on the in-app Credits screen. Player Press's original neutral fallback remains available whenever a future record lacks an approved image.
 
 The leaderboard is visual sample data only. There is no authentication, shared state, server score validation, anti-cheat, public leaderboard, or production puzzle secrecy in this static build.
 
@@ -47,19 +47,21 @@ The production output is written to `dist/`. The build also generates the web ap
 
 ## Player ingestion pipeline
 
-The raw FC CSV is intentionally ignored by git. Place it at `data/raw/players.csv`, or pass its local path explicitly. Python 3.11+ is recommended.
+The raw FC CSV is intentionally ignored by git. Place it at `data/raw/players.csv`, or pass its local path explicitly. Python 3.11–3.13 is recommended.
 
 ```bash
 python3 -m pip install -r ingestion/requirements.txt
 npm run ingest:players
 # or: npm run ingest:players -- --source /absolute/path/to/players.csv
 npm run ingest:rating-85 -- --source /absolute/path/to/players.csv
+npm run merge:rating-85-plus
+npm run process:cutouts
 npm run test:ingestion
 ```
 
 The importer reads `data/selected_players.csv`, resolves identity through the official Wikidata API, retrieves only the Wikidata `P18` file through the Wikimedia Commons API, records creator/licence/source URL, creates clean and editorial 400 × 500 WebP portraits, and emits public JSON plus a human-readable report under `data/generated/`. API responses are cached in ignored `data/cache/`; an existing reviewed portrait is not redownloaded or overwritten. Use `--offline` for cache-only runs and `--dry-run` to validate without publishing outputs.
 
-The rating-catalogue command builds every men's record at one exact FC rating. Catalogues for ratings 85 through 91 contain 96 verified identities, 96 clean portraits, 96 newspaper-style derivatives, attribution metadata, browser-ready JSON, queryable SQLite databases, contact sheets and HTML review galleries. `npm run merge:rating-85-plus` creates the combined frontend JSON and `data/generated/rating-85-plus/players.sqlite`. All 96 records are valid guesses and possible answers. Assets live under `public/players/rating-*/`. To target another exact rating, run `python3 -m ingestion.rating_catalog --rating <number> --source <csv>`.
+The rating-catalogue command builds every men's record at one exact FC rating. Catalogues for ratings 85 through 91 contain 96 verified identities, 96 clean portraits, 96 newspaper-style derivatives, attribution metadata, browser-ready JSON, queryable SQLite databases, contact sheets and HTML review galleries. `npm run merge:rating-85-plus` creates the combined frontend JSON and `data/generated/rating-85-plus/players.sqlite`. `npm run process:cutouts` runs the local U²-Net human-segmentation model, removes disconnected mask debris, creates transparent PNG plus alpha-preserving newspaper WebP assets, updates catalogue metadata and writes `cutouts-contact-sheet.jpg` for visual QA. Use Python 3.11–3.13 for that optional processing step. All 96 records are valid guesses and possible answers. Assets live under `public/players/rating-*/`. To target another exact rating, run `python3 -m ingestion.rating_catalog --rating <number> --source <csv>`.
 
 ## GitHub Pages
 

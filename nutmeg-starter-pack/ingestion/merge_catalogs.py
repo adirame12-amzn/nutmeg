@@ -35,6 +35,7 @@ def write_outputs(min_rating: int, max_rating: int, players: list[dict[str, Any]
         "verifiedIdentities": sum(1 for player in players if player["wikidataId"]),
         "publishedPortraits": sum(1 for player in players if player["portraitStatus"] != "fallback"),
         "fallbackPortraits": sum(1 for player in players if player["portraitStatus"] == "fallback"),
+        "processedCutouts": sum(1 for player in players if player.get("portraitCutoutUrl")),
         "sourceLicenseStatus": "review_required",
     }
     (output / "players.json").write_text(json.dumps(players, ensure_ascii=False, indent=2) + "\n")
@@ -49,6 +50,7 @@ def write_outputs(min_rating: int, max_rating: int, players: list[dict[str, Any]
         f"- Verified identities: {report['verifiedIdentities']}\n"
         f"- Published clean + editorial portraits: {report['publishedPortraits']}\n"
         f"- Fallback portraits: {report['fallbackPortraits']}\n"
+        f"- Transparent editorial cutouts: {report['processedCutouts']}\n"
         "- Source redistribution licence: **review required**\n"
     )
     print(json.dumps(report, ensure_ascii=False, indent=2))

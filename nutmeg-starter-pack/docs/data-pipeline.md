@@ -16,7 +16,7 @@ The current browser demo proves the import and card-rendering path with all 96 m
 
 Portrait publication is allowlist-based. Public-domain, CC0 and CC BY assets can pass automatically; CC BY-SA assets require an explicit review state in the selection file. Published derivatives are 400 × 500 WebP and retain creator, licence and source-page attribution in `data/generated/attributions.json`. Each approved source produces a clean review crop and a non-generative Player Press editorial derivative using deterministic warm duotone, ink contrast and restrained halftone processing. A neutral local illustration is used when a portrait cannot be verified.
 
-The original ten preview players may additionally use a separately reviewed transparent PNG cutout. These cutouts are AI-assisted edits rather than reproducible pipeline outputs, are never substituted automatically, and fall back to the deterministic editorial crop when absent or rejected. They remain attributed derivatives of the reviewed Commons source.
+Every approved catalogue portrait can additionally use a reproducible transparent cutout produced locally by `ingestion/cutout_catalog.py`. The processor uses the Apache-2.0 U²-Net human-segmentation model through the MIT-licensed `rembg` library, removes disconnected mask islands, and then applies the same alpha-preserving newspaper treatment. It does not redraw faces, kits or source content and does not send images to a third-party API. Automated outputs are labelled `auto_review_pending`, collected in `data/generated/rating-85-plus/cutouts-contact-sheet.jpg`, and fall back to the deterministic editorial crop if absent. They remain attributed derivatives of the reviewed Commons source.
 
 ## Exact-rating catalogue
 

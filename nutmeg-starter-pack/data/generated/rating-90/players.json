@@ -22,7 +22,10 @@
     "identityStatus": "dob_and_football_description",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-90/cutouts/harry-kane.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-90/cutouts-editorial/harry-kane.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "jude-bellingham",
@@ -47,7 +50,10 @@
     "identityStatus": "dob_and_nationality",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-90/cutouts/jude-bellingham.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-90/cutouts-editorial/jude-bellingham.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "lamine-yamal",
@@ -73,7 +79,10 @@
     "identityStatus": "dob_and_nationality",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-90/cutouts/lamine-yamal.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-90/cutouts-editorial/lamine-yamal.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "michael-olise",
@@ -98,7 +107,10 @@
     "identityStatus": "dob_and_football_description",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-90/cutouts/michael-olise.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-90/cutouts-editorial/michael-olise.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "ousmane-dembele",
@@ -123,7 +135,10 @@
     "identityStatus": "dob_and_nationality",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-90/cutouts/ousmane-dembele.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-90/cutouts-editorial/ousmane-dembele.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "pedri",
@@ -149,7 +164,10 @@
     "identityStatus": "dob_and_nationality",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-90/cutouts/pedri.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-90/cutouts-editorial/pedri.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "rodri",
@@ -175,7 +193,10 @@
     "identityStatus": "dob_and_nationality",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-90/cutouts/rodri.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-90/cutouts-editorial/rodri.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "thibaut-courtois",
@@ -200,7 +221,10 @@
     "identityStatus": "dob_and_nationality",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-90/cutouts/thibaut-courtois.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-90/cutouts-editorial/thibaut-courtois.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   },
   {
     "id": "vitinha",
@@ -226,6 +250,9 @@
     "identityStatus": "dob_and_nationality",
     "sourceSnapshot": "2026-09-12",
     "poolCategory": "men",
-    "dataStatus": "prototype_source_licence_review_pending"
+    "dataStatus": "prototype_source_licence_review_pending",
+    "portraitCutoutUrl": "/nutmeg/players/rating-90/cutouts/vitinha.png",
+    "portraitCutoutEditorialUrl": "/nutmeg/players/rating-90/cutouts-editorial/vitinha.webp",
+    "portraitCutoutStatus": "auto_review_pending"
   }
 ]

@@ -13,6 +13,7 @@
     "ingest:players": "python3 -m ingestion.pipeline",
     "ingest:rating-85": "python3 -m ingestion.rating_catalog --rating 85",
     "merge:rating-85-plus": "python3 -m ingestion.merge_catalogs --min-rating 85 --max-rating 91",
+    "process:cutouts": "python3 -m ingestion.cutout_catalog",
     "test:ingestion": "python3 -m unittest discover -s ingestion/tests -p 'test_*.py'"
   },
   "dependencies": {
