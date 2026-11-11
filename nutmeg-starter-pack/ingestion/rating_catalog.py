@@ -8,6 +8,7 @@ import math
 import os
 import sqlite3
 import sys
+from collections import Counter
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -78,11 +79,13 @@ def build_catalog(source: Path, rating: int, *, offline: bool = False, dry_run: 
     issues: list[dict[str, str]] = []
     asset_dir = PUBLIC_PLAYERS / f"rating-{rating}"
     fallback = "/nutmeg/players/fallback-player.svg"
+    slug_counts = Counter(slugify(player_name(row)) for row in rows)
 
     for row in rows:
         selection = selection_for(row)
         display_name = selection["display_name"]
-        slug = slugify(display_name)
+        base_slug = slugify(display_name)
+        slug = f"{base_slug}-{row['player_id']}" if slug_counts[base_slug] > 1 else base_slug
         try:
             qid, identity_status = resolve_entity(api, selection, row)
         except Exception as error:

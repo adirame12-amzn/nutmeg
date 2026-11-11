@@ -1,5 +1,5 @@
 import previewPlayers from '../../data/generated/players.json'
-import rating85PlusPlayers from '../../data/generated/rating-85-plus/players.json'
+import rating80PlusPlayers from '../../data/generated/rating-80-plus/players.json'
 import type { Player } from '../domain/types'
 
 type GeneratedPlayer = Omit<Player, 'shirtNumber' | 'portraitStatus'> & {
@@ -15,7 +15,7 @@ const toPlayablePlayer = (player: GeneratedPlayer): Player => ({
 
 const combinedPlayers = [
   ...(previewPlayers as GeneratedPlayer[]),
-  ...(rating85PlusPlayers as GeneratedPlayer[]),
+  ...(rating80PlusPlayers as GeneratedPlayer[]),
 ].map(toPlayablePlayer)
 
 /** All reviewed prototype records currently available to Prime Suspect. */

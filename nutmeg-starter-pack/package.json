@@ -12,8 +12,10 @@
     "lint": "eslint .",
     "ingest:players": "python3 -m ingestion.pipeline",
     "ingest:rating-85": "python3 -m ingestion.rating_catalog --rating 85",
+    "ingest:rating": "python3 -m ingestion.rating_catalog",
+    "merge:rating-80-plus": "python3 -m ingestion.merge_catalogs --min-rating 80 --max-rating 91",
     "merge:rating-85-plus": "python3 -m ingestion.merge_catalogs --min-rating 85 --max-rating 91",
-    "process:cutouts": "python3 -m ingestion.cutout_catalog",
+    "process:cutouts": "python3 -m ingestion.cutout_catalog --min-rating 80",
     "test:ingestion": "python3 -m unittest discover -s ingestion/tests -p 'test_*.py'"
   },
   "dependencies": {

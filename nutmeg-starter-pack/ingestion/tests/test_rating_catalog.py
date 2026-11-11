@@ -4,7 +4,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from ingestion.rating_catalog import player_name, source_cohort, write_database
+from ingestion.rating_catalog import build_catalog, player_name, source_cohort, write_database
 
 
 class RatingCatalogTests(unittest.TestCase):
@@ -23,6 +23,20 @@ class RatingCatalogTests(unittest.TestCase):
             cohort = source_cohort(source, 85)
             self.assertEqual([row["player_id"] for row in cohort], ["1"])
             self.assertEqual(player_name(cohort[0]), "Men Player")
+
+    def test_slug_collisions_are_disambiguated_with_stable_source_ids(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            source = Path(temporary) / "players.csv"
+            fields = ["player_id", "common_name", "first_name", "last_name", "overall_rating", "gender", "birthdate", "snapshot_date", "club", "league", "nationality", "position", "preferred_foot"]
+            with source.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=fields)
+                writer.writeheader()
+                writer.writerows([
+                    {"player_id": "1", "common_name": "Ederson", "overall_rating": "82", "gender": "Men's Football", "birthdate": "1990-01-01", "snapshot_date": "2026-09-12", "club": "A", "league": "L", "nationality": "Brazil", "position": "CM", "preferred_foot": "Right"},
+                    {"player_id": "2", "common_name": "Éderson", "overall_rating": "82", "gender": "Men's Football", "birthdate": "1991-01-01", "snapshot_date": "2026-09-12", "club": "B", "league": "L", "nationality": "Brazil", "position": "CM", "preferred_foot": "Right"},
+                ])
+            players, _, _ = build_catalog(source, 82, offline=True, dry_run=True)
+            self.assertEqual([player["id"] for player in players], ["ederson-1", "ederson-2"])
 
     def test_writes_queryable_sqlite_database(self):
         player = {

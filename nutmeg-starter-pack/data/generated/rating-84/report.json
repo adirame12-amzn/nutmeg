@@ -1,0 +1,15 @@
+{
+  "generatedAt": "2026-11-11T22:00:31+05:30",
+  "rating": 84,
+  "players": 41,
+  "verifiedIdentities": 41,
+  "publishedPortraits": 40,
+  "fallbackPortraits": 1,
+  "issues": [
+    {
+      "player": "Kenan Yıldız",
+      "issue": "portrait rejected: Attribution"
+    }
+  ],
+  "sourceLicenseStatus": "review_required"
+}

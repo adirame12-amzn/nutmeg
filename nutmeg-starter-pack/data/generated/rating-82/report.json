@@ -1,0 +1,31 @@
+{
+  "generatedAt": "2026-11-11T22:09:48+05:30",
+  "rating": 82,
+  "players": 80,
+  "verifiedIdentities": 79,
+  "publishedPortraits": 75,
+  "fallbackPortraits": 5,
+  "issues": [
+    {
+      "player": "Jonathan Burkardt",
+      "issue": "no verified Wikimedia portrait"
+    },
+    {
+      "player": "Moleiro",
+      "issue": "no verified Wikimedia portrait"
+    },
+    {
+      "player": "Palhinha",
+      "issue": "no verified Wikimedia portrait"
+    },
+    {
+      "player": "Rodrigo Zalazar",
+      "issue": "no verified Wikimedia portrait"
+    },
+    {
+      "player": "Vivian",
+      "issue": "no verified Wikimedia portrait"
+    }
+  ],
+  "sourceLicenseStatus": "review_required"
+}

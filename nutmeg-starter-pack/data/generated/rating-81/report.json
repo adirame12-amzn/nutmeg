@@ -1,0 +1,35 @@
+{
+  "generatedAt": "2026-11-11T22:16:15+05:30",
+  "rating": 81,
+  "players": 107,
+  "verifiedIdentities": 107,
+  "publishedPortraits": 101,
+  "fallbackPortraits": 6,
+  "issues": [
+    {
+      "player": "De Frutos",
+      "issue": "no verified Wikimedia portrait"
+    },
+    {
+      "player": "Estéban Lepaul",
+      "issue": "no verified Wikimedia portrait"
+    },
+    {
+      "player": "Galeno",
+      "issue": "no verified Wikimedia portrait"
+    },
+    {
+      "player": "Luis Milla",
+      "issue": "no verified Wikimedia portrait"
+    },
+    {
+      "player": "Maximiliano Araújo",
+      "issue": "no verified Wikimedia portrait"
+    },
+    {
+      "player": "Álvaro García",
+      "issue": "no verified Wikimedia portrait"
+    }
+  ],
+  "sourceLicenseStatus": "review_required"
+}

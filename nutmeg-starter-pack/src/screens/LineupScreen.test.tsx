@@ -17,12 +17,16 @@ describe('Lineup mobile interaction', () => {
     const guess = fc27Players.find(player => player.id !== target.id)!
     render(<LineupScreen onResult={vi.fn()} />)
 
+    expect(screen.getByText('0 of 6 suspects tried')).toBeInTheDocument()
+    expect(screen.getByLabelText('6 suspects remaining').querySelectorAll('.used, .won')).toHaveLength(0)
+
     const search = screen.getByRole('textbox', { name: /search the suspect pool/i })
     await user.type(search, guess.displayName)
     await user.click(screen.getByRole('option', { name: new RegExp(guess.displayName, 'i') }))
 
     expect(screen.getByRole('article', { name: new RegExp(`Suspect 1: ${guess.displayName}`, 'i') })).toBeInTheDocument()
-    expect(screen.getByText('Suspect 2 of 6')).toBeInTheDocument()
+    expect(screen.getByText('1 of 6 suspects tried')).toBeInTheDocument()
+    expect(screen.getByLabelText('5 suspects remaining').querySelectorAll('.used, .won')).toHaveLength(1)
 
     await user.type(search, guess.displayName)
     expect(screen.queryByRole('option', { name: new RegExp(guess.displayName, 'i') })).not.toBeInTheDocument()

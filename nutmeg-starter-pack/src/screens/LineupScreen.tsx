@@ -61,12 +61,12 @@ export function LineupScreen({ onResult }: { onResult: (payload: ResultPayload) 
 
   return (
     <div className="game-page lineup-page">
-      <div className="game-heading"><p className="eyebrow">PRIME SUSPECT</p><p className="demo-pill">MEN'S 96-PLAYER POOL</p></div>
+      <div className="game-heading"><p className="eyebrow">PRIME SUSPECT</p><p className="demo-pill">MEN'S {fc27Players.length}-PLAYER POOL</p></div>
       <h1>Find the Player</h1>
       <p className="game-intro">Name a suspect and compare their profile. The evidence points toward the hidden player.</p>
       <aside className="data-preview-note"><strong>Prototype data · 12 Sep 2026</strong><span>FC source licence and 2026 eligibility still require publication review.</span></aside>
       <div className="attempt-row">
-        <strong>{status === 'playing' ? `Suspect ${guesses.length + 1} of ${LINEUP_GUESS_LIMIT}` : status === 'won' ? 'Case closed!' : 'Case unsolved'}</strong>
+        <strong>{status === 'playing' ? `${guesses.length} of ${LINEUP_GUESS_LIMIT} suspects tried` : status === 'won' ? 'Case closed!' : 'Case unsolved'}</strong>
         <div className="attempts" aria-label={`${LINEUP_GUESS_LIMIT - guesses.length} suspects remaining`}>
           {dots.map(index => <span className={index < guesses.length ? guesses[index].isCorrect ? 'won' : 'used' : ''} key={index} />)}
         </div>

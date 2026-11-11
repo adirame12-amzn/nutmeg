@@ -123,7 +123,7 @@ def process_portrait(
         render_editorial_cutout(cutout, editorial)
 
 
-def update_catalogs(players: list[dict[str, Any]], attributions: list[dict[str, Any]]) -> None:
+def update_catalogs(players: list[dict[str, Any]], attributions: list[dict[str, Any]], combined: Path) -> None:
     by_id = {player["id"]: player for player in players}
     ratings = sorted({int(player["fcOverall"]) for player in players})
     for rating in ratings:
@@ -134,7 +134,6 @@ def update_catalogs(players: list[dict[str, Any]], attributions: list[dict[str, 
         rating_attributions = json.loads((folder / "attributions.json").read_text())
         write_database(folder / "players.sqlite", updated, rating_attributions)
 
-    combined = GENERATED_ROOT / "rating-85-plus"
     (combined / "players.json").write_text(json.dumps(players, ensure_ascii=False, indent=2) + "\n")
     write_database(combined / "players.sqlite", players, attributions)
 
@@ -176,6 +175,7 @@ def write_review_sheet(players: list[dict[str, Any]], output: Path) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Create transparent and editorial cutouts for the playable catalogue")
     parser.add_argument("--model", default=DEFAULT_MODEL)
+    parser.add_argument("--min-rating", type=int, default=85)
     parser.add_argument("--limit", type=int)
     parser.add_argument("--force", action="store_true")
     parser.add_argument("--no-alpha-matting", action="store_true")
@@ -187,7 +187,7 @@ def main() -> None:
     except ImportError as error:
         raise SystemExit('Install the image extra first: pip install "rembg[cpu]>=2.0.69,<3"') from error
 
-    combined = GENERATED_ROOT / "rating-85-plus"
+    combined = GENERATED_ROOT / f"rating-{args.min_rating}-plus"
     players = json.loads((combined / "players.json").read_text())
     attributions = json.loads((combined / "attributions.json").read_text())
     selected = players[:args.limit] if args.limit else players
@@ -214,7 +214,7 @@ def main() -> None:
     completed_ids = {item["id"] for item in review if item["status"] == "auto_review_pending"}
     updated_players = [add_cutout_metadata(player) if player["id"] in completed_ids or public_path(cutout_urls(player)[0]).exists() else player for player in players]
     if not args.skip_metadata and not args.limit:
-        update_catalogs(updated_players, attributions)
+        update_catalogs(updated_players, attributions, combined)
         write_review_sheet(updated_players, combined / "cutouts-contact-sheet.jpg")
     (combined / "cutouts-review.json").write_text(json.dumps(review, ensure_ascii=False, indent=2) + "\n")
     print(json.dumps({

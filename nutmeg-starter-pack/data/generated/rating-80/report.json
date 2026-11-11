@@ -1,0 +1,59 @@
+{
+  "generatedAt": "2026-11-11T22:24:23+05:30",
+  "rating": 80,
+  "players": 130,
+  "verifiedIdentities": 129,
+  "publishedPortraits": 118,
+  "fallbackPortraits": 12,
+  "issues": [
+    {
+      "player": "Andrei Rațiu",
+      "issue": "no verified Wikimedia portrait"
+    },
+    {
+      "player": "Armand Laurienté",
+      "issue": "no verified Wikimedia portrait"
+    },
+    {
+      "player": "Carlos Romero",
+      "issue": "no verified Wikimedia portrait"
+    },
+    {
+      "player": "Elia Caprile",
+      "issue": "no verified Wikimedia portrait"
+    },
+    {
+      "player": "Ermedin Demirović",
+      "issue": "no verified Wikimedia portrait"
+    },
+    {
+      "player": "Gabri Veiga",
+      "issue": "no verified Wikimedia portrait"
+    },
+    {
+      "player": "Johan Manzambi",
+      "issue": "no verified Wikimedia portrait"
+    },
+    {
+      "player": "Matteo Politano",
+      "issue": "no verified Wikimedia portrait"
+    },
+    {
+      "player": "Merih Demiral",
+      "issue": "portrait rejected: Attribution"
+    },
+    {
+      "player": "Miguel Gutiérrez",
+      "issue": "no verified Wikimedia portrait"
+    },
+    {
+      "player": "Rafa",
+      "issue": "no verified Wikimedia portrait"
+    },
+    {
+      "player": "Wesley",
+      "issue": "no verified Wikimedia portrait"
+    }
+  ],
+  "sourceLicenseStatus": "review_required"
+}

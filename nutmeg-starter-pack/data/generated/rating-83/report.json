@@ -1,0 +1,27 @@
+{
+  "generatedAt": "2026-11-11T22:04:02+05:30",
+  "rating": 83,
+  "players": 56,
+  "verifiedIdentities": 55,
+  "publishedPortraits": 52,
+  "fallbackPortraits": 4,
+  "issues": [
+    {
+      "player": "Amir Rrahmani",
+      "issue": "no verified Wikimedia portrait"
+    },
+    {
+      "player": "Ivan Provedel",
+      "issue": "no verified Wikimedia portrait"
+    },
+    {
+      "player": "Pablo Barrios",
+      "issue": "no verified Wikimedia portrait"
+    },
+    {
+      "player": "Serge Gnabry",
+      "issue": "no verified Wikimedia portrait"
+    }
+  ],
+  "sourceLicenseStatus": "review_required"
+}
