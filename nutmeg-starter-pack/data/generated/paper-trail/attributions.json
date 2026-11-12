@@ -1,0 +1,642 @@
+[
+  {
+    "clubId": "vfl-wolfsburg",
+    "wikidataId": "Q101859",
+    "file": "VfL Wolfsburg logo.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:VfL_Wolfsburg_logo.svg",
+    "creator": "VfL Wolfsburg",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "borussia-monchengladbach",
+    "wikidataId": "Q101959",
+    "file": "Borussia Mönchengladbach logo.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Borussia_Mönchengladbach_logo.svg",
+    "creator": "Borussia Mönchengladbach",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "defensa-y-justicia",
+    "wikidataId": "Q1024338",
+    "file": "Escudo del Club Social y Deportivo Defensa y Justicia.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Escudo_del_Club_Social_y_Deportivo_Defensa_y_Justicia.svg",
+    "creator": "Defensa y Justicia",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "bayer-04-leverkusen",
+    "wikidataId": "Q104761",
+    "file": "Logo TSV Bayer 04 Leverkusen.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Logo_TSV_Bayer_04_Leverkusen.svg",
+    "creator": "Unknown authorUnknown author",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "1-fc-koln",
+    "wikidataId": "Q104770",
+    "file": "1. FC Koeln Logo 2014–.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:1._FC_Koeln_Logo_2014–.svg",
+    "creator": "1. FC Köln",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "status": "review_required"
+  },
+  {
+    "clubId": "karlsruher-sc",
+    "wikidataId": "Q105853",
+    "file": "Karlsruher SC Logo 2.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Karlsruher_SC_Logo_2.svg",
+    "creator": "Karlsruher SC",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "como-1907",
+    "wikidataId": "Q1120838",
+    "file": "Calcio Como - logo (Italy, 2019-).svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Calcio_Como_-_logo_(Italy,_2019-).svg",
+    "creator": "Como 1907 srl",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "liverpool-f-c",
+    "wikidataId": "Q1130849",
+    "file": "Logo Liverpool FC (2024).png",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Logo_Liverpool_FC_(2024).png",
+    "creator": "Liverpool FC",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "fc-porto",
+    "wikidataId": "Q128446",
+    "file": "Emblema F C Porto (derived).jpg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Emblema_F_C_Porto_(derived).jpg",
+    "creator": "Manuel de Sousa / JotaCartas",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "status": "review_required"
+  },
+  {
+    "clubId": "olympique-de-marseille",
+    "wikidataId": "Q132885",
+    "file": "Olympique Marseille logo.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Olympique_Marseille_logo.svg",
+    "creator": "Olympique de Marseille",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "instituto-atletico-central-cordoba",
+    "wikidataId": "Q1421829",
+    "file": "Escudo Instituto ACC optimizado 165.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Escudo_Instituto_ACC_optimizado_165.svg",
+    "creator": "Instituto ACC",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "juventus-fc",
+    "wikidataId": "Q1422",
+    "file": "Juventus FC - logo black (Italy, 2020).svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Juventus_FC_-_logo_black_(Italy,_2020).svg",
+    "creator": "Interbrand – Global Brand Consultancy / Juventus Football Club SpA",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "u-c-sampdoria",
+    "wikidataId": "Q1457",
+    "file": "Flag of Sampdoria.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Flag_of_Sampdoria.svg",
+    "creator": "F l a n k e r",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "fortuna-dusseldorf",
+    "wikidataId": "Q151747",
+    "file": "Fortuna Düsseldorf.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Fortuna_Düsseldorf.svg",
+    "creator": "Fortuna Düsseldorf (SVG created by de:Benutzer:ChristianBier)",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "ac-milan",
+    "wikidataId": "Q1543",
+    "file": "Logo of AC Milan.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Logo_of_AC_Milan.svg",
+    "creator": "A.C. Milan\n\nUploaded by Vargklo at en.wikipedia",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "fc-bayern-munich",
+    "wikidataId": "Q15789",
+    "file": "FC Bayern München logo (2024).svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:FC_Bayern_München_logo_(2024).svg",
+    "creator": "FC Bayern Munich",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "club-atletico-river-plate",
+    "wikidataId": "Q15799",
+    "file": "Club Atlético River Plate logo.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Club_Atlético_River_Plate_logo.svg",
+    "creator": "Club Atlético River Plate",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "club-atletico-penarol",
+    "wikidataId": "Q16320",
+    "file": "Escudo del Club Atlético Peñarol.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Escudo_del_Club_Atlético_Peñarol.svg",
+    "creator": "Club Atlético Peñarol",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "inter-miami-cf",
+    "wikidataId": "Q16844931",
+    "file": "Inter Miami CF wordmark-full pink.png",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Inter_Miami_CF_wordmark-full_pink.png",
+    "creator": "Inter Miami CF",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "fc-girondins-de-bordeaux",
+    "wikidataId": "Q172476",
+    "file": "Current logo of Girondins de Bordeaux.png",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Current_logo_of_Girondins_de_Bordeaux.png",
+    "creator": "Logos Vector, ESCUDOS DO MUNDO INTEIRO - HOMERO QUEIROGA, Romilson de Lima, Stick PNG",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "gnk-dinamo-zagreb",
+    "wikidataId": "Q172803",
+    "file": "Logo GNK Dinamo Zagreb (2019).svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Logo_GNK_Dinamo_Zagreb_(2019).svg",
+    "creator": "Unknown authorUnknown author",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "ogc-nice",
+    "wikidataId": "Q185163",
+    "file": "OGC Nice (simplified logo).svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:OGC_Nice_(simplified_logo).svg",
+    "creator": "Unknown authorUnknown author",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "atalanta-bc",
+    "wikidataId": "Q1886",
+    "file": "Atalanta BC.png",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Atalanta_BC.png",
+    "creator": "Atalanta BC",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "fc-basel",
+    "wikidataId": "Q189671",
+    "file": "FC Basel.png",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:FC_Basel.png",
+    "creator": "Unknown authorUnknown author",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "stade-rennais-f-c",
+    "wikidataId": "Q19509",
+    "file": "Stade Rennais (logo 1960).svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Stade_Rennais_(logo_1960).svg",
+    "creator": "Stade rennais football club\nKilyann Le Hen (vectorisation)",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "as-saint-etienne",
+    "wikidataId": "Q19521",
+    "file": "Logo AS Saint-Étienne.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Logo_AS_Saint-Étienne.svg",
+    "creator": "Association Sportive de Saint-Étienne",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "royale-union-saint-gilloise",
+    "wikidataId": "Q196160",
+    "file": "USG.png",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:USG.png",
+    "creator": "www.rusg.brussels/nl",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "status": "approved"
+  },
+  {
+    "clubId": "fc-dinamo-tbilisi",
+    "wikidataId": "Q201006",
+    "file": "FC Dinamo Tbilisi logo.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:FC_Dinamo_Tbilisi_logo.svg",
+    "creator": "FC Dinamo Tbilisi",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "acf-fiorentina",
+    "wikidataId": "Q2052",
+    "file": "ACF Fiorentina - logo (Italy, 2022).svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:ACF_Fiorentina_-_logo_(Italy,_2022).svg",
+    "creator": "FutureBrand Creative Agency / ACF Fiorentina S.r.l. a socio unico",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "stade-de-reims",
+    "wikidataId": "Q208228",
+    "file": "Stade Reims.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Stade_Reims.svg",
+    "creator": "Stade de Reims",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "molde-fk",
+    "wikidataId": "Q208552",
+    "file": "Molde Fotball Logo.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Molde_Fotball_Logo.svg",
+    "creator": "Unknown authorUnknown author",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "k-r-c-genk",
+    "wikidataId": "Q216032",
+    "file": "KRC Genk Logo 2016.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:KRC_Genk_Logo_2016.svg",
+    "creator": "KRC Genk",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "tsg-1899-hoffenheim",
+    "wikidataId": "Q22707",
+    "file": "TSG Logo-Standard 4c.png",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:TSG_Logo-Standard_4c.png",
+    "creator": "Template:Lalilu123",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "fc-groningen",
+    "wikidataId": "Q24711",
+    "file": "FC Groningen logo.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:FC_Groningen_logo.svg",
+    "creator": "FC Groningen",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "independiente-del-valle",
+    "wikidataId": "Q249648",
+    "file": "Escudoindependientedelvalle2023.png",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Escudoindependientedelvalle2023.png",
+    "creator": "Jonathan Erardo Ortiz Salazar",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "ssc-napoli",
+    "wikidataId": "Q2641",
+    "file": "SSC Napoli 2024 (deep blue navy).svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:SSC_Napoli_2024_(deep_blue_navy).svg",
+    "creator": "Logo:  SSC Napoli S.p.A.\nUpload:  The White Lion",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "parma-calcio-1913",
+    "wikidataId": "Q2693",
+    "file": "Logo Parma Calcio 1913 (adozione 2016).svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Logo_Parma_Calcio_1913_(adozione_2016).svg",
+    "creator": "Parma Calcio 1913",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "clube-atletico-mineiro",
+    "wikidataId": "Q270995",
+    "file": "Clube Atlético Mineiro logo.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Clube_Atlético_Mineiro_logo.svg",
+    "creator": "Clube Atlético Mineiro",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "as-roma",
+    "wikidataId": "Q2739",
+    "file": "AS ROMA Text Logo 2020 - 2021 .svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:AS_ROMA_Text_Logo_2020_-_2021_.svg",
+    "creator": "Associazione Sportiva Roma S.p.A.",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "racing-club",
+    "wikidataId": "Q276533",
+    "file": "Escudo de Racing Club (2014).svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Escudo_de_Racing_Club_(2014).svg",
+    "creator": "Racing Club de Avellaneda",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "udinese-calcio",
+    "wikidataId": "Q2798",
+    "file": "Udinese Calcio 2010.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Udinese_Calcio_2010.svg",
+    "creator": "Unknown authorUnknown author",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "fc-sion",
+    "wikidataId": "Q321061",
+    "file": "FC Sion.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:FC_Sion.svg",
+    "creator": "Unknown authorUnknown author",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "junior-de-barranquilla",
+    "wikidataId": "Q332524",
+    "file": "Junior Barranquilla logo.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Junior_Barranquilla_logo.svg",
+    "creator": "Junior de Barranquilla",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "s-c-corinthians-paulista",
+    "wikidataId": "Q35933",
+    "file": "Corinthians23022007 (cropped).jpg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Corinthians23022007_(cropped).jpg",
+    "creator": "Antonio Cruz/ABr",
+    "license": "CC BY 3.0 br",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/br/deed.en",
+    "status": "approved"
+  },
+  {
+    "clubId": "avai-futebol-clube",
+    "wikidataId": "Q374069",
+    "file": "Avaí Futebol Clube logo.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Avaí_Futebol_Clube_logo.svg",
+    "creator": "Avaí Futebol Clube",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "borussia-dortmund",
+    "wikidataId": "Q41420",
+    "file": "Borussia Dortmund logo.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Borussia_Dortmund_logo.svg",
+    "creator": "Lispir (Lispir)",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "gremio-osasco-audax",
+    "wikidataId": "Q43899915",
+    "file": "Grêmio Osasco Audax (01) - SP.png",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Grêmio_Osasco_Audax_(01)_-_SP.png",
+    "creator": "Grêmio Osasco Audax",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "vfb-stuttgart",
+    "wikidataId": "Q4512",
+    "file": "VfB Stuttgart 1893 Logo.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:VfB_Stuttgart_1893_Logo.svg",
+    "creator": "VfB Stuttgart",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "en-avant-de-guingamp",
+    "wikidataId": "Q459148",
+    "file": "Logo EA Guingamp 2019.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Logo_EA_Guingamp_2019.svg",
+    "creator": "En Avant Guingamp",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "galatasaray-s-k",
+    "wikidataId": "Q495299",
+    "file": "Galatasaray Sports Club Logo.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Galatasaray_Sports_Club_Logo.svg",
+    "creator": "Ayet Emin (died on 29 September 1931, Galatasaray Logosunun Doğuşu), Vector drawing: Turkish Wikipedia @SAİT71",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "es-troyes-ac",
+    "wikidataId": "Q501693",
+    "file": "ES Troyes AC.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:ES_Troyes_AC.svg",
+    "creator": "Espérance Sportive Troyes Aube Champagne",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "hamburger-sv",
+    "wikidataId": "Q51974",
+    "file": "Hamburger SV logo.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Hamburger_SV_logo.svg",
+    "creator": "Hamburger SV",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "sv-werder-bremen",
+    "wikidataId": "Q51976",
+    "file": "SV-Werder-Bremen-Logo.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:SV-Werder-Bremen-Logo.svg",
+    "creator": "Unknown authorUnknown author",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "tsv-havelse",
+    "wikidataId": "Q537301",
+    "file": "TSV Havelse logo.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:TSV_Havelse_logo.svg",
+    "creator": "Unknown authorUnknown author",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "s-c-olhanense",
+    "wikidataId": "Q621259",
+    "file": "SC Olhanense.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:SC_Olhanense.svg",
+    "creator": "LonEMedia",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+    "status": "review_required"
+  },
+  {
+    "clubId": "inter-milan",
+    "wikidataId": "Q631",
+    "file": "FC Internazionale Milano 2021.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:FC_Internazionale_Milano_2021.svg",
+    "creator": "FC Internazionale Milano S.p.A. / Bureau Borsche",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "empoli-fc",
+    "wikidataId": "Q6703",
+    "file": "Empoli FC logo.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Empoli_FC_logo.svg",
+    "creator": "Unknown authorUnknown author",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "rb-leipzig",
+    "wikidataId": "Q702455",
+    "file": "2019-07-12 Fußball; Freundschaftsspiel RB Leipzig - FC Zürich 1DX 0881 by Stepro 2.png",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:2019-07-12_Fußball;_Freundschaftsspiel_RB_Leipzig_-_FC_Zürich_1DX_0881_by_Stepro_2.png",
+    "creator": "Steffen Prößdorf, edited by User:CennoxX",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "status": "review_required"
+  },
+  {
+    "clubId": "fc-barcelona",
+    "wikidataId": "Q7156",
+    "file": "Football Club Barcelona Color Update.png",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Football_Club_Barcelona_Color_Update.png",
+    "creator": "HAMDANI 72",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "status": "approved"
+  },
+  {
+    "clubId": "sporting-cp",
+    "wikidataId": "Q75729",
+    "file": "Sporting Clube de Portugal.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Sporting_Clube_de_Portugal.svg",
+    "creator": "Woodbeatcool / Sporting Club de Portugal",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "stade-lavallois",
+    "wikidataId": "Q760736",
+    "file": "LogoStadeLavalloisMayenneFC 2015.png",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:LogoStadeLavalloisMayenneFC_2015.png",
+    "creator": "Stade Lavallois Mayenne Football Club",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "s-c-internacional",
+    "wikidataId": "Q80845",
+    "file": "Escudo do Sport Club Internacional.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Escudo_do_Sport_Club_Internacional.svg",
+    "creator": "Sport Club Internacional",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "sv-meppen",
+    "wikidataId": "Q819400",
+    "file": "SV Meppen Logo 2022.svg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:SV_Meppen_Logo_2022.svg",
+    "creator": "SV Meppen",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "status": "approved"
+  },
+  {
+    "clubId": "getafe-cf",
+    "wikidataId": "Q8806",
+    "file": "Getafe CF Logo.png",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Getafe_CF_Logo.png",
+    "creator": "Yawen",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "status": "review_required"
+  }
+]

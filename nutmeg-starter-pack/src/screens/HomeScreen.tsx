@@ -3,11 +3,11 @@ import { useState } from 'react'
 import type { RankedIdentity } from '../api/ranked'
 import type { Screen } from '../components/Chrome'
 
-function GameTicket({ mystery = false }: { mystery?: boolean }) {
+function GameTicket({ mystery = false, trail = false }: { mystery?: boolean; trail?: boolean }) {
   return (
-    <span className={`ticket-icon ${mystery ? 'mystery-ticket' : 'lineup-ticket'}`} aria-hidden="true">
+    <span className={`ticket-icon ${mystery ? 'mystery-ticket' : trail ? 'trail-ticket' : 'lineup-ticket'}`} aria-hidden="true">
       <span className="ticket-sheet">
-        {mystery ? <b>?</b> : (
+        {mystery ? <b>?</b> : trail ? <b>03</b> : (
           <svg viewBox="0 0 48 58"><path d="M10 9h28v40H10z"/><circle cx="18" cy="19" r="2.5"/><circle cx="31" cy="16" r="2.5"/><circle cx="24" cy="30" r="2.5"/><circle cx="16" cy="41" r="2.5"/><circle cx="34" cy="40" r="2.5"/><path d="m19 20 4 8m3-1 4-9m-5 14-7 7m9-7 6 6"/></svg>
         )}
       </span>
@@ -27,7 +27,7 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
 
       <div className="desk-switch" role="group" aria-label="Choose a case desk">
         <button className={desk === 'daily' ? 'active' : ''} onClick={() => setDesk('daily')} aria-pressed={desk === 'daily'}><CalendarCheck/><span><strong>Daily Ranked</strong><small>Shared case · scored</small></span></button>
-        <button className={desk === 'practice' ? 'active' : ''} onClick={() => setDesk('practice')} aria-pressed={desk === 'practice'}><FolderOpen/><span><strong>Practice Files</strong><small>Unlimited · unscored</small></span></button>
+        <button className={desk === 'practice' ? 'active' : ''} onClick={() => setDesk('practice')} aria-pressed={desk === 'practice'}><FolderOpen/><span><strong>Cold Case</strong><small>Unlimited · unscored</small></span></button>
       </div>
 
       {desk === 'daily' ? <section className="case-desk daily-desk" aria-labelledby="daily-dossier-title">
@@ -48,19 +48,19 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
         </div>
       </section> : null}
 
-      {desk === 'practice' ? <section className="case-desk archive-desk" aria-labelledby="archive-title">
+      {desk === 'practice' ? <section className="case-desk archive-desk" aria-labelledby="cold-case-title">
         <div className="desk-heading">
           <span className="desk-seal"><FolderOpen /></span>
-          <span><small>UNLIMITED · UNSCORED · NEW FILES</small><h2 id="archive-title">The Archives</h2></span>
+          <span><small>UNLIMITED · UNSCORED · LOCAL FILES</small><h2 id="cold-case-title">Cold Case</h2></span>
           <span className="mode-chip practice">PRACTICE</span>
         </div>
-        <p>Sharpen your instincts with replayable case files. These rounds never affect the leaderboard.</p>
+        <p>Reopen old files and sharpen your instincts. These local rounds never affect the leaderboard.</p>
         <div className="archive-games">
           <button className="archive-game orange" onClick={onOpenPracticeLineup}>
             <GameTicket /><span><small>RANDOM PLAYER</small><strong>Prime Suspect</strong><em>A fresh suspect every round.</em></span><ArrowRight />
           </button>
-          <button className="archive-game blue" onClick={() => onNavigate('mystery')}>
-            <GameTicket mystery /><span><small>3 CLUES</small><strong>Cold Case</strong><em>Question the evidence.</em></span><ArrowRight />
+          <button className="archive-game" onClick={() => onNavigate('paper-trail')}>
+            <GameTicket trail /><span><small>CASE 03 · 6 SUSPECTS</small><strong>Paper Trail</strong><em>Follow the clubs. Find the player.</em></span><ArrowRight />
           </button>
         </div>
         <div className="archive-foot"><Clock3 size={15}/><span>Play again whenever you like · no points recorded</span></div>
@@ -73,7 +73,7 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
           <button onClick={() => onNavigate('credits')}>Sources, methodology &amp; portrait credits <ArrowRight size={14}/></button>
         </div>
       </aside>
-      <p className="local-note">Cold Case uses fictional demo evidence. Prime Suspect’s prototype data remains under publication review.</p>
+      <p className="local-note">Cold Case play stays on this device and is never submitted to the ranked service. Prototype data remains under publication review.</p>
       {identity && <button className="friends-status" onClick={() => onNavigate('leaderboard')}><span><UserRoundCheck/><span><strong>@{identity.user.username}</strong><small>View your weekly standing</small></span></span><ArrowRight/></button>}
     </div>
   )

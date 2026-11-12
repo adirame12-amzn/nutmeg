@@ -6,9 +6,10 @@ import { PlayerSearch } from '../components/PlayerSearch'
 import { fc27Players, getRandomLineupTarget } from '../data/fc27Players'
 import { canSubmitGuess, comparePlayers, LINEUP_GUESS_LIMIT, lineupScore } from '../domain/game'
 import type { GameStatus, LineupGuess, Player } from '../domain/types'
+import type { ClubEvidence } from '../domain/paperTrail'
 
 export interface ResultPayload {
-  mode: 'lineup' | 'mystery'
+  mode: 'lineup' | 'mystery' | 'paper-trail'
   won: boolean
   score: number
   answer: string
@@ -18,6 +19,9 @@ export interface ResultPayload {
   portraitUrl?: string
   ranked?: boolean
   date?: string
+  nationality?: string
+  clubs?: ClubEvidence[]
+  puzzleId?: string
 }
 
 const LAST_TARGET_KEY = 'nutmeg-last-lineup-target'

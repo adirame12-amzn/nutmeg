@@ -13,18 +13,19 @@ describe('Home case desks', () => {
 
     expect(screen.getByRole('button', { name: /daily ranked/i })).toHaveAttribute('aria-pressed', 'true')
     expect(screen.getByText('Today’s Dossier')).toBeInTheDocument()
-    expect(screen.queryByText('The Archives')).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Cold Case' })).not.toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: /practice files/i }))
-    expect(screen.getByRole('button', { name: /practice files/i })).toHaveAttribute('aria-pressed', 'true')
-    expect(screen.getByText('The Archives')).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: /^cold case/i }))
+    expect(screen.getByRole('button', { name: /^cold case/i })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('heading', { name: 'Cold Case' })).toBeInTheDocument()
     expect(screen.queryByText('Today’s Dossier')).not.toBeInTheDocument()
+    expect(screen.queryByText('Question the evidence.')).not.toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: /random player prime suspect/i }))
     expect(onOpenPracticeLineup).toHaveBeenCalledOnce()
 
-    await user.click(screen.getByRole('button', { name: /cold case/i }))
-    expect(onNavigate).toHaveBeenCalledWith('mystery')
+    await user.click(screen.getByRole('button', { name: /paper trail/i }))
+    expect(onNavigate).toHaveBeenCalledWith('paper-trail')
   })
 
   it('opens the shared Prime Suspect from the daily desk', async () => {

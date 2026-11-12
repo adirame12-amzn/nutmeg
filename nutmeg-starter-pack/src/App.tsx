@@ -9,8 +9,9 @@ import { MysteryScreen } from './screens/MysteryScreen'
 import { ResultScreen } from './screens/ResultScreen'
 import { CreditsScreen } from './screens/CreditsScreen'
 import { RankedLineupScreen } from './screens/RankedLineupScreen'
+import { PaperTrailScreen } from './screens/PaperTrailScreen'
 
-const screens: Screen[] = ['home', 'lineup', 'mystery', 'leaderboard', 'credits', 'result']
+const screens: Screen[] = ['home', 'lineup', 'mystery', 'paper-trail', 'leaderboard', 'credits', 'result']
 
 function screenFromHash(): Screen {
   const value = window.location.hash.replace('#', '') as Screen
@@ -52,6 +53,7 @@ export function App() {
       {needsIdentity && <UsernameOnboarding onComplete={setIdentity} />}
       {screen === 'lineup' && !needsIdentity && (rankedApiEnabled && identity && !quickCase ? <RankedLineupScreen identity={identity} onResult={showResult} onQuickCase={() => setQuickCase(true)} /> : <LineupScreen onResult={showResult} />)}
       {screen === 'mystery' && <MysteryScreen onResult={showResult} />}
+      {screen === 'paper-trail' && <PaperTrailScreen onResult={showResult} />}
       {screen === 'leaderboard' && !needsIdentity && (rankedApiEnabled && identity ? <LeaderboardScreen identity={identity} /> : <LeaderboardDemo />)}
       {screen === 'credits' && <CreditsScreen />}
       {screen === 'result' && <ResultScreen result={result} onNavigate={navigate} />}

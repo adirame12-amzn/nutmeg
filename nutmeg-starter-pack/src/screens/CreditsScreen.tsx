@@ -1,7 +1,9 @@
 import { ExternalLink, ImageOff } from 'lucide-react'
 import previewAttributions from '../../data/generated/attributions.json'
+import clubAttributions from '../../data/generated/paper-trail/attributions.json'
 import rating85PlusAttributions from '../../data/generated/rating-85-plus/attributions.json'
 import { fc27Players } from '../data/fc27Players'
+import { paperTrailHistories } from '../data/paperTrail'
 import { PlayerPortrait } from '../components/PlayerPortrait'
 
 export function CreditsScreen() {
@@ -9,6 +11,10 @@ export function CreditsScreen() {
     [...previewAttributions, ...rating85PlusAttributions].map(item => [item.playerId, item]),
   ).values())
   const creditedPlayers = [...fc27Players].sort((left, right) => left.displayName.localeCompare(right.displayName))
+  const clubNames = new Map(paperTrailHistories.flatMap(history => history.clubs.map(club => [club.clubId, club.name] as const)))
+  const publishedClubCredits = clubAttributions
+    .filter(credit => credit.status === 'approved' && clubNames.has(credit.clubId))
+    .sort((left, right) => (clubNames.get(left.clubId) || left.clubId).localeCompare(clubNames.get(right.clubId) || right.clubId))
   return (
     <div className="credits-page game-page">
       <div className="game-heading"><p className="eyebrow">OPEN CREDITS</p><p className="demo-pill">96 PLAYERS</p></div>
@@ -25,10 +31,22 @@ export function CreditsScreen() {
           )
         })}
       </section>
+      <details className="club-credits">
+        <summary>Paper Trail crest credits ({publishedClubCredits.length})</summary>
+        <p>Published crests keep their original club colours. Player Press applies its editorial treatment to the evidence card, not the crest artwork.</p>
+        <div>
+          {publishedClubCredits.map(credit => <article key={credit.clubId}>
+            <strong>{clubNames.get(credit.clubId) || credit.clubId}</strong>
+            <span>{credit.creator} · {credit.license}</span>
+            <a href={credit.sourcePage} target="_blank" rel="noreferrer">View source <ExternalLink size={12}/></a>
+          </article>)}
+        </div>
+      </details>
       <section className="data-notes">
         <h2>Data note</h2>
         <p>Attributes cover all 96 men's records rated 85–91 in the EA FC Analysis repository’s 12 September 2026 snapshot. That repository currently exposes no redistribution licence, so Player Press marks these records as review-required and does not treat them as production data.</p>
         <p>Wikidata identifiers are used for identity resolution. Wikimedia Commons images are resized to 400 × 500 WebP; approved CC BY-SA derivatives remain under their source licence. Gameplay uses separately reviewed transparent cutouts where available and falls back to the editorial crop when extraction is unavailable.</p>
+        <p>Paper Trail club histories come from Wikidata P54 statements with a positive senior appearance count (P1350). Youth, reserve and national-team claims are excluded conservatively. The 2026-11-11 snapshot has 87 locally playable player histories and remains under editorial completeness review.</p>
       </section>
     </div>
   )

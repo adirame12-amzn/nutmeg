@@ -1,7 +1,7 @@
-import { ArrowLeft, BarChart3, CircleUserRound, Home, Menu, Trophy, X } from 'lucide-react'
+import { ArrowLeft, BarChart3, CircleUserRound, FileSearch, Home, Menu, Trophy, X } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 
-export type Screen = 'home' | 'lineup' | 'mystery' | 'leaderboard' | 'credits' | 'result'
+export type Screen = 'home' | 'lineup' | 'mystery' | 'paper-trail' | 'leaderboard' | 'credits' | 'result'
 
 export function AppHeader({ screen, onNavigate }: { screen: Screen, onNavigate: (screen: Screen) => void }) {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -18,7 +18,7 @@ export function AppHeader({ screen, onNavigate }: { screen: Screen, onNavigate: 
         <nav className="masthead-menu" aria-label="Game menu">
           <button onClick={() => navigate('home')}><Home size={18}/> Today’s cases</button>
           <button onClick={() => navigate('lineup')}><span className="menu-ticket">6</span> Prime Suspect</button>
-          <button onClick={() => navigate('mystery')}><span className="menu-ticket">?</span> Cold Case</button>
+          <button onClick={() => navigate('paper-trail')}><FileSearch size={18}/> Paper Trail</button>
           <button onClick={() => navigate('leaderboard')}><Trophy size={18}/> Friends league</button>
         </nav>
       )}
@@ -31,7 +31,7 @@ export function BottomNav({ active, onNavigate }: { active: Screen, onNavigate: 
     <nav className="bottom-nav" aria-label="Primary navigation">
       <button className={active === 'home' ? 'active' : ''} onClick={() => onNavigate('home')}><Home size={19} /><span>Home</span></button>
       <button className={active === 'lineup' ? 'active' : ''} onClick={() => onNavigate('lineup')}><span className="nav-num">6</span><span>Suspect</span></button>
-      <button className={active === 'mystery' ? 'active' : ''} onClick={() => onNavigate('mystery')}><span className="nav-num">?</span><span>Cold Case</span></button>
+      <button className={active === 'paper-trail' ? 'active' : ''} onClick={() => onNavigate('paper-trail')}><FileSearch size={19}/><span>Paper Trail</span></button>
       <button className={active === 'leaderboard' ? 'active' : ''} onClick={() => onNavigate('leaderboard')}><Trophy size={19} /><span>Friends</span></button>
     </nav>
   )
