@@ -67,6 +67,34 @@ export interface RankedPaperTrailState {
   answer?: Player
 }
 
+export interface RankedRedactedState {
+  date: string
+  status: 'not_started' | GameStatus
+  attemptsUsed: number
+  wrongAttempts: number
+  score: number
+  guessedLetters: string[]
+  guesses: string[]
+  slots: Array<{ id: string; kind: 'letter' | 'separator'; character: string; revealed: boolean }>
+  evidence: Array<{ open: boolean; available: boolean; value?: string }>
+  answer?: Player
+  displayAnswer?: string
+}
+
+export interface RankedCipherState {
+  date: string
+  status: 'not_started' | GameStatus
+  attemptsUsed: number
+  score: number
+  guesses: string[]
+  guessedLetters: string[]
+  scrambled: string[]
+  nation?: string
+  club?: string
+  answer?: Player
+  displayAnswer?: string
+}
+
 export interface WeeklyLeader {
   rank: number
   username: string
@@ -183,6 +211,32 @@ export async function getDailyPaperTrail(identity: RankedIdentity) {
 
 export async function submitDailyPaperTrailGuess(identity: RankedIdentity, playerId: string) {
   return toPaperTrailState(await request<Parameters<typeof toPaperTrailState>[0]>('/daily/paper-trail/guess', { method: 'POST', body: JSON.stringify({ playerId }) }, identity))
+}
+
+const wordState = <T extends { answer?: ApiPlayer }>(state: T) => ({ ...state, answer: state.answer ? toPlayer(state.answer) : undefined })
+
+export async function getDailyRedacted(identity: RankedIdentity) {
+  return wordState(await request<Omit<RankedRedactedState, 'answer'> & { answer?: ApiPlayer }>('/daily/redacted', {}, identity)) as RankedRedactedState
+}
+
+export async function submitDailyRedactedLetter(identity: RankedIdentity, letter: string) {
+  return wordState(await request<Omit<RankedRedactedState, 'answer'> & { answer?: ApiPlayer }>('/daily/redacted/letter', { method: 'POST', body: JSON.stringify({ letter }) }, identity)) as RankedRedactedState
+}
+
+export async function openDailyRedactedEvidence(identity: RankedIdentity, index: number) {
+  return wordState(await request<Omit<RankedRedactedState, 'answer'> & { answer?: ApiPlayer }>('/daily/redacted/evidence', { method: 'POST', body: JSON.stringify({ index }) }, identity)) as RankedRedactedState
+}
+
+export async function submitDailyRedactedGuess(identity: RankedIdentity, playerId: string) {
+  return wordState(await request<Omit<RankedRedactedState, 'answer'> & { answer?: ApiPlayer }>('/daily/redacted/guess', { method: 'POST', body: JSON.stringify({ playerId }) }, identity)) as RankedRedactedState
+}
+
+export async function getDailyCipher(identity: RankedIdentity) {
+  return wordState(await request<Omit<RankedCipherState, 'answer'> & { answer?: ApiPlayer }>('/daily/cipher', {}, identity)) as RankedCipherState
+}
+
+export async function submitDailyCipherGuess(identity: RankedIdentity, guess: string) {
+  return wordState(await request<Omit<RankedCipherState, 'answer'> & { answer?: ApiPlayer }>('/daily/cipher/guess', { method: 'POST', body: JSON.stringify({ guess }) }, identity)) as RankedCipherState
 }
 
 export function getWeeklyLeaderboard(identity: RankedIdentity) {

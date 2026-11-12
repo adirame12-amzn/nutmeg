@@ -60,6 +60,73 @@ const playerPublic = (player: PlayerRow) => ({
   portraitCutoutEditorialUrl: player.portrait_cutout_editorial_url,
 })
 
+type WordMode = 'redacted' | 'cipher'
+interface WordPuzzleRow extends PuzzleRow { mode: WordMode; display_answer: string; scrambled_answer: string | null }
+interface WordAttemptRow extends AttemptRow { attempts_used: number; guessed_letters: string; evidence_opened: number; guesses_json: string }
+
+const wordNames: Record<string, string> = {
+  'vini-jr': 'Vini Jr.', 'virgil-van-dijk': 'Van Dijk', 'kevin-de-bruyne': 'De Bruyne',
+  'frenkie-de-jong': 'De Jong',
+}
+const wordTransliteration: Record<string, string> = { Ø: 'O', ø: 'o', Ł: 'L', ł: 'l', Đ: 'D', đ: 'd', Ð: 'D', ð: 'd', Þ: 'TH', þ: 'th', Æ: 'AE', æ: 'ae', Œ: 'OE', œ: 'oe', ß: 'SS' }
+const normalizeWord = (value: string) => value.replace(/[ØøŁłĐđÐðÞþÆæŒœß]/g, character => wordTransliteration[character] || character).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleUpperCase('en-US').replace(/[^A-Z]/g, '')
+const displayWord = (player: PlayerRow) => wordNames[player.id] || player.display_name.trim().split(/\s+/).at(-1) || player.display_name
+const scrambleWord = (value: string) => {
+  const letters = normalizeWord(value).split('')
+  for (let index = letters.length - 1; index > 0; index -= 1) {
+    const random = crypto.getRandomValues(new Uint32Array(1))[0] / 0x100000000
+    const swap = Math.floor(random * (index + 1)); [letters[index], letters[swap]] = [letters[swap], letters[index]]
+  }
+  if (letters.join('') === normalizeWord(value) && letters.length > 1) letters.push(letters.shift()!)
+  return letters.join('')
+}
+
+async function ensureDailyWordPuzzle(env: Env, mode: WordMode, date = utcDate()): Promise<WordPuzzleRow> {
+  const existing = await env.DB.prepare('SELECT id, puzzle_date, mode, target_player_id, display_answer, scrambled_answer FROM word_daily_puzzles WHERE puzzle_date = ? AND mode = ?').bind(date, mode).first<WordPuzzleRow>()
+  if (existing) return existing
+  const rows = await env.DB.prepare('SELECT * FROM players WHERE eligible_answer = 1').all<PlayerRow>()
+  const candidates = (rows.results || []).filter(candidate => {
+    const length = normalizeWord(displayWord(candidate)).length
+    return length >= 4 && length <= 12
+  })
+  const random = crypto.getRandomValues(new Uint32Array(1))[0] / 0x100000000
+  const player = candidates[Math.floor(random * candidates.length)]
+  if (!player) throw new Error('The ranked word-game pool has not been seeded.')
+  const answer = displayWord(player)
+  await env.DB.prepare('INSERT OR IGNORE INTO word_daily_puzzles (id, puzzle_date, mode, target_player_id, display_answer, scrambled_answer, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)')
+    .bind(`${mode}:${date}`, date, mode, player.id, answer, mode === 'cipher' ? scrambleWord(answer) : null, new Date().toISOString()).run()
+  const puzzle = await env.DB.prepare('SELECT id, puzzle_date, mode, target_player_id, display_answer, scrambled_answer FROM word_daily_puzzles WHERE puzzle_date = ? AND mode = ?').bind(date, mode).first<WordPuzzleRow>()
+  if (!puzzle) throw new Error('Unable to create the daily word puzzle.')
+  return puzzle
+}
+
+async function ensureWordAttempt(env: Env, userId: string, puzzle: WordPuzzleRow) {
+  let attempt = await env.DB.prepare('SELECT id, status, attempts_used, score, guessed_letters, evidence_opened, guesses_json FROM word_attempts WHERE user_id = ? AND puzzle_id = ?').bind(userId, puzzle.id).first<WordAttemptRow>()
+  if (!attempt) {
+    await env.DB.prepare("INSERT OR IGNORE INTO word_attempts (id, user_id, puzzle_id, status, started_at) VALUES (?, ?, ?, 'playing', ?)").bind(crypto.randomUUID(), userId, puzzle.id, new Date().toISOString()).run()
+    attempt = await env.DB.prepare('SELECT id, status, attempts_used, score, guessed_letters, evidence_opened, guesses_json FROM word_attempts WHERE user_id = ? AND puzzle_id = ?').bind(userId, puzzle.id).first<WordAttemptRow>()
+  }
+  if (!attempt) throw new Error('Unable to start the daily word case.')
+  return attempt
+}
+
+async function getWordState(env: Env, userId: string, puzzle: WordPuzzleRow) {
+  const attempt = await env.DB.prepare('SELECT id, status, attempts_used, score, guessed_letters, evidence_opened, guesses_json FROM word_attempts WHERE user_id = ? AND puzzle_id = ?').bind(userId, puzzle.id).first<WordAttemptRow>()
+  const guessedLetters = attempt ? JSON.parse(attempt.guessed_letters) as string[] : []
+  const guesses = attempt ? JSON.parse(attempt.guesses_json) as string[] : []
+  const complete = attempt && attempt.status !== 'playing'
+  const target = complete || (attempt && ((puzzle.mode === 'redacted' && attempt.evidence_opened) || (puzzle.mode === 'cipher' && attempt.attempts_used >= 2))) ? await env.DB.prepare('SELECT * FROM players WHERE id = ?').bind(puzzle.target_player_id).first<PlayerRow>() : null
+  const base = { date: puzzle.puzzle_date, status: attempt?.status || 'not_started', attemptsUsed: attempt?.attempts_used || 0, score: attempt?.score || 0, guesses, guessedLetters }
+  if (puzzle.mode === 'cipher') return { ...base, scrambled: (puzzle.scrambled_answer || '').split(''), nation: (attempt?.attempts_used || 0) >= 2 ? target?.nation : undefined, club: (attempt?.attempts_used || 0) >= 3 ? target?.club : undefined, answer: complete && target ? playerPublic(target) : undefined, displayAnswer: complete ? puzzle.display_answer : undefined }
+  const guessed = new Set(guessedLetters)
+  const slots = Array.from(puzzle.display_answer).map((character, index) => {
+    const normalized = normalizeWord(character)
+    return normalized ? { id: `${index}-${normalized}`, kind: 'letter', character: guessed.has(normalized) || complete ? character.toLocaleUpperCase('en-US') : '', revealed: guessed.has(normalized) || Boolean(complete) } : { id: `${index}-${character}`, kind: 'separator', character, revealed: true }
+  })
+  const evidence = [0, 1].map(index => ({ open: Boolean((attempt?.evidence_opened || 0) & (1 << index)), available: (attempt?.attempts_used || 0) >= (index ? 4 : 2), value: attempt && ((attempt.evidence_opened || 0) & (1 << index)) && target ? index === 0 ? `${target.nation} · ${target.position}` : `${target.club} · FC ${target.fc_overall ?? '—'}` : undefined }))
+  return { ...base, wrongAttempts: attempt?.attempts_used || 0, slots, evidence, answer: complete && target ? playerPublic(target) : undefined, displayAnswer: complete ? puzzle.display_answer : undefined }
+}
+
 async function ensureDailyPuzzle(env: Env, date = utcDate()): Promise<PuzzleRow> {
   const existing = await env.DB.prepare("SELECT id, puzzle_date, target_player_id FROM daily_puzzles WHERE puzzle_date = ? AND mode = 'lineup'").bind(date).first<PuzzleRow>()
   if (existing) return existing
@@ -164,13 +231,17 @@ async function ensurePreviousWeekChampion(env: Env, date = utcDate()) {
         SELECT a.user_id, a.status, a.score, p.puzzle_date
         FROM paper_trail_attempts a JOIN paper_trail_daily_puzzles p ON p.id = a.puzzle_id
         WHERE a.status IN ('won', 'lost') AND p.puzzle_date BETWEEN ? AND ?
+        UNION ALL
+        SELECT a.user_id, a.status, a.score, p.puzzle_date
+        FROM word_attempts a JOIN word_daily_puzzles p ON p.id = a.puzzle_id
+        WHERE a.status IN ('won', 'lost') AND p.puzzle_date BETWEEN ? AND ?
       ) c
       JOIN users u ON u.id = c.user_id
       GROUP BY u.id, u.created_at
       ORDER BY points DESC, solved DESC, played ASC, u.created_at ASC
       LIMIT 1
     ) ranked
-  `).bind(start, new Date().toISOString(), start, end, start, end).run()
+  `).bind(start, new Date().toISOString(), start, end, start, end, start, end).run()
 }
 
 const suggestionParts = {
@@ -318,6 +389,82 @@ async function route(request: Request, env: Env) {
     return json(await getPaperTrailAttemptState(env, user.id, puzzle))
   }
 
+  const wordMatch = path.match(/^\/daily\/(redacted|cipher)$/)
+  if (request.method === 'GET' && wordMatch) {
+    const puzzle = await ensureDailyWordPuzzle(env, wordMatch[1] as WordMode)
+    return json(await getWordState(env, user.id, puzzle))
+  }
+
+  if (request.method === 'POST' && path === '/daily/cipher/guess') {
+    const body = await request.json().catch(() => ({})) as { guess?: string }
+    if (!body.guess?.trim()) return json({ error: 'Enter a player name.' }, 400)
+    const puzzle = await ensureDailyWordPuzzle(env, 'cipher')
+    const attempt = await ensureWordAttempt(env, user.id, puzzle)
+    if (attempt.status !== 'playing') return json({ error: 'Today’s Cipher is already complete.', state: await getWordState(env, user.id, puzzle) }, 409)
+    const guesses = JSON.parse(attempt.guesses_json) as string[]
+    if (guesses.some(value => normalizeWord(value) === normalizeWord(body.guess!))) return json({ error: 'That reading is already in the file.' }, 409)
+    const target = await env.DB.prepare('SELECT * FROM players WHERE id = ?').bind(puzzle.target_player_id).first<PlayerRow>()
+    if (!target) throw new Error('The daily Cipher answer is missing.')
+    const attempts = attempt.attempts_used + 1
+    const correct = normalizeWord(body.guess) === normalizeWord(puzzle.display_answer) || normalizeWord(body.guess) === normalizeWord(target.display_name)
+    const status = correct ? 'won' : attempts >= 4 ? 'lost' : 'playing'
+    const score = correct ? [100, 75, 50, 25][attempts - 1] : 0
+    await env.DB.prepare('UPDATE word_attempts SET status = ?, attempts_used = ?, score = ?, guesses_json = ?, completed_at = ? WHERE id = ? AND status = \'playing\'')
+      .bind(status, attempts, score, JSON.stringify([...guesses, body.guess.trim()]), status === 'playing' ? null : new Date().toISOString(), attempt.id).run()
+    return json(await getWordState(env, user.id, puzzle))
+  }
+
+  if (request.method === 'POST' && path === '/daily/redacted/letter') {
+    const body = await request.json().catch(() => ({})) as { letter?: string }
+    const letter = normalizeWord(body.letter || '')
+    if (letter.length !== 1) return json({ error: 'Choose one letter.' }, 400)
+    const puzzle = await ensureDailyWordPuzzle(env, 'redacted')
+    const attempt = await ensureWordAttempt(env, user.id, puzzle)
+    if (attempt.status !== 'playing') return json({ error: 'Today’s Redacted case is already complete.', state: await getWordState(env, user.id, puzzle) }, 409)
+    const guessed = JSON.parse(attempt.guessed_letters) as string[]
+    if (guessed.includes(letter)) return json(await getWordState(env, user.id, puzzle))
+    const nextGuessed = [...guessed, letter]
+    const correctLetter = normalizeWord(puzzle.display_answer).includes(letter)
+    const wrong = attempt.attempts_used + (correctLetter ? 0 : 1)
+    const solved = Array.from(new Set(normalizeWord(puzzle.display_answer))).every(value => nextGuessed.includes(value))
+    const status = solved ? 'won' : wrong >= 6 ? 'lost' : 'playing'
+    const evidenceCount = ((attempt.evidence_opened & 1) ? 1 : 0) + ((attempt.evidence_opened & 2) ? 1 : 0)
+    const score = solved ? Math.max(10, 100 - wrong * 12 - evidenceCount * 10) : 0
+    await env.DB.prepare('UPDATE word_attempts SET status = ?, attempts_used = ?, score = ?, guessed_letters = ?, completed_at = ? WHERE id = ? AND status = \'playing\'')
+      .bind(status, wrong, score, JSON.stringify(nextGuessed), status === 'playing' ? null : new Date().toISOString(), attempt.id).run()
+    return json(await getWordState(env, user.id, puzzle))
+  }
+
+  if (request.method === 'POST' && path === '/daily/redacted/evidence') {
+    const body = await request.json().catch(() => ({})) as { index?: number }
+    if (body.index !== 0 && body.index !== 1) return json({ error: 'Choose a valid evidence seal.' }, 400)
+    const puzzle = await ensureDailyWordPuzzle(env, 'redacted')
+    const attempt = await ensureWordAttempt(env, user.id, puzzle)
+    if (attempt.status !== 'playing') return json({ error: 'Today’s Redacted case is already complete.', state: await getWordState(env, user.id, puzzle) }, 409)
+    const threshold = body.index === 0 ? 2 : 4
+    if (attempt.attempts_used < threshold) return json({ error: `That seal opens after ${threshold} strikes.` }, 409)
+    const opened = attempt.evidence_opened | (1 << body.index)
+    await env.DB.prepare('UPDATE word_attempts SET evidence_opened = ? WHERE id = ?').bind(opened, attempt.id).run()
+    return json(await getWordState(env, user.id, puzzle))
+  }
+
+  if (request.method === 'POST' && path === '/daily/redacted/guess') {
+    const body = await request.json().catch(() => ({})) as { playerId?: string }
+    if (!body.playerId) return json({ error: 'Choose a valid suspect.' }, 400)
+    const puzzle = await ensureDailyWordPuzzle(env, 'redacted')
+    const attempt = await ensureWordAttempt(env, user.id, puzzle)
+    if (attempt.status !== 'playing') return json({ error: 'Today’s Redacted case is already complete.', state: await getWordState(env, user.id, puzzle) }, 409)
+    const wrong = attempt.attempts_used + (body.playerId === puzzle.target_player_id ? 0 : 1)
+    const won = body.playerId === puzzle.target_player_id
+    const status = won ? 'won' : wrong >= 6 ? 'lost' : 'playing'
+    const evidenceCount = ((attempt.evidence_opened & 1) ? 1 : 0) + ((attempt.evidence_opened & 2) ? 1 : 0)
+    const score = won ? Math.max(10, 100 - wrong * 12 - evidenceCount * 10) : 0
+    const guesses = JSON.parse(attempt.guesses_json) as string[]
+    await env.DB.prepare('UPDATE word_attempts SET status = ?, attempts_used = ?, score = ?, guesses_json = ?, completed_at = ? WHERE id = ? AND status = \'playing\'')
+      .bind(status, wrong, score, JSON.stringify([...guesses, body.playerId]), status === 'playing' ? null : new Date().toISOString(), attempt.id).run()
+    return json(await getWordState(env, user.id, puzzle))
+  }
+
   if (request.method === 'GET' && path === '/leaderboard/weekly') {
     const today = utcDate()
     const start = weekStartUtc(today)
@@ -330,6 +477,10 @@ async function route(request: Request, env: Env) {
         UNION ALL
         SELECT a.user_id, a.status, a.score, p.puzzle_date
         FROM paper_trail_attempts a JOIN paper_trail_daily_puzzles p ON p.id = a.puzzle_id
+        WHERE a.status IN ('won', 'lost')
+        UNION ALL
+        SELECT a.user_id, a.status, a.score, p.puzzle_date
+        FROM word_attempts a JOIN word_daily_puzzles p ON p.id = a.puzzle_id
         WHERE a.status IN ('won', 'lost')
       ), star_totals AS (
         SELECT user_id, COUNT(*) AS stars FROM weekly_champions GROUP BY user_id
@@ -377,6 +528,6 @@ export default {
     }
   },
   async scheduled(_controller: unknown, env: Env) {
-    await Promise.all([ensureDailyPuzzle(env), ensureDailyPaperTrailPuzzle(env), ensurePreviousWeekChampion(env)])
+    await Promise.all([ensureDailyPuzzle(env), ensureDailyPaperTrailPuzzle(env), ensureDailyWordPuzzle(env, 'redacted'), ensureDailyWordPuzzle(env, 'cipher'), ensurePreviousWeekChampion(env)])
   },
 }

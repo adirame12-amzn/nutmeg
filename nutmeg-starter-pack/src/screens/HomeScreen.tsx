@@ -1,6 +1,6 @@
 import { ArrowRight, CalendarCheck, Clock3, Fingerprint, FolderOpen, Sparkles, Trophy, UserRoundCheck } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { getDailyLineup, getDailyPaperTrail, type RankedIdentity } from '../api/ranked'
+import { getDailyCipher, getDailyLineup, getDailyPaperTrail, getDailyRedacted, type RankedIdentity } from '../api/ranked'
 import type { Screen } from '../components/Chrome'
 
 type CaseProgress = { status: 'checking' | 'open' | 'playing' | 'won' | 'lost'; score?: number }
@@ -37,14 +37,20 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
   const [desk, setDesk] = useState<'daily' | 'practice'>('daily')
   const [lineupProgress, setLineupProgress] = useState<CaseProgress>({ status: identity && ranked ? 'checking' : 'open' })
   const [trailProgress, setTrailProgress] = useState<CaseProgress>({ status: identity && ranked ? 'checking' : 'open' })
+  const [redactedProgress, setRedactedProgress] = useState<CaseProgress>({ status: identity && ranked ? 'checking' : 'open' })
+  const [cipherProgress, setCipherProgress] = useState<CaseProgress>({ status: identity && ranked ? 'checking' : 'open' })
 
   useEffect(() => {
     if (!ranked || !identity) return
-    Promise.allSettled([getDailyLineup(identity), getDailyPaperTrail(identity)]).then(([lineup, trail]) => {
+    Promise.allSettled([getDailyLineup(identity), getDailyPaperTrail(identity), getDailyRedacted(identity), getDailyCipher(identity)]).then(([lineup, trail, redacted, cipher]) => {
       if (lineup.status === 'fulfilled') setLineupProgress({ status: lineup.value.status === 'not_started' ? 'open' : lineup.value.status, score: lineup.value.score })
       else setLineupProgress({ status: 'open' })
       if (trail.status === 'fulfilled') setTrailProgress({ status: trail.value.status === 'not_started' ? 'open' : trail.value.status, score: trail.value.score })
       else setTrailProgress({ status: 'open' })
+      if (redacted.status === 'fulfilled') setRedactedProgress({ status: redacted.value.status === 'not_started' ? 'open' : redacted.value.status, score: redacted.value.score })
+      else setRedactedProgress({ status: 'open' })
+      if (cipher.status === 'fulfilled') setCipherProgress({ status: cipher.value.status === 'not_started' ? 'open' : cipher.value.status, score: cipher.value.score })
+      else setCipherProgress({ status: 'open' })
     })
   }, [identity, ranked])
 
@@ -77,6 +83,12 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
             <GameTicket game="trail" />
             <span><CaseProgressChip progress={trailProgress}/><small>DAILY CASE 02 · 6 SUSPECTS</small><strong>PAPER TRAIL</strong><em>Trace the badges. Name the career.</em></span>
             <ArrowRight className="tile-arrow" />
+          </button>
+          <button className={`game-tile ranked-case redacted-ranked-case progress-${redactedProgress.status}`} onClick={() => onNavigate(ranked ? 'ranked-redacted' : 'redacted')}>
+            <GameTicket game="redacted"/><span><CaseProgressChip progress={redactedProgress}/><small>DAILY CASE 03 · 6 STRIKES</small><strong>REDACTED</strong><em>Strip the ink. Expose today’s hidden name.</em></span><ArrowRight className="tile-arrow"/>
+          </button>
+          <button className={`game-tile ranked-case cipher-ranked-case progress-${cipherProgress.status}`} onClick={() => onNavigate(ranked ? 'ranked-cipher' : 'cipher')}>
+            <GameTicket game="cipher"/><span><CaseProgressChip progress={cipherProgress}/><small>DAILY CASE 04 · 4 ATTEMPTS</small><strong>THE CIPHER</strong><em>Rebuild the same scrambled name as everyone else.</em></span><ArrowRight className="tile-arrow"/>
           </button>
         </div>
         <div className={`desk-meta ${ranked || identity ? '' : 'single'}`}>

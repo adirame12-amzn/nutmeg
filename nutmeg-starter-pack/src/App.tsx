@@ -14,8 +14,10 @@ import { RankedPaperTrailScreen } from './screens/RankedPaperTrailScreen'
 import { RedactedScreen } from './screens/RedactedScreen'
 import { WirePreviewScreen } from './screens/WirePreviewScreen'
 import { CipherScreen } from './screens/CipherScreen'
+import { RankedRedactedScreen } from './screens/RankedRedactedScreen'
+import { RankedCipherScreen } from './screens/RankedCipherScreen'
 
-const screens: Screen[] = ['home', 'lineup', 'mystery', 'paper-trail', 'ranked-paper-trail', 'redacted', 'cipher', 'wire-preview', 'leaderboard', 'credits', 'result']
+const screens: Screen[] = ['home', 'lineup', 'mystery', 'paper-trail', 'ranked-paper-trail', 'redacted', 'ranked-redacted', 'cipher', 'ranked-cipher', 'wire-preview', 'leaderboard', 'credits', 'result']
 
 function screenFromHash(): Screen {
   const value = window.location.hash.replace('#', '') as Screen
@@ -23,7 +25,7 @@ function screenFromHash(): Screen {
 }
 
 export function shouldRequestIdentity(screen: Screen, quickCase: boolean, apiEnabled: boolean, hasIdentity: boolean) {
-  return apiEnabled && !hasIdentity && (screen === 'leaderboard' || screen === 'ranked-paper-trail' || (screen === 'lineup' && !quickCase))
+  return apiEnabled && !hasIdentity && (screen === 'leaderboard' || screen === 'ranked-paper-trail' || screen === 'ranked-redacted' || screen === 'ranked-cipher' || (screen === 'lineup' && !quickCase))
 }
 
 export function App() {
@@ -63,7 +65,19 @@ export function App() {
       {screen === 'mystery' && <MysteryScreen onResult={showResult} />}
       {screen === 'paper-trail' && <PaperTrailScreen onResult={showResult} />}
       {screen === 'redacted' && <RedactedScreen onNavigate={navigate} />}
+      {screen === 'ranked-redacted' && rankedApiEnabled && !needsIdentity && identity && (
+        <RankedRedactedScreen identity={identity}/>
+      )}
+      {screen === 'ranked-redacted' && !rankedApiEnabled && (
+        <RedactedScreen onNavigate={navigate}/>
+      )}
       {screen === 'cipher' && <CipherScreen onNavigate={navigate} />}
+      {screen === 'ranked-cipher' && rankedApiEnabled && !needsIdentity && identity && (
+        <RankedCipherScreen identity={identity}/>
+      )}
+      {screen === 'ranked-cipher' && !rankedApiEnabled && (
+        <CipherScreen onNavigate={navigate}/>
+      )}
       {screen === 'wire-preview' && <WirePreviewScreen />}
       {screen === 'ranked-paper-trail' && rankedApiEnabled && !needsIdentity && identity && <RankedPaperTrailScreen identity={identity} onResult={showResult} onPractice={() => navigate('paper-trail')} />}
       {screen === 'ranked-paper-trail' && !rankedApiEnabled && <PaperTrailScreen onResult={showResult} />}

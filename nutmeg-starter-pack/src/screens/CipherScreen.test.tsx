@@ -18,6 +18,10 @@ describe('The Cipher interaction', () => {
 
     await user.type(screen.getByRole('textbox', { name: /unscrambled player name/i }), 'wrong')
     await user.click(screen.getByRole('button', { name: /submit/i }))
+    expect(screen.queryByText(answer.player.nationalTeam)).not.toBeInTheDocument()
+
+    await user.type(screen.getByRole('textbox', { name: /unscrambled player name/i }), 'still wrong')
+    await user.click(screen.getByRole('button', { name: /submit/i }))
     expect(screen.getByText(answer.player.nationalTeam)).toBeInTheDocument()
 
     await user.type(screen.getByRole('textbox', { name: /unscrambled player name/i }), answer.player.displayName)

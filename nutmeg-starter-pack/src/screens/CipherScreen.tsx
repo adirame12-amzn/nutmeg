@@ -17,7 +17,8 @@ export function CipherScreen({ onNavigate }: { onNavigate: (screen: Screen) => v
   const [status, setStatus] = useState<GameStatus>('playing')
   const [feedback, setFeedback] = useState('The letters are all here. Put the name back together.')
   const score = cipherScore(attempts.length, status === 'won')
-  const revealedClues = Math.min(2, attempts.length)
+  const nationRevealed = attempts.length >= 2
+  const clubRevealed = attempts.length >= 3
   const tileRotations = useMemo(() => scrambled.map((_, index) => `${index % 2 ? 1.5 : -1.5}deg`), [scrambled])
   useEffect(() => { sessionStorage.setItem(LAST_CIPHER_KEY, caseFile.player.id) }, [caseFile.player.id])
 
@@ -37,7 +38,7 @@ export function CipherScreen({ onNavigate }: { onNavigate: (screen: Screen) => v
       setStatus('lost')
       return
     }
-    setFeedback(next.length === 1 ? 'Not cracked. A nationality clue has been released.' : next.length === 2 ? 'Still scrambled. The club stamp is now visible.' : 'One last read of the letters.')
+    setFeedback(next.length === 1 ? 'Not cracked. Read the tiles again.' : next.length === 2 ? 'Nationality clue released.' : 'Club stamp released. One last attempt.')
   }
 
   const reset = () => {
@@ -72,8 +73,8 @@ export function CipherScreen({ onNavigate }: { onNavigate: (screen: Screen) => v
       <small>{scrambled.length} LETTERS · SPACES REMOVED</small>
     </section>
     <div className="cipher-clues">
-      <span className={revealedClues >= 1 ? 'revealed' : ''}>{revealedClues >= 1 ? <ShieldCheck/> : <Lightbulb/>}<small>NATION</small><b>{revealedClues >= 1 ? caseFile.player.nationalTeam : 'AFTER 1 MISS'}</b></span>
-      <span className={revealedClues >= 2 ? 'revealed' : ''}>{revealedClues >= 2 ? <ShieldCheck/> : <Lightbulb/>}<small>CLUB</small><b>{revealedClues >= 2 ? caseFile.player.currentClub : 'AFTER 2 MISSES'}</b></span>
+      <span className={nationRevealed ? 'revealed' : ''}>{nationRevealed ? <ShieldCheck/> : <Lightbulb/>}<small>NATION</small><b>{nationRevealed ? caseFile.player.nationalTeam : 'AFTER 2 MISSES'}</b></span>
+      <span className={clubRevealed ? 'revealed' : ''}>{clubRevealed ? <ShieldCheck/> : <Lightbulb/>}<small>CLUB</small><b>{clubRevealed ? caseFile.player.currentClub : 'AFTER 3 MISSES'}</b></span>
     </div>
     <div className="cipher-attempts"><span>{CIPHER_ATTEMPT_LIMIT - attempts.length} attempts left</span><div>{Array.from({ length: CIPHER_ATTEMPT_LIMIT }, (_, index) => <i className={index < attempts.length ? 'used' : ''} key={index}/>)}</div></div>
     <p className="cipher-feedback" aria-live="polite">{feedback}</p>
