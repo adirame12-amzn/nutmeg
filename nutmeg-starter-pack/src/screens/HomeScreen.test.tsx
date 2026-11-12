@@ -12,13 +12,14 @@ describe('Home case desks', () => {
     render(<HomeScreen onNavigate={onNavigate} onOpenPracticeLineup={onOpenPracticeLineup} ranked identity={null} />)
 
     expect(screen.getByRole('button', { name: /ranked case/i })).toHaveAttribute('aria-pressed', 'true')
-    expect(screen.getByText('Today’s Investigation')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Today’s Cases' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /casebook.*№ 001/i })).toBeInTheDocument()
     expect(screen.queryByRole('heading', { name: 'Cold Cases' })).not.toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: /^cold cases/i }))
     expect(screen.getByRole('button', { name: /^cold cases/i })).toHaveAttribute('aria-pressed', 'true')
     expect(screen.getByRole('heading', { name: 'Cold Cases' })).toBeInTheDocument()
-    expect(screen.queryByText('Today’s Investigation')).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Today’s Cases' })).not.toBeInTheDocument()
     expect(screen.queryByText('Question the evidence.')).not.toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: /random player prime suspect/i }))

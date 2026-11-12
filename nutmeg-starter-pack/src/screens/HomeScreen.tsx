@@ -21,7 +21,7 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
   return (
     <div className="home-page">
       <section className="home-hero">
-        <div><p className="edition">CASEBOOK № 001 · DAILY</p><h1>Today’s<br/><em>Cases</em></h1><p>Every player leaves clues. Follow the evidence.</p></div>
+        <div><p className="edition">DAILY FOOTBALL CASE FILE</p><h1><span>Casebook</span><br/><em>№ 001</em></h1><p>Every player leaves clues. Follow the evidence.</p></div>
         <div className="hero-player" aria-hidden="true"><span>10</span></div>
       </section>
 
@@ -30,10 +30,10 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
         <button className={desk === 'practice' ? 'active' : ''} onClick={() => setDesk('practice')} aria-pressed={desk === 'practice'}><FolderOpen/><span><strong>Cold Cases</strong><small>Unlimited · unscored</small></span></button>
       </div>
 
-      {desk === 'daily' ? <section className="case-desk daily-desk" aria-labelledby="daily-investigation-title">
+      {desk === 'daily' ? <section className="case-desk daily-desk" aria-labelledby="daily-cases-title">
         <div className="desk-heading">
           <span className="desk-seal"><CalendarCheck /></span>
-          <span><small>ONE SHARED FILE · SCORED</small><h2 id="daily-investigation-title">Today’s Investigation</h2></span>
+          <span><small>ONE SHARED FILE · SCORED</small><h2 id="daily-cases-title">Today’s Cases</h2></span>
           <span className="mode-chip">RANKED</span>
         </div>
         <p>Everyone investigates the same player. Your best detective work goes onto the weekly table.</p>
@@ -55,7 +55,7 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
         </div>
       </section> : null}
 
-      {desk === 'practice' ? <section className="case-desk archive-desk" aria-labelledby="cold-cases-title">
+      {desk === 'practice' ? <section className="case-desk archive-desk" aria-labelledby="cold-cases-title" data-file="ARCHIVE DRAWER">
         <div className="desk-heading">
           <span className="desk-seal"><FolderOpen /></span>
           <span><small>UNLIMITED · UNSCORED · LOCAL FILES</small><h2 id="cold-cases-title">Cold Cases</h2></span>
@@ -63,10 +63,10 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
         </div>
         <p>Reopen old files and sharpen your instincts. These local rounds never affect the leaderboard.</p>
         <div className="archive-games">
-          <button className="archive-game orange" onClick={onOpenPracticeLineup}>
+          <button className="archive-game orange" data-file="FILE 01" onClick={onOpenPracticeLineup}>
             <GameTicket /><span><small>RANDOM PLAYER</small><strong>Prime Suspect</strong><em>A fresh suspect every round.</em></span><ArrowRight />
           </button>
-          <button className="archive-game" onClick={() => onNavigate('paper-trail')}>
+          <button className="archive-game" data-file="FILE 03" onClick={() => onNavigate('paper-trail')}>
             <GameTicket trail /><span><small>CASE 03 · 6 SUSPECTS</small><strong>Paper Trail</strong><em>Follow the clubs. Find the player.</em></span><ArrowRight />
           </button>
         </div>
