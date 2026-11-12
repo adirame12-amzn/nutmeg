@@ -1,6 +1,6 @@
 # The Cipher — Cold Cases practice and daily ranked case
 
-The Cipher presents the normalized letters of one footballing name in a shuffled order. The player has four distinct attempts to restore the name. Practice is browser-local; the daily case stores its shared puzzle, attempts, optional evidence and score in D1 and validates every action in the Worker.
+The Cipher presents the normalized letters of one footballing name in a shuffled order. Cold Cases hides the letters behind an **Open the File** gate and gives the player 20 seconds plus four distinct attempts to restore the name. Practice is browser-local; the untimed daily case stores its shared puzzle, attempts, optional evidence and score in D1 and validates every action in the Worker.
 
 ## Evidence and scoring
 

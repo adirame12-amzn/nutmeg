@@ -3,11 +3,14 @@ import { useEffect, useMemo, useState } from 'react'
 import { CareerGrid } from '../components/CareerGrid'
 import { PaperTrailGuessHistory } from '../components/PaperTrailGuessHistory'
 import { PlayerSearch } from '../components/PlayerSearch'
+import { PracticeStartGate, PracticeTimer } from '../components/PracticeTimer'
 import { fc27Players } from '../data/fc27Players'
 import { getRandomPaperTrailPuzzle } from '../data/paperTrail'
+import { markPracticeComplete } from '../data/practiceProgress'
 import { canGuessPaperTrail, PAPER_TRAIL_GUESS_LIMIT, paperTrailRevealCount, paperTrailScore, type PaperTrailPuzzle } from '../domain/paperTrail'
 import type { Player } from '../domain/types'
 import type { ResultPayload } from './LineupScreen'
+import { usePracticeTimer } from '../hooks/usePracticeTimer'
 
 const LAST_TRAIL_KEY = 'player-press-last-paper-trail-target'
 const previousTarget = () => typeof sessionStorage === 'undefined' ? undefined : sessionStorage.getItem(LAST_TRAIL_KEY) || undefined
@@ -16,12 +19,14 @@ export function PaperTrailScreen({ onResult }: { onResult: (payload: ResultPaylo
   const [puzzle] = useState<PaperTrailPuzzle>(() => getRandomPaperTrailPuzzle(previousTarget()))
   const [guesses, setGuesses] = useState<Player[]>([])
   const [feedback, setFeedback] = useState('One club is on file. Name the player.')
+  const [started, setStarted] = useState(false)
   const guessIds = useMemo(() => guesses.map(player => player.id), [guesses])
   const revealCount = paperTrailRevealCount(guesses.length, puzzle.clubs.length)
 
   useEffect(() => { sessionStorage.setItem(LAST_TRAIL_KEY, puzzle.answer.id) }, [puzzle.answer.id])
 
   const finish = (won: boolean, nextGuesses: Player[]) => {
+    markPracticeComplete('paper-trail')
     onResult({
       mode: 'paper-trail', won, score: paperTrailScore(nextGuesses.length, won),
       answer: puzzle.answer.displayName, nationality: puzzle.answer.nationalTeam,
@@ -29,9 +34,11 @@ export function PaperTrailScreen({ onResult }: { onResult: (payload: ResultPaylo
       portraitUrl: puzzle.answer.portraitCutoutEditorialUrl || puzzle.answer.portraitEditorialUrl || puzzle.answer.portraitUrl,
     })
   }
+  const timer = usePracticeTimer(started, () => finish(false, guesses))
 
   const submitGuess = (player: Player) => {
-    if (!canGuessPaperTrail(guessIds, player.id)) return
+    if (!started || !canGuessPaperTrail(guessIds, player.id)) return
+    if (timer.expired()) { finish(false, guesses); return }
     const next = [...guesses, player]
     if (player.id === puzzle.answer.id) {
       finish(true, next)
@@ -52,7 +59,8 @@ export function PaperTrailScreen({ onResult }: { onResult: (payload: ResultPaylo
       <h1>Follow the Clubs</h1>
       <p className="game-intro">Trace the badges through a senior career. Name the player before six suspects run out.</p>
       <aside className="trail-source-note"><FileSearch/><span><strong>Local practice file · unscored leaderboard</strong><small>Wikidata club statements snapshot {puzzle.sourceSnapshot} · editorial completeness review pending.</small></span></aside>
-
+      {!started ? <PracticeStartGate onStart={() => { timer.start(); setStarted(true) }} label="OPEN PAPER TRAIL"/> : <>
+      <PracticeTimer timeLeft={timer.timeLeft}/>
       <CareerGrid clubs={puzzle.clubs} revealedCount={revealCount} />
 
       <div className="trail-attempt-row">
@@ -68,6 +76,7 @@ export function PaperTrailScreen({ onResult }: { onResult: (payload: ResultPaylo
         <a href={puzzle.sourceUrl} target="_blank" rel="noreferrer"><LinkIcon/> Career-source record</a>
         <a href="#credits">Crest and portrait credits</a>
       </div>
+      </>}
     </div>
   )
 }

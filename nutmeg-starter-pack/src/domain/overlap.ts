@@ -1,6 +1,6 @@
 import type { Player } from './types'
 
-export const OVERLAP_DURATION_MS = 30_000
+export const OVERLAP_DURATION_MS = 20_000
 export const OVERLAP_SCORE_TABLE = [0, 10, 40, 100] as const
 
 export interface OverlapEvidence {

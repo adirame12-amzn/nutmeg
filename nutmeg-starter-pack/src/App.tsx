@@ -17,6 +17,7 @@ import { CipherScreen } from './screens/CipherScreen'
 import { RankedRedactedScreen } from './screens/RankedRedactedScreen'
 import { RankedCipherScreen } from './screens/RankedCipherScreen'
 import { OverlapScreen } from './screens/OverlapScreen'
+import { markPracticeComplete } from './data/practiceProgress'
 
 const screens: Screen[] = ['home', 'lineup', 'mystery', 'paper-trail', 'ranked-paper-trail', 'redacted', 'ranked-redacted', 'cipher', 'ranked-cipher', 'overlap', 'wire-preview', 'leaderboard', 'credits', 'result']
 
@@ -55,7 +56,10 @@ export function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  const showResult = (payload: ResultPayload) => { setResult(payload); navigate('result') }
+  const showResult = (payload: ResultPayload) => {
+    if (!payload.ranked && payload.mode === 'lineup' && quickCase) markPracticeComplete('lineup')
+    setResult(payload); navigate('result')
+  }
   const needsIdentity = shouldRequestIdentity(screen, quickCase, rankedApiEnabled, Boolean(identity))
 
   return (

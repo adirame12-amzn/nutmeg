@@ -3,8 +3,10 @@ import { useEffect, useMemo, useState } from 'react'
 import type { Screen } from '../components/Chrome'
 import { PlayerPortrait } from '../components/PlayerPortrait'
 import { PlayerSearch } from '../components/PlayerSearch'
+import { PracticeStartGate, PracticeTimer } from '../components/PracticeTimer'
 import { RedactedKeyboard } from '../components/RedactedKeyboard'
 import { fc27Players } from '../data/fc27Players'
+import { markPracticeComplete } from '../data/practiceProgress'
 import { getRandomRedactedCase } from '../data/redacted'
 import {
   EMPTY_REDACTED_STATS,
@@ -21,6 +23,7 @@ import {
   type RedactedStats,
 } from '../domain/redacted'
 import type { GameStatus, Player } from '../domain/types'
+import { usePracticeTimer } from '../hooks/usePracticeTimer'
 
 const LAST_TARGET_KEY = 'player-press-last-redacted-target'
 const previousTarget = () => typeof sessionStorage === 'undefined' ? undefined : sessionStorage.getItem(LAST_TARGET_KEY) || undefined
@@ -37,6 +40,7 @@ export function RedactedScreen({ onNavigate }: { onNavigate: (screen: Screen) =>
   const [openedEvidence, setOpenedEvidence] = useState<boolean[]>([false, false])
   const [showSearch, setShowSearch] = useState(false)
   const [status, setStatus] = useState<GameStatus>('playing')
+  const [started, setStarted] = useState(false)
   const [feedback, setFeedback] = useState('The name is under black ink. Start with a letter.')
   const [stats, setStats] = useState<RedactedStats>(loadStats)
 
@@ -52,12 +56,15 @@ export function RedactedScreen({ onNavigate }: { onNavigate: (screen: Screen) =>
     const nextStats = recordRedactedResult(stats, won, nextWrong, nextScore)
     setStats(nextStats)
     window.localStorage?.setItem(REDACTED_STATS_KEY, JSON.stringify(nextStats))
+    markPracticeComplete('redacted')
     setStatus(won ? 'won' : 'lost')
     setShowSearch(false)
   }
+  const timer = usePracticeTimer(started && status === 'playing', () => finish(false, wrongAttempts))
 
   const guessLetter = (letter: string) => {
-    if (status !== 'playing' || guessedLetters.includes(letter)) return
+    if (status !== 'playing' || !started || guessedLetters.includes(letter)) return
+    if (timer.expired()) { finish(false, wrongAttempts); return }
     const nextLetters = [...guessedLetters, letter]
     setGuessedLetters(nextLetters)
     if (isCorrectRedactedLetter(caseFile, letter)) {
@@ -72,7 +79,8 @@ export function RedactedScreen({ onNavigate }: { onNavigate: (screen: Screen) =>
   }
 
   const submitFullGuess = (player: Player) => {
-    if (status !== 'playing' || fullGuessIds.includes(player.id)) return
+    if (status !== 'playing' || !started || fullGuessIds.includes(player.id)) return
+    if (timer.expired()) { finish(false, wrongAttempts); return }
     setFullGuessIds(ids => [...ids, player.id])
     if (player.id === caseFile.player.id) {
       finish(true, wrongAttempts)
@@ -100,6 +108,8 @@ export function RedactedScreen({ onNavigate }: { onNavigate: (screen: Screen) =>
     setOpenedEvidence([false, false])
     setShowSearch(false)
     setStatus('playing')
+    setStarted(false)
+    timer.reset()
     setFeedback('The name is under black ink. Start with a letter.')
   }
 
@@ -129,7 +139,9 @@ export function RedactedScreen({ onNavigate }: { onNavigate: (screen: Screen) =>
       <div className="game-heading"><p className="eyebrow redacted">REDACTED</p><p className="demo-pill">CASE 04 · PRACTICE</p></div>
       <div className="redacted-scorekey" aria-label="Scoring rules"><span><b>100</b> start</span><i/><span><b>−12</b> strike</span><i/><span><b>−10</b> evidence</span></div>
       <h1>Uncover the Name</h1>
-      <p className="game-intro">Lift the black ink before six wrong letters close the file.</p>
+      <p className="game-intro">Lift the black ink before six wrong letters—or the clock—close the file.</p>
+      {!started ? <PracticeStartGate onStart={() => { timer.start(); setStarted(true) }}/> : <>
+      <PracticeTimer timeLeft={timer.timeLeft}/>
 
       <section className="redacted-evidence" aria-labelledby="redacted-evidence-title">
         <div className="evidence-heading"><span><Eye/></span><div><h2 id="redacted-evidence-title">Evidence</h2><small>UNLOCKS AT 2 / 4 STRIKES · −10 TO OPEN</small></div></div>
@@ -162,6 +174,7 @@ export function RedactedScreen({ onNavigate }: { onNavigate: (screen: Screen) =>
       <button className="redacted-search-toggle" onClick={() => setShowSearch(show => !show)} aria-expanded={showSearch}><Search/> Name the Suspect</button>
       {showSearch && <PlayerSearch excludedIds={fullGuessIds} onSelect={submitFullGuess} pool={fc27Players} />}
       <p className="redacted-rule-note">Full-player misses also use one strike. Accents are optional.</p>
+      </>}
     </div>
   )
 }

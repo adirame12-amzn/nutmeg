@@ -2,9 +2,12 @@ import { Fingerprint, Home, Lightbulb, LockKeyhole, RotateCcw, Send, ShieldCheck
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import type { Screen } from '../components/Chrome'
 import { PlayerPortrait } from '../components/PlayerPortrait'
+import { PracticeStartGate, PracticeTimer } from '../components/PracticeTimer'
 import { getRandomRedactedCase } from '../data/redacted'
+import { markPracticeComplete } from '../data/practiceProgress'
 import { CIPHER_ATTEMPT_LIMIT, CIPHER_HINT_COST, cipherScore, isCipherAnswer, scrambleCipherName } from '../domain/cipher'
 import type { GameStatus } from '../domain/types'
+import { usePracticeTimer } from '../hooks/usePracticeTimer'
 
 const LAST_CIPHER_KEY = 'player-press-last-cipher-target'
 const previousTarget = () => typeof sessionStorage === 'undefined' ? undefined : sessionStorage.getItem(LAST_CIPHER_KEY) || undefined
@@ -15,6 +18,7 @@ export function CipherScreen({ onNavigate }: { onNavigate: (screen: Screen) => v
   const [guess, setGuess] = useState('')
   const [attempts, setAttempts] = useState<string[]>([])
   const [openedHints, setOpenedHints] = useState([false, false])
+  const [started, setStarted] = useState(false)
   const [status, setStatus] = useState<GameStatus>('playing')
   const [feedback, setFeedback] = useState('The letters are all here. Put the name back together.')
   const score = cipherScore(attempts.length, status === 'won', openedHints.filter(Boolean).length)
@@ -22,20 +26,24 @@ export function CipherScreen({ onNavigate }: { onNavigate: (screen: Screen) => v
   const clubAvailable = attempts.length >= 3
   const tileRotations = useMemo(() => scrambled.map((_, index) => `${index % 2 ? 1.5 : -1.5}deg`), [scrambled])
   useEffect(() => { sessionStorage.setItem(LAST_CIPHER_KEY, caseFile.player.id) }, [caseFile.player.id])
+  const timer = usePracticeTimer(started && status === 'playing', () => { markPracticeComplete('cipher'); setStatus('lost') })
 
   const submit = (event: FormEvent) => {
     event.preventDefault()
     const trimmed = guess.trim()
-    if (!trimmed || status !== 'playing') return
+    if (!trimmed || status !== 'playing' || !started) return
+    if (timer.expired()) { markPracticeComplete('cipher'); setStatus('lost'); return }
     const next = [...attempts, trimmed]
     setAttempts(next)
     setGuess('')
     ;(document.activeElement as HTMLElement | null)?.blur()
     if (isCipherAnswer(caseFile, trimmed)) {
+      markPracticeComplete('cipher')
       setStatus('won')
       return
     }
     if (next.length >= CIPHER_ATTEMPT_LIMIT) {
+      markPracticeComplete('cipher')
       setStatus('lost')
       return
     }
@@ -57,6 +65,8 @@ export function CipherScreen({ onNavigate }: { onNavigate: (screen: Screen) => v
     setGuess('')
     setAttempts([])
     setOpenedHints([false, false])
+    setStarted(false)
+    timer.reset()
     setStatus('playing')
     setFeedback('The letters are all here. Put the name back together.')
   }
@@ -75,7 +85,9 @@ export function CipherScreen({ onNavigate }: { onNavigate: (screen: Screen) => v
   return <div className="game-page cipher-page">
     <div className="game-heading"><p className="eyebrow cipher">THE CIPHER</p><p className="demo-pill">CASE 05 · PRACTICE</p></div>
     <h1>Unscramble the Name</h1>
-    <p className="game-intro">Every letter belongs to one player. Rebuild the name in four attempts; optional evidence costs {CIPHER_HINT_COST} points.</p>
+    <p className="game-intro">Every letter belongs to one player. Rebuild the name before the file closes; optional evidence costs {CIPHER_HINT_COST} points.</p>
+    {!started ? <PracticeStartGate onStart={() => { timer.start(); setStarted(true) }}/> : <>
+    <PracticeTimer timeLeft={timer.timeLeft}/>
     <section className="cipher-board" aria-label={`Scrambled name with ${scrambled.length} letters`}>
       <div className="cipher-file"><Fingerprint/><span>INTERCEPTED NAME</span><small>PP–005</small></div>
       <div className="cipher-tiles">{scrambled.map((letter, index) => <span style={{ transform: `rotate(${tileRotations[index]})` }} key={`${letter}-${index}`}>{letter}</span>)}</div>
@@ -92,5 +104,6 @@ export function CipherScreen({ onNavigate }: { onNavigate: (screen: Screen) => v
       <button type="submit" disabled={!guess.trim()}><Send/> Submit</button>
     </form>
     {attempts.length > 0 && <div className="cipher-misses"><small>REJECTED READS</small>{attempts.map(value => <span key={value}>{value}</span>)}</div>}
+    </>}
   </div>
 }

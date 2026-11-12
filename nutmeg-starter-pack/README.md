@@ -16,7 +16,7 @@ Milestone A is playable and the shared ranked alpha is deployed with an account-
 - Local and daily ranked Paper Trail with progressive senior-club reveals, six guesses, 87 eligible histories, clean-colour club crests and a complete case-report reveal. Ranked play keeps unrevealed clubs and the answer server-side.
 - Browser-only Redacted practice with accent-safe letter matching, six strikes, optional full-player guesses, evidence unlocks, local scoring and versioned local statistics.
 - Local and daily ranked Cipher with four attempts. Nation and club evidence become available after two and three misses, remain sealed until deliberately opened, and cost ten points each.
-- Browser-only The Overlap with a monotonic 30-second timer, one locked answer, three equal evidence cards, deterministic 0/10/40/100 scoring and 156 audited club-pair/country puzzles.
+- Browser-only The Overlap with a monotonic 20-second timer, one locked answer, three equal evidence cards, deterministic 0/10/40/100 scoring and 156 audited club-pair/country puzzles. Cipher, Redacted and Paper Trail Cold Cases use the same evidence-gated 20-second practice clock; ranked daily cases remain untimed until their deadline can be server-authoritative.
 - A clearly labelled, non-playable The Wire practice mockup demonstrating the intended vertical club graph and exactly two emphasized active clubs. Its verified route engine, timer and scoring are not implemented yet.
 - Staggered deal-in, sheen and tactile hover/press motion for Cold Cases cards, with reduced-motion support.
 - Responsive mobile shell designed at 390px and adapted for 320px, 768px, and desktop.

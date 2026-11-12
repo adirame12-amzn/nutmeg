@@ -4,7 +4,7 @@ The Overlap is a timed, browser-only association game. It does not require a det
 
 ## Rules
 
-- Press **Open the File** to start a monotonic 30-second timer. Opening the route alone does not start it.
+- Press **Open the File** to reveal the evidence and start a monotonic 20-second timer. Opening the route alone does not expose the clubs or start the clock.
 - Each case shows two distinct senior clubs and one national-team country. All three evidence cards have equal weight.
 - Search the existing FC 27 prototype catalogue, select one player, then explicitly press **Lock In Answer**. Selecting an autocomplete result never submits it.
 - The submitted player is evaluated once and cannot be changed. A timeout without a locked answer scores zero.

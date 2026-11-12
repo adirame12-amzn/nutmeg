@@ -95,4 +95,15 @@ describe('Home case desks', () => {
     expect(await screen.findByText('SOLVED · +80')).toBeInTheDocument()
     expect(await screen.findByText('IN PROGRESS')).toBeInTheDocument()
   })
+
+  it('turns completed local files green without involving ranked state', async () => {
+    localStorage.setItem('player-press-practice-completed-v1', JSON.stringify(['cipher']))
+    const user = userEvent.setup()
+    render(<HomeScreen onNavigate={vi.fn()} onOpenPracticeLineup={vi.fn()} ranked={false} identity={null} />)
+    await user.click(screen.getByRole('button', { name: /^cold cases/i }))
+
+    expect(screen.getByRole('button', { name: /the cipher/i })).toHaveClass('completed')
+    expect(screen.getByRole('button', { name: /paper trail/i })).not.toHaveClass('completed')
+    localStorage.removeItem('player-press-practice-completed-v1')
+  })
 })

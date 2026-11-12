@@ -16,6 +16,7 @@ describe('Redacted interaction', () => {
     const user = userEvent.setup()
     const answer = getRandomRedactedCase(undefined, () => 0)
     render(<RedactedScreen onNavigate={vi.fn()} />)
+    await user.click(screen.getByRole('button', { name: /open the file/i }))
 
     const correct = answer.normalizedAnswer[0]
     const wrong = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').filter(letter => !answer.normalizedAnswer.includes(letter)).slice(0, 2)
@@ -33,6 +34,7 @@ describe('Redacted interaction', () => {
     const user = userEvent.setup()
     const answer = getRandomRedactedCase(undefined, () => 0)
     render(<RedactedScreen onNavigate={vi.fn()} />)
+    await user.click(screen.getByRole('button', { name: /open the file/i }))
 
     await user.click(screen.getByRole('button', { name: /name the suspect/i }))
     await user.type(screen.getByRole('textbox'), answer.player.displayName)
@@ -48,6 +50,7 @@ describe('Redacted interaction', () => {
     const answer = getRandomRedactedCase(undefined, () => 0)
     const wrong = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').filter(letter => !answer.normalizedAnswer.includes(letter)).slice(0, 6)
     render(<RedactedScreen onNavigate={vi.fn()} />)
+    await user.click(screen.getByRole('button', { name: /open the file/i }))
 
     for (const letter of wrong) await user.click(screen.getByRole('button', { name: `Guess ${letter}` }))
     expect(screen.getByText('CASE CLOSED')).toBeInTheDocument()

@@ -1,6 +1,6 @@
 # Redacted — Cold Cases practice
 
-Redacted is an untimed, browser-only football name game presented as a confidential case file. It uses the existing 96-player FC 27 prototype catalogue and never requests a detective identity, calls the Worker, writes to D1 or contributes to the weekly table.
+Redacted is a browser-only football name game presented as a confidential case file. Its evidence stays sealed until **Open the File** starts a monotonic 20-second practice clock. It uses the existing 96-player FC 27 prototype catalogue and never requests a detective identity, calls the Worker, writes to D1 or contributes to the weekly table.
 
 ## Rules
 
@@ -9,6 +9,7 @@ Redacted is an untimed, browser-only football name game presented as a confident
 - Correct letters reveal every matching position. Diacritics and selected football-name characters are normalized, so `MBAPPE` solves `MBAPPÉ` and `ODEGAARD` matches `ØDEGAARD`.
 - Spaces, punctuation and word boundaries remain visible. Duplicate letter submissions are disabled.
 - Six incorrect letter or full-player guesses close the case.
+- Letting the 20-second practice clock expire also closes the case at zero points.
 - The optional **Name the Suspect** search accepts the canonical player ID; an incorrect full-player guess consumes one strike and cannot be repeated.
 - Evidence 01 becomes available after two strikes and Evidence 02 after four. Opening evidence is voluntary and deducts ten points.
 - Successful cases start at 100 points, lose 12 per strike and 10 per opened evidence card, with a minimum successful score of 10. Failed cases score zero.

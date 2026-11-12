@@ -17,6 +17,8 @@ describe('Paper Trail interaction', () => {
     const puzzle = getRandomPaperTrailPuzzle(undefined, () => 0)
     const wrong = fc27Players.find(player => player.id !== puzzle.answer.id)!
     const { container } = render(<PaperTrailScreen onResult={vi.fn()} />)
+    expect(container.querySelectorAll('.career-grid .club-card')).toHaveLength(0)
+    await user.click(screen.getByRole('button', { name: /open paper trail/i }))
 
     const cards = container.querySelectorAll('.career-grid .club-card')
     expect(cards).toHaveLength(5)
@@ -42,6 +44,7 @@ describe('Paper Trail interaction', () => {
     const onResult = vi.fn()
     const answer = getRandomPaperTrailPuzzle(undefined, () => 0).answer
     render(<PaperTrailScreen onResult={onResult} />)
+    await user.click(screen.getByRole('button', { name: /open paper trail/i }))
 
     await user.type(screen.getByRole('textbox'), answer.displayName)
     await user.click(screen.getByRole('option', { name: new RegExp(answer.displayName, 'i') }))
@@ -55,6 +58,7 @@ describe('Paper Trail interaction', () => {
     const answer = getRandomPaperTrailPuzzle(undefined, () => 0).answer
     const wrongPlayers = fc27Players.filter(player => player.id !== answer.id).slice(0, 6)
     render(<PaperTrailScreen onResult={onResult} />)
+    await user.click(screen.getByRole('button', { name: /open paper trail/i }))
 
     for (const player of wrongPlayers) {
       await user.type(screen.getByRole('textbox'), player.displayName)

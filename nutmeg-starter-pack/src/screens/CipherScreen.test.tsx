@@ -15,6 +15,9 @@ describe('The Cipher interaction', () => {
     const user = userEvent.setup()
     const answer = getRandomRedactedCase(undefined, () => 0)
     render(<CipherScreen onNavigate={vi.fn()}/>)
+    expect(screen.queryByLabelText(/scrambled name/i)).not.toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: /open the file/i }))
+    expect(screen.getByRole('timer')).toHaveTextContent('20')
 
     await user.type(screen.getByRole('textbox', { name: /unscrambled player name/i }), 'wrong')
     await user.click(screen.getByRole('button', { name: /submit/i }))

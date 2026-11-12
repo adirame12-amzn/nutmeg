@@ -1,12 +1,15 @@
-import { Check, Clock3, Home, RotateCcw, Share2, Timer, X } from 'lucide-react'
-import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
+import { Check, Home, RotateCcw, Share2, X } from 'lucide-react'
+import { useMemo, useRef, useState } from 'react'
 import type { Screen } from '../components/Chrome'
 import { PlayerPortrait } from '../components/PlayerPortrait'
 import { PlayerSearch } from '../components/PlayerSearch'
+import { PracticeStartGate, PracticeTimer } from '../components/PracticeTimer'
 import { fc27Players } from '../data/fc27Players'
 import { getRandomOverlapPuzzle, overlapClubIdsByPlayer } from '../data/overlap'
-import { evaluateOverlap, OVERLAP_DURATION_MS, type OverlapEvidence, type OverlapResult } from '../domain/overlap'
+import { markPracticeComplete } from '../data/practiceProgress'
+import { evaluateOverlap, type OverlapEvidence, type OverlapResult } from '../domain/overlap'
 import type { Player } from '../domain/types'
+import { PRACTICE_DURATION_MS, usePracticeTimer } from '../hooks/usePracticeTimer'
 
 const LAST_OVERLAP_KEY = 'player-press-last-overlap-puzzle'
 
@@ -24,51 +27,38 @@ export function OverlapScreen({ onNavigate }: { onNavigate: (screen: Screen) => 
   const [phase, setPhase] = useState<'ready' | 'playing' | 'result'>('ready')
   const [selected, setSelected] = useState<Player | null>(null)
   const [result, setResult] = useState<OverlapResult | null>(null)
-  const [timeLeft, setTimeLeft] = useState(30)
-  const deadlineRef = useRef(0)
   const startedRef = useRef(0)
   const evidence = useMemo(() => [puzzle.clubA, puzzle.clubB, puzzle.country], [puzzle])
-
-  useEffect(() => {
-    if (phase !== 'playing') return
-    const update = () => {
-      const remaining = Math.max(0, deadlineRef.current - performance.now())
-      setTimeLeft(Math.ceil(remaining / 1000))
-      if (remaining <= 0) {
-        const timedOut = evaluateOverlap(puzzle, null, new Set())
-        setResult({ ...timedOut, elapsedMs: OVERLAP_DURATION_MS })
-        setPhase('result')
-      }
-    }
-    const timer = window.setInterval(update, 200)
-    document.addEventListener('visibilitychange', update)
-    update()
-    return () => { window.clearInterval(timer); document.removeEventListener('visibilitychange', update) }
-  }, [phase, puzzle])
+  const expire = () => {
+    const timedOut = evaluateOverlap(puzzle, null, new Set())
+    setResult({ ...timedOut, elapsedMs: PRACTICE_DURATION_MS })
+    markPracticeComplete('overlap')
+    setPhase('result')
+  }
+  const timer = usePracticeTimer(phase === 'playing', expire)
 
   const start = () => {
     const now = performance.now()
     startedRef.current = now
-    deadlineRef.current = now + OVERLAP_DURATION_MS
-    setTimeLeft(30); setSelected(null); setResult(null); setPhase('playing')
+    timer.start()
+    setSelected(null); setResult(null); setPhase('playing')
   }
 
   const lockIn = () => {
     if (!selected || phase !== 'playing') return
     const now = performance.now()
-    if (now >= deadlineRef.current) {
-      const timedOut = evaluateOverlap(puzzle, null, new Set())
-      setResult({ ...timedOut, elapsedMs: OVERLAP_DURATION_MS }); setPhase('result'); return
-    }
+    if (timer.expired()) { expire(); return }
     const evaluated = evaluateOverlap(puzzle, selected, overlapClubIdsByPlayer.get(selected.id) || new Set())
     setResult({ ...evaluated, elapsedMs: now - startedRef.current })
+    markPracticeComplete('overlap')
     setPhase('result')
   }
 
   const playAgain = () => {
     const next = getRandomOverlapPuzzle(puzzle.id)
     sessionStorage.setItem(LAST_OVERLAP_KEY, next.id)
-    setPuzzle(next); setPhase('ready'); setSelected(null); setResult(null); setTimeLeft(30)
+    timer.reset()
+    setPuzzle(next); setPhase('ready'); setSelected(null); setResult(null)
   }
 
   const share = async () => {
@@ -97,12 +87,9 @@ export function OverlapScreen({ onNavigate }: { onNavigate: (screen: Screen) => 
     <h1>Three clues. One shot.</h1>
     <p className="game-intro">Two clubs. One country. Find the footballer who connects as many as possible.</p>
     <div className="overlap-venn" aria-hidden="true"><i/><i/><i/><b>?</b></div>
-    <div className="overlap-evidence-grid">{evidence.map(item => <EvidenceCard key={item.id} evidence={item}/>)}</div>
-    {phase === 'ready' ? <section className="overlap-start">
-      <span><Timer/><strong>30 seconds</strong><small>One answer. No second chances.</small></span>
-      <button onClick={start}>OPEN THE FILE</button>
-    </section> : <>
-      <div className={`overlap-timer ${timeLeft <= 5 ? 'urgent' : ''}`} role="timer" aria-live={timeLeft <= 5 ? 'assertive' : 'off'}><Clock3/><span><strong>{timeLeft}</strong><small>SECONDS LEFT</small></span><i style={{ '--time': `${timeLeft / 30}` } as CSSProperties}/></div>
+    {phase === 'ready' ? <PracticeStartGate onStart={start}/> : <>
+      <div className="overlap-evidence-grid">{evidence.map(item => <EvidenceCard key={item.id} evidence={item}/>)}</div>
+      <PracticeTimer timeLeft={timer.timeLeft}/>
       <p className="overlap-scorekey"><b>0</b> none <i/> <b>10</b> one <i/> <b>40</b> two <i/> <b>100</b> full house</p>
       <PlayerSearch excludedIds={[]} onSelect={setSelected} pool={fc27Players}/>
       {selected ? <div className="overlap-selected"><PlayerPortrait player={selected} size="card"/><span><small>SELECTED — MATCHES STILL SEALED</small><strong>{selected.displayName}</strong><em>{selected.currentClub} · {selected.nationalTeam}</em></span><button onClick={() => setSelected(null)} aria-label="Clear selected player"><X/></button></div> : <p className="overlap-empty">Search the full case-file catalogue, then make your one shot count.</p>}

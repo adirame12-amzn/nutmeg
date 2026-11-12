@@ -16,8 +16,10 @@ describe('The Overlap interaction', () => {
     render(<OverlapScreen onNavigate={vi.fn()}/>)
 
     expect(screen.queryByRole('timer')).not.toBeInTheDocument()
+    expect(screen.queryByText(puzzle.clubA.name)).not.toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: /open the file/i }))
-    expect(screen.getByRole('timer')).toHaveTextContent('30')
+    expect(screen.getByRole('timer')).toHaveTextContent('20')
+    expect(screen.getByText(puzzle.clubA.name)).toBeInTheDocument()
 
     await user.type(screen.getByRole('textbox', { name: /search the suspect pool/i }), perfect.displayName)
     await user.click(screen.getByRole('option', { name: new RegExp(perfect.displayName, 'i') }))
