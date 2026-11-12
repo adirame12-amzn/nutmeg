@@ -2,19 +2,21 @@
 
 **Every player leaves clues.**
 
-Player Press is a mobile-first football case-solving game. **Ranked Case** serves shared server-validated daily Prime Suspect and Paper Trail cases plus a combined weekly leaderboard; **Cold Cases** is the local, unlimited practice desk for Prime Suspect, Paper Trail and Redacted, plus an early visual preview of The Wire. The visual direction is a warm investigative football newspaper with high-energy orange and cobalt accents.
+Player Press is a mobile-first football case-solving game. **Ranked Cases** serves shared server-validated daily Prime Suspect, Paper Trail, Redacted and Cipher cases plus a combined weekly leaderboard; **Cold Cases** is the local, unlimited practice desk for Prime Suspect, Paper Trail, Redacted, The Cipher and The Overlap, plus an early visual preview of The Wire. The visual direction is a warm investigative football newspaper with high-energy orange and cobalt accents.
 
 ## Current implementation status
 
-Milestone A is playable and the shared Prime Suspect alpha is deployed with an account-owned Cloudflare Worker and D1 database. Ranked Paper Trail is implemented and locally verified on this feature branch; its new D1 migration and Worker routes must be deployed before it is public:
+Milestone A is playable and the shared ranked alpha is deployed with an account-owned Cloudflare Worker and D1 database:
 
 - Home with explicit Ranked Case and Cold Cases practice desks, Prime Suspect, Paper Trail, case-report, unique-name onboarding, and weekly leaderboard screens.
-- One server-stored Prime Suspect and one server-stored Paper Trail per UTC date for everyone, created by a 00:00 UTC cron with an idempotent first-request fallback.
+- One server-stored puzzle per UTC date for Prime Suspect, Paper Trail, Redacted and The Cipher, created by a 00:00 UTC cron with an idempotent first-request fallback.
 - Browser-bound unique detective names without email/password login or recovery, and server-authoritative guesses and scores.
-- Weekly Monday–Sunday UTC table combining both ranked cases. Prime Suspect awards 100, 80, 65, 50, 35, or 20 points; Paper Trail awards 100, 85, 70, 55, 40, or 25; an unsolved case scores zero.
+- Weekly Monday–Sunday UTC table combining all four ranked cases. Scores and optional-evidence deductions are calculated by the Worker; an unsolved case scores zero.
 - Six-suspect Prime Suspect using 96 imported FC 27 snapshot records, accent-insensitive aliases, reviewed portraits, deterministic comparisons, age/OVR directions, stacked player cards, scoring, and replay.
 - Local and daily ranked Paper Trail with progressive senior-club reveals, six guesses, 87 eligible histories, clean-colour club crests and a complete case-report reveal. Ranked play keeps unrevealed clubs and the answer server-side.
 - Browser-only Redacted practice with accent-safe letter matching, six strikes, optional full-player guesses, evidence unlocks, local scoring and versioned local statistics.
+- Local and daily ranked Cipher with four attempts. Nation and club evidence become available after two and three misses, remain sealed until deliberately opened, and cost ten points each.
+- Browser-only The Overlap with a monotonic 30-second timer, one locked answer, three equal evidence cards, deterministic 0/10/40/100 scoring and 156 audited club-pair/country puzzles.
 - A clearly labelled, non-playable The Wire practice mockup demonstrating the intended vertical club graph and exactly two emphasized active clubs. Its verified route engine, timer and scoring are not implemented yet.
 - Staggered deal-in, sheen and tactile hover/press motion for Cold Cases cards, with reduced-motion support.
 - Responsive mobile shell designed at 390px and adapted for 320px, 768px, and desktop.
@@ -100,9 +102,9 @@ https://player-press-ranked.adirame12.workers.dev/api/health
 
 ## Architecture
 
-- `src/domain/`: framework-independent rules, comparisons, limits, and scoring, including Redacted name normalization and local record updates.
+- `src/domain/`: framework-independent rules, comparisons, limits, and scoring, including Redacted, Cipher and The Overlap.
 - `src/api/`: typed ranked Worker client and browser identity persistence.
-- `src/data/`: generated Prime Suspect and Paper Trail adapters plus the hidden legacy Mystery fixtures.
+- `src/data/`: generated player and Paper Trail adapters, The Overlap’s audited puzzle generator, plus the hidden legacy Mystery fixtures.
 - `ingestion/`: source adapter, identity resolution, Commons metadata/licence policy, image processing, and offline unit tests.
 - `data/generated/`: public player JSON, mappings, attributions, SQLite catalogue, and ingestion reports.
 - `src/components/`: reusable app chrome, search, and stacked guess cards.
@@ -110,6 +112,6 @@ https://player-press-ranked.adirame12.workers.dev/api/health
 - `docs/`: product, design, data, and future backend specifications.
 - `worker/`: Cloudflare Worker routes, D1 migration, generated player seed, UTC scheduler, and ranked rule tests.
 
-For shared play, keep puzzle targets, attempt enforcement, and score calculation in the Cloudflare Worker/D1 backend before treating results as authoritative. Cold Cases practice remains deliberately browser-only and unranked. See the [product specification](docs/product-requirements.md), [architecture](docs/architecture.md), [data plan](docs/data-pipeline.md), [Prime Suspect rules](docs/game-lineup.md), [Paper Trail rules](docs/game-paper-trail.md), [Redacted rules](docs/game-redacted.md), [The Wire preview](docs/game-the-wire.md), [legacy Mystery rules](docs/game-mystery.md), [design system](docs/design-system.md), and [roadmap](docs/roadmap.md).
+For shared play, keep puzzle targets, attempt enforcement, and score calculation in the Cloudflare Worker/D1 backend before treating results as authoritative. Cold Cases practice remains deliberately browser-only and unranked. See the [product specification](docs/product-requirements.md), [architecture](docs/architecture.md), [data plan](docs/data-pipeline.md), [Prime Suspect rules](docs/game-lineup.md), [Paper Trail rules](docs/game-paper-trail.md), [Redacted rules](docs/game-redacted.md), [Cipher rules](docs/game-cipher.md), [The Overlap rules](docs/game-overlap.md), [The Wire preview](docs/game-the-wire.md), [legacy Mystery rules](docs/game-mystery.md), [design system](docs/design-system.md), and [roadmap](docs/roadmap.md).
 
 Reference images: [mobile cards](design/mobile-card-layout.png) and [original editorial direction](design/mobile-editorial-reference.png). They are concept mockups, not production player-data truth or licensed player imagery.

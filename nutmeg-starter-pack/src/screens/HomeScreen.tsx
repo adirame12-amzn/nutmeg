@@ -13,12 +13,13 @@ function CaseProgressChip({ progress }: { progress: CaseProgress }) {
   return <span className={`case-progress ${progress.status}`}>{label}</span>
 }
 
-type GameMark = 'suspect' | 'trail' | 'redacted' | 'cipher' | 'wire'
+type GameMark = 'suspect' | 'trail' | 'redacted' | 'cipher' | 'overlap' | 'wire'
 
 function GameGlyph({ game }: { game: GameMark }) {
   if (game === 'trail') return <svg viewBox="0 0 48 58"><circle cx="14" cy="14" r="6"/><circle cx="34" cy="28" r="6"/><circle cx="15" cy="45" r="6"/><path d="m19 17 10 8m0 7-9 9"/><path d="M11 14h6M31 28h6M12 45h6"/></svg>
   if (game === 'redacted') return <svg viewBox="0 0 48 58"><path d="M10 8h28v42H10z"/><path d="M15 17h18M15 24h10M15 33h18M15 40h14"/><path className="redaction" d="M12 14h25v7H12zm0 16h25v7H12z"/></svg>
   if (game === 'cipher') return <svg viewBox="0 0 48 58"><path d="M8 10h32v38H8z"/><rect x="13" y="16" width="9" height="10" rx="2"/><rect x="26" y="16" width="9" height="10" rx="2"/><rect x="13" y="31" width="9" height="10" rx="2"/><rect x="26" y="31" width="9" height="10" rx="2"/><path d="m17 19 14 19m0-19L17 38"/></svg>
+  if (game === 'overlap') return <svg viewBox="0 0 48 58"><circle cx="18" cy="24" r="11"/><circle cx="30" cy="24" r="11"/><circle cx="24" cy="36" r="11"/><path d="M24 24v8m0 5v1"/></svg>
   if (game === 'wire') return <svg viewBox="0 0 48 58"><circle cx="12" cy="13" r="5"/><circle cx="36" cy="45" r="5"/><path d="M16 16c18 4 1 14 14 18 7 2 7 5 6 6"/><path d="M8 13h8M32 45h8"/><path className="spark" d="m24 24 4 4-5 2 3 5"/></svg>
   return <svg viewBox="0 0 48 58"><path d="M10 9h28v40H10z"/><circle cx="24" cy="22" r="7"/><path d="M14 42c2-8 18-8 20 0"/><path d="M16 13c5-5 12-5 17 0M13 17c-2 8 1 17 7 22M35 17c2 8-1 17-7 22"/></svg>
 }
@@ -116,6 +117,9 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
           </button>
           <button className="archive-game cipher-archive" data-file="FILE 05" onClick={() => onNavigate('cipher')}>
             <GameTicket game="cipher" /><span><small>CASE 05 · 4 ATTEMPTS</small><strong>The Cipher</strong><em>Unscramble the name before the trail goes cold.</em></span><ArrowRight />
+          </button>
+          <button className="archive-game overlap-archive" data-file="FILE 06" onClick={() => onNavigate('overlap')}>
+            <GameTicket game="overlap" /><span><small>CASE 06 · 30 SECONDS</small><strong>The Overlap</strong><em>Two clubs. One country. One shot.</em></span><ArrowRight />
           </button>
         </div>
         <div className="archive-foot"><Clock3 size={15}/><span>Play again whenever you like · no points recorded</span></div>

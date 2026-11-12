@@ -89,6 +89,7 @@ export interface RankedCipherState {
   guesses: string[]
   guessedLetters: string[]
   scrambled: string[]
+  hints: Array<{ open: boolean; available: boolean; value?: string }>
   nation?: string
   club?: string
   answer?: Player
@@ -237,6 +238,10 @@ export async function getDailyCipher(identity: RankedIdentity) {
 
 export async function submitDailyCipherGuess(identity: RankedIdentity, guess: string) {
   return wordState(await request<Omit<RankedCipherState, 'answer'> & { answer?: ApiPlayer }>('/daily/cipher/guess', { method: 'POST', body: JSON.stringify({ guess }) }, identity)) as RankedCipherState
+}
+
+export async function openDailyCipherHint(identity: RankedIdentity, index: number) {
+  return wordState(await request<Omit<RankedCipherState, 'answer'> & { answer?: ApiPlayer }>('/daily/cipher/hint', { method: 'POST', body: JSON.stringify({ index }) }, identity)) as RankedCipherState
 }
 
 export function getWeeklyLeaderboard(identity: RankedIdentity) {

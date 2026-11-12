@@ -19,8 +19,10 @@ describe('The Cipher rules', () => {
     expect(isCipherAnswer(caseFile, 'wrong player')).toBe(false)
   })
 
-  it('reduces the score across four attempts', () => {
+  it('reduces the score across four attempts and charges for opened hints', () => {
     expect([1, 2, 3, 4].map(attempt => cipherScore(attempt, true))).toEqual([100, 75, 50, 25])
+    expect(cipherScore(3, true, 1)).toBe(40)
+    expect(cipherScore(4, true, 2)).toBe(5)
     expect(cipherScore(4, false)).toBe(0)
   })
 })

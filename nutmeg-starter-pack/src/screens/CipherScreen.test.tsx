@@ -11,7 +11,7 @@ describe('The Cipher interaction', () => {
   })
   afterEach(() => vi.restoreAllMocks())
 
-  it('reveals clues after misses and accepts the player name', async () => {
+  it('unlocks paid clues after misses without revealing them automatically', async () => {
     const user = userEvent.setup()
     const answer = getRandomRedactedCase(undefined, () => 0)
     render(<CipherScreen onNavigate={vi.fn()}/>)
@@ -22,6 +22,8 @@ describe('The Cipher interaction', () => {
 
     await user.type(screen.getByRole('textbox', { name: /unscrambled player name/i }), 'still wrong')
     await user.click(screen.getByRole('button', { name: /submit/i }))
+    expect(screen.queryByText(answer.player.nationalTeam)).not.toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: /nation unseal/i }))
     expect(screen.getByText(answer.player.nationalTeam)).toBeInTheDocument()
 
     await user.type(screen.getByRole('textbox', { name: /unscrambled player name/i }), answer.player.displayName)

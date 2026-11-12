@@ -1,4 +1,4 @@
-import { compareRankedPlayers, normaliseUsername, previousWeekUtc, rankedLineupScore, rankedPaperTrailScore, RANKED_GUESS_LIMIT, utcDate, validateUsername, weekStartUtc } from './rules'
+import { compareRankedPlayers, normaliseUsername, previousWeekUtc, rankedCipherScore, rankedLineupScore, rankedPaperTrailScore, RANKED_GUESS_LIMIT, utcDate, validateUsername, weekStartUtc } from './rules'
 import type { AttemptRow, Env, PaperTrailPuzzleRow, PlayerRow, PuzzleRow, UserRow } from './types'
 
 const DEFAULT_ORIGINS = [
@@ -115,9 +115,17 @@ async function getWordState(env: Env, userId: string, puzzle: WordPuzzleRow) {
   const guessedLetters = attempt ? JSON.parse(attempt.guessed_letters) as string[] : []
   const guesses = attempt ? JSON.parse(attempt.guesses_json) as string[] : []
   const complete = attempt && attempt.status !== 'playing'
-  const target = complete || (attempt && ((puzzle.mode === 'redacted' && attempt.evidence_opened) || (puzzle.mode === 'cipher' && attempt.attempts_used >= 2))) ? await env.DB.prepare('SELECT * FROM players WHERE id = ?').bind(puzzle.target_player_id).first<PlayerRow>() : null
+  const target = complete || (attempt && attempt.evidence_opened) ? await env.DB.prepare('SELECT * FROM players WHERE id = ?').bind(puzzle.target_player_id).first<PlayerRow>() : null
   const base = { date: puzzle.puzzle_date, status: attempt?.status || 'not_started', attemptsUsed: attempt?.attempts_used || 0, score: attempt?.score || 0, guesses, guessedLetters }
-  if (puzzle.mode === 'cipher') return { ...base, scrambled: (puzzle.scrambled_answer || '').split(''), nation: (attempt?.attempts_used || 0) >= 2 ? target?.nation : undefined, club: (attempt?.attempts_used || 0) >= 3 ? target?.club : undefined, answer: complete && target ? playerPublic(target) : undefined, displayAnswer: complete ? puzzle.display_answer : undefined }
+  if (puzzle.mode === 'cipher') {
+    const attemptsUsed = attempt?.attempts_used || 0
+    const nationOpen = Boolean((attempt?.evidence_opened || 0) & 1)
+    const clubOpen = Boolean((attempt?.evidence_opened || 0) & 2)
+    return { ...base, scrambled: (puzzle.scrambled_answer || '').split(''), hints: [
+      { open: nationOpen, available: attemptsUsed >= 2, value: nationOpen ? target?.nation : undefined },
+      { open: clubOpen, available: attemptsUsed >= 3, value: clubOpen ? target?.club : undefined },
+    ], nation: nationOpen ? target?.nation : undefined, club: clubOpen ? target?.club : undefined, answer: complete && target ? playerPublic(target) : undefined, displayAnswer: complete ? puzzle.display_answer : undefined }
+  }
   const guessed = new Set(guessedLetters)
   const slots = Array.from(puzzle.display_answer).map((character, index) => {
     const normalized = normalizeWord(character)
@@ -395,6 +403,19 @@ async function route(request: Request, env: Env) {
     return json(await getWordState(env, user.id, puzzle))
   }
 
+  if (request.method === 'POST' && path === '/daily/cipher/hint') {
+    const body = await request.json().catch(() => ({})) as { index?: number }
+    if (body.index !== 0 && body.index !== 1) return json({ error: 'Choose a valid evidence seal.' }, 400)
+    const puzzle = await ensureDailyWordPuzzle(env, 'cipher')
+    const attempt = await ensureWordAttempt(env, user.id, puzzle)
+    if (attempt.status !== 'playing') return json({ error: 'Today’s Cipher is already complete.', state: await getWordState(env, user.id, puzzle) }, 409)
+    const threshold = body.index === 0 ? 2 : 3
+    if (attempt.attempts_used < threshold) return json({ error: `That evidence opens after ${threshold} misses.` }, 409)
+    const opened = attempt.evidence_opened | (1 << body.index)
+    await env.DB.prepare('UPDATE word_attempts SET evidence_opened = ? WHERE id = ?').bind(opened, attempt.id).run()
+    return json(await getWordState(env, user.id, puzzle))
+  }
+
   if (request.method === 'POST' && path === '/daily/cipher/guess') {
     const body = await request.json().catch(() => ({})) as { guess?: string }
     if (!body.guess?.trim()) return json({ error: 'Enter a player name.' }, 400)
@@ -408,7 +429,8 @@ async function route(request: Request, env: Env) {
     const attempts = attempt.attempts_used + 1
     const correct = normalizeWord(body.guess) === normalizeWord(puzzle.display_answer) || normalizeWord(body.guess) === normalizeWord(target.display_name)
     const status = correct ? 'won' : attempts >= 4 ? 'lost' : 'playing'
-    const score = correct ? [100, 75, 50, 25][attempts - 1] : 0
+    const evidenceCount = ((attempt.evidence_opened & 1) ? 1 : 0) + ((attempt.evidence_opened & 2) ? 1 : 0)
+    const score = rankedCipherScore(attempts, correct, evidenceCount)
     await env.DB.prepare('UPDATE word_attempts SET status = ?, attempts_used = ?, score = ?, guesses_json = ?, completed_at = ? WHERE id = ? AND status = \'playing\'')
       .bind(status, attempts, score, JSON.stringify([...guesses, body.guess.trim()]), status === 'playing' ? null : new Date().toISOString(), attempt.id).run()
     return json(await getWordState(env, user.id, puzzle))

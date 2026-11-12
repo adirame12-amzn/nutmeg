@@ -16,8 +16,9 @@ import { WirePreviewScreen } from './screens/WirePreviewScreen'
 import { CipherScreen } from './screens/CipherScreen'
 import { RankedRedactedScreen } from './screens/RankedRedactedScreen'
 import { RankedCipherScreen } from './screens/RankedCipherScreen'
+import { OverlapScreen } from './screens/OverlapScreen'
 
-const screens: Screen[] = ['home', 'lineup', 'mystery', 'paper-trail', 'ranked-paper-trail', 'redacted', 'ranked-redacted', 'cipher', 'ranked-cipher', 'wire-preview', 'leaderboard', 'credits', 'result']
+const screens: Screen[] = ['home', 'lineup', 'mystery', 'paper-trail', 'ranked-paper-trail', 'redacted', 'ranked-redacted', 'cipher', 'ranked-cipher', 'overlap', 'wire-preview', 'leaderboard', 'credits', 'result']
 
 function screenFromHash(): Screen {
   const value = window.location.hash.replace('#', '') as Screen
@@ -78,6 +79,7 @@ export function App() {
       {screen === 'ranked-cipher' && !rankedApiEnabled && (
         <CipherScreen onNavigate={navigate}/>
       )}
+      {screen === 'overlap' && <OverlapScreen onNavigate={navigate} />}
       {screen === 'wire-preview' && <WirePreviewScreen />}
       {screen === 'ranked-paper-trail' && rankedApiEnabled && !needsIdentity && identity && <RankedPaperTrailScreen identity={identity} onResult={showResult} onPractice={() => navigate('paper-trail')} />}
       {screen === 'ranked-paper-trail' && !rankedApiEnabled && <PaperTrailScreen onResult={showResult} />}
