@@ -65,6 +65,8 @@ export interface RankedPaperTrailState {
   clubCount: number
   sourceSnapshot: string
   answer?: Player
+  deadlineAt?: string
+  durationSeconds?: number
 }
 
 export interface RankedRedactedState {
@@ -79,6 +81,8 @@ export interface RankedRedactedState {
   evidence: Array<{ open: boolean; available: boolean; value?: string }>
   answer?: Player
   displayAnswer?: string
+  deadlineAt?: string
+  durationSeconds?: number
 }
 
 export interface RankedCipherState {
@@ -94,6 +98,22 @@ export interface RankedCipherState {
   club?: string
   answer?: Player
   displayAnswer?: string
+  deadlineAt?: string
+  durationSeconds?: number
+}
+
+export interface RankedOverlapState {
+  date: string
+  status: 'not_started' | GameStatus
+  score: number
+  matches: number
+  deadlineAt?: string
+  durationSeconds: number
+  clues: Array<{ clubId?: string; wikidataClubId?: string; name: string; crestUrl?: string | null; kind?: 'country' }>
+  selected?: Player
+  verdicts?: boolean[]
+  answer?: Player
+  sourceSnapshot: string
 }
 
 export interface WeeklyLeader {
@@ -210,6 +230,10 @@ export async function getDailyPaperTrail(identity: RankedIdentity) {
   return toPaperTrailState(await request<Parameters<typeof toPaperTrailState>[0]>('/daily/paper-trail', {}, identity))
 }
 
+export async function startDailyPaperTrail(identity: RankedIdentity) {
+  return toPaperTrailState(await request<Parameters<typeof toPaperTrailState>[0]>('/daily/paper-trail/start', { method: 'POST' }, identity))
+}
+
 export async function submitDailyPaperTrailGuess(identity: RankedIdentity, playerId: string) {
   return toPaperTrailState(await request<Parameters<typeof toPaperTrailState>[0]>('/daily/paper-trail/guess', { method: 'POST', body: JSON.stringify({ playerId }) }, identity))
 }
@@ -218,6 +242,10 @@ const wordState = <T extends { answer?: ApiPlayer }>(state: T) => ({ ...state, a
 
 export async function getDailyRedacted(identity: RankedIdentity) {
   return wordState(await request<Omit<RankedRedactedState, 'answer'> & { answer?: ApiPlayer }>('/daily/redacted', {}, identity)) as RankedRedactedState
+}
+
+export async function startDailyRedacted(identity: RankedIdentity) {
+  return wordState(await request<Omit<RankedRedactedState, 'answer'> & { answer?: ApiPlayer }>('/daily/redacted/start', { method: 'POST' }, identity)) as RankedRedactedState
 }
 
 export async function submitDailyRedactedLetter(identity: RankedIdentity, letter: string) {
@@ -236,12 +264,34 @@ export async function getDailyCipher(identity: RankedIdentity) {
   return wordState(await request<Omit<RankedCipherState, 'answer'> & { answer?: ApiPlayer }>('/daily/cipher', {}, identity)) as RankedCipherState
 }
 
+export async function startDailyCipher(identity: RankedIdentity) {
+  return wordState(await request<Omit<RankedCipherState, 'answer'> & { answer?: ApiPlayer }>('/daily/cipher/start', { method: 'POST' }, identity)) as RankedCipherState
+}
+
 export async function submitDailyCipherGuess(identity: RankedIdentity, guess: string) {
   return wordState(await request<Omit<RankedCipherState, 'answer'> & { answer?: ApiPlayer }>('/daily/cipher/guess', { method: 'POST', body: JSON.stringify({ guess }) }, identity)) as RankedCipherState
 }
 
 export async function openDailyCipherHint(identity: RankedIdentity, index: number) {
   return wordState(await request<Omit<RankedCipherState, 'answer'> & { answer?: ApiPlayer }>('/daily/cipher/hint', { method: 'POST', body: JSON.stringify({ index }) }, identity)) as RankedCipherState
+}
+
+const toOverlapState = (state: Omit<RankedOverlapState, 'selected' | 'answer'> & { selected?: ApiPlayer; answer?: ApiPlayer }): RankedOverlapState => ({
+  ...state,
+  selected: state.selected ? toPlayer(state.selected) : undefined,
+  answer: state.answer ? toPlayer(state.answer) : undefined,
+})
+
+export async function getDailyOverlap(identity: RankedIdentity) {
+  return toOverlapState(await request<Parameters<typeof toOverlapState>[0]>('/daily/overlap', {}, identity))
+}
+
+export async function startDailyOverlap(identity: RankedIdentity) {
+  return toOverlapState(await request<Parameters<typeof toOverlapState>[0]>('/daily/overlap/start', { method: 'POST' }, identity))
+}
+
+export async function submitDailyOverlapGuess(identity: RankedIdentity, playerId: string) {
+  return toOverlapState(await request<Parameters<typeof toOverlapState>[0]>('/daily/overlap/guess', { method: 'POST', body: JSON.stringify({ playerId }) }, identity))
 }
 
 export function getWeeklyLeaderboard(identity: RankedIdentity) {

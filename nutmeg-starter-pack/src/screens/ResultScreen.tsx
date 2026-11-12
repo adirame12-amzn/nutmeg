@@ -1,10 +1,10 @@
-import { Home, RotateCcw, Share2, Trophy } from 'lucide-react'
+import { ArrowRight, Home, RotateCcw, Share2, Trophy } from 'lucide-react'
 import { useEffect } from 'react'
 import type { Screen } from '../components/Chrome'
 import { CareerGrid } from '../components/CareerGrid'
 import type { ResultPayload } from './LineupScreen'
 
-export function ResultScreen({ result, onNavigate }: { result: ResultPayload | null, onNavigate: (screen: Screen) => void }) {
+export function ResultScreen({ result, onNavigate, onNextDaily }: { result: ResultPayload | null, onNavigate: (screen: Screen) => void; onNextDaily: () => void }) {
   useEffect(() => { window.scrollTo({ top: 0, behavior: 'auto' }) }, [result])
   if (!result) return <div className="result-page empty"><Trophy/><h1>No case report yet</h1><p>Open a case to build your report.</p><button className="primary" onClick={() => onNavigate('lineup')}>Play Prime Suspect</button></div>
 
@@ -32,8 +32,9 @@ export function ResultScreen({ result, onNavigate }: { result: ResultPayload | n
       </div>
       <strong className="points">+{result.score} pts</strong>
       <button className="primary dark" onClick={share}><Share2/> Share without spoilers</button>
+      {result.ranked && <div className="daily-result-actions"><button className="primary daily-next" onClick={onNextDaily}>Play next daily game <ArrowRight/></button><button onClick={() => onNavigate('home')}><Home/> Finish later / Return home</button></div>}
       <button onClick={() => onNavigate(replayScreen)}><RotateCcw/> {result.ranked ? 'Review today’s case' : result.mode === 'paper-trail' ? 'Open another trail' : 'Reopen this case'}</button>
-      <button className="text-button" onClick={() => onNavigate('home')}><Home/> Back to today’s cases</button>
+      {!result.ranked && <button className="text-button" onClick={() => onNavigate('home')}><Home/> Back to today’s cases</button>}
     </div>
   )
 }

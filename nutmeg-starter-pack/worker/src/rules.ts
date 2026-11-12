@@ -4,6 +4,8 @@ export const RANKED_GUESS_LIMIT = 6
 export const RANKED_LINEUP_POINTS = [100, 80, 65, 50, 35, 20] as const
 export const RANKED_PAPER_TRAIL_POINTS = [100, 85, 70, 55, 40, 25] as const
 export const RANKED_CIPHER_POINTS = [100, 75, 50, 25] as const
+export const RANKED_TIMED_SECONDS = 60
+export const RANKED_OVERLAP_POINTS = [0, 10, 40, 100] as const
 
 export type RankedStatus = 'match' | 'miss' | 'higher' | 'lower'
 
@@ -53,6 +55,10 @@ export function rankedPaperTrailScore(guessNumber: number, won: boolean) {
 export function rankedCipherScore(guessNumber: number, won: boolean, hintsOpened = 0) {
   if (!won || guessNumber < 1 || guessNumber > RANKED_CIPHER_POINTS.length) return 0
   return Math.max(0, RANKED_CIPHER_POINTS[guessNumber - 1] - Math.max(0, hintsOpened) * 10)
+}
+
+export function rankedOverlapScore(matches: number) {
+  return RANKED_OVERLAP_POINTS[Math.max(0, Math.min(3, matches))]
 }
 
 export function utcDate(value = new Date()) {

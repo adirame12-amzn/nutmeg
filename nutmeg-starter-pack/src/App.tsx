@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { loadRankedIdentity, rankedApiEnabled, type RankedIdentity } from './api/ranked'
+import { getDailyCipher, getDailyLineup, getDailyOverlap, getDailyPaperTrail, getDailyRedacted, loadRankedIdentity, rankedApiEnabled, type RankedIdentity } from './api/ranked'
 import { ScreenFrame, type Screen } from './components/Chrome'
 import { UsernameOnboarding } from './components/UsernameOnboarding'
 import { HomeScreen } from './screens/HomeScreen'
@@ -18,8 +18,10 @@ import { RankedRedactedScreen } from './screens/RankedRedactedScreen'
 import { RankedCipherScreen } from './screens/RankedCipherScreen'
 import { OverlapScreen } from './screens/OverlapScreen'
 import { markPracticeComplete } from './data/practiceProgress'
+import { nextDailyScreen, type DailyCaseStatus } from './domain/dailyJourney'
+import { RankedOverlapScreen } from './screens/RankedOverlapScreen'
 
-const screens: Screen[] = ['home', 'lineup', 'mystery', 'paper-trail', 'ranked-paper-trail', 'redacted', 'ranked-redacted', 'cipher', 'ranked-cipher', 'overlap', 'wire-preview', 'leaderboard', 'credits', 'result']
+const screens: Screen[] = ['home', 'lineup', 'mystery', 'paper-trail', 'ranked-paper-trail', 'redacted', 'ranked-redacted', 'cipher', 'ranked-cipher', 'overlap', 'ranked-overlap', 'wire-preview', 'leaderboard', 'credits', 'result']
 
 function screenFromHash(): Screen {
   const value = window.location.hash.replace('#', '') as Screen
@@ -27,7 +29,7 @@ function screenFromHash(): Screen {
 }
 
 export function shouldRequestIdentity(screen: Screen, quickCase: boolean, apiEnabled: boolean, hasIdentity: boolean) {
-  return apiEnabled && !hasIdentity && (screen === 'leaderboard' || screen === 'ranked-paper-trail' || screen === 'ranked-redacted' || screen === 'ranked-cipher' || (screen === 'lineup' && !quickCase))
+  return apiEnabled && !hasIdentity && (screen === 'leaderboard' || screen === 'ranked-paper-trail' || screen === 'ranked-redacted' || screen === 'ranked-cipher' || screen === 'ranked-overlap' || (screen === 'lineup' && !quickCase))
 }
 
 export function App() {
@@ -43,6 +45,7 @@ export function App() {
   }, [])
 
   const navigate = (next: Screen) => {
+    ;(document.activeElement as HTMLElement | null)?.blur()
     if (next === 'lineup' && screen !== 'result') setQuickCase(false)
     window.location.hash = next
     setScreen(next)
@@ -60,6 +63,16 @@ export function App() {
     if (!payload.ranked && payload.mode === 'lineup' && quickCase) markPracticeComplete('lineup')
     setResult(payload); navigate('result')
   }
+  const continueDaily = async (after?: Screen) => {
+    if (!identity || !rankedApiEnabled) { navigate('lineup'); return }
+    try {
+      const [lineup, trail, redacted, cipher, overlap] = await Promise.all([
+        getDailyLineup(identity), getDailyPaperTrail(identity), getDailyRedacted(identity), getDailyCipher(identity), getDailyOverlap(identity),
+      ])
+      const statuses: Record<string, DailyCaseStatus> = { lineup: lineup.status, 'paper-trail': trail.status, redacted: redacted.status, cipher: cipher.status, overlap: overlap.status }
+      navigate(nextDailyScreen(statuses, after) || 'home')
+    } catch { navigate('home') }
+  }
   const needsIdentity = shouldRequestIdentity(screen, quickCase, rankedApiEnabled, Boolean(identity))
 
   return (
@@ -71,25 +84,27 @@ export function App() {
       {screen === 'paper-trail' && <PaperTrailScreen onResult={showResult} />}
       {screen === 'redacted' && <RedactedScreen onNavigate={navigate} />}
       {screen === 'ranked-redacted' && rankedApiEnabled && !needsIdentity && identity && (
-        <RankedRedactedScreen identity={identity}/>
+        <RankedRedactedScreen identity={identity} onNext={() => continueDaily('ranked-redacted')} onHome={() => navigate('home')}/>
       )}
       {screen === 'ranked-redacted' && !rankedApiEnabled && (
         <RedactedScreen onNavigate={navigate}/>
       )}
       {screen === 'cipher' && <CipherScreen onNavigate={navigate} />}
       {screen === 'ranked-cipher' && rankedApiEnabled && !needsIdentity && identity && (
-        <RankedCipherScreen identity={identity}/>
+        <RankedCipherScreen identity={identity} onNext={() => continueDaily('ranked-cipher')} onHome={() => navigate('home')}/>
       )}
       {screen === 'ranked-cipher' && !rankedApiEnabled && (
         <CipherScreen onNavigate={navigate}/>
       )}
       {screen === 'overlap' && <OverlapScreen onNavigate={navigate} />}
+      {screen === 'ranked-overlap' && rankedApiEnabled && !needsIdentity && identity && <RankedOverlapScreen identity={identity} onNext={() => continueDaily('ranked-overlap')} onHome={() => navigate('home')}/>}
+      {screen === 'ranked-overlap' && !rankedApiEnabled && <OverlapScreen onNavigate={navigate}/>}
       {screen === 'wire-preview' && <WirePreviewScreen />}
       {screen === 'ranked-paper-trail' && rankedApiEnabled && !needsIdentity && identity && <RankedPaperTrailScreen identity={identity} onResult={showResult} onPractice={() => navigate('paper-trail')} />}
       {screen === 'ranked-paper-trail' && !rankedApiEnabled && <PaperTrailScreen onResult={showResult} />}
       {screen === 'leaderboard' && !needsIdentity && (rankedApiEnabled && identity ? <LeaderboardScreen identity={identity} /> : <LeaderboardDemo />)}
       {screen === 'credits' && <CreditsScreen />}
-      {screen === 'result' && <ResultScreen result={result} onNavigate={navigate} />}
+      {screen === 'result' && <ResultScreen result={result} onNavigate={navigate} onNextDaily={() => continueDaily(result?.mode === 'lineup' ? 'lineup' : result?.mode === 'paper-trail' ? 'ranked-paper-trail' : undefined)} />}
     </ScreenFrame>
   )
 }

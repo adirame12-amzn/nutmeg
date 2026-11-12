@@ -17,7 +17,7 @@ describe('The Cipher interaction', () => {
     render(<CipherScreen onNavigate={vi.fn()}/>)
     expect(screen.queryByLabelText(/scrambled name/i)).not.toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: /open the file/i }))
-    expect(screen.getByRole('timer')).toHaveTextContent('20')
+    expect(screen.getByRole('timer')).toHaveTextContent('60')
 
     await user.type(screen.getByRole('textbox', { name: /unscrambled player name/i }), 'wrong')
     await user.click(screen.getByRole('button', { name: /submit/i }))

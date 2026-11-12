@@ -1,6 +1,6 @@
 import type { Player } from './types'
 
-export const OVERLAP_DURATION_MS = 20_000
+export const OVERLAP_DURATION_MS = 60_000
 export const OVERLAP_SCORE_TABLE = [0, 10, 40, 100] as const
 
 export interface OverlapEvidence {
@@ -42,8 +42,8 @@ export function overlapScore(matches: number) {
 export function evaluateOverlap(puzzle: OverlapPuzzle, player: Player | null, clubIds: ReadonlySet<string>): OverlapResult {
   const verdicts = [
     { evidence: puzzle.clubA, match: Boolean(player && clubIds.has(puzzle.clubA.id)) },
-    { evidence: puzzle.clubB, match: Boolean(player && clubIds.has(puzzle.clubB.id)) },
     { evidence: puzzle.country, match: Boolean(player && canonicalCountryId(player.nationalTeam) === puzzle.country.id) },
+    { evidence: puzzle.clubB, match: Boolean(player && clubIds.has(puzzle.clubB.id)) },
   ]
   const matches = verdicts.filter(verdict => verdict.match).length
   return { player, verdicts, matches, points: overlapScore(matches), timedOut: !player, elapsedMs: 0 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { compareRankedPlayers, previousWeekUtc, rankedCipherScore, rankedLineupScore, rankedPaperTrailScore, validateUsername, weekStartUtc } from './rules'
+import { compareRankedPlayers, previousWeekUtc, rankedCipherScore, rankedLineupScore, rankedOverlapScore, rankedPaperTrailScore, validateUsername, weekStartUtc } from './rules'
 import type { PlayerRow } from './types'
 
 const player = (overrides: Partial<PlayerRow> = {}): PlayerRow => ({
@@ -25,6 +25,10 @@ describe('ranked daily rules', () => {
     expect(rankedCipherScore(3, true, 1)).toBe(40)
     expect(rankedCipherScore(4, true, 2)).toBe(5)
     expect(rankedCipherScore(4, false, 2)).toBe(0)
+  })
+
+  it('scores daily Overlap by exact matches', () => {
+    expect([0, 1, 2, 3].map(rankedOverlapScore)).toEqual([0, 10, 40, 100])
   })
 
   it('starts the leaderboard week on Monday UTC', () => {

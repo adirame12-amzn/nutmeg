@@ -13,7 +13,7 @@ import { PRACTICE_DURATION_MS, usePracticeTimer } from '../hooks/usePracticeTime
 
 const LAST_OVERLAP_KEY = 'player-press-last-overlap-puzzle'
 
-function EvidenceCard({ evidence, verdict }: { evidence: OverlapEvidence; verdict?: boolean }) {
+export function EvidenceCard({ evidence, verdict }: { evidence: OverlapEvidence; verdict?: boolean }) {
   return <article className={`overlap-evidence ${verdict === undefined ? '' : verdict ? 'match' : 'miss'}`}>
     <span className="overlap-evidence-mark">{evidence.kind === 'club' && evidence.crestUrl ? <img src={evidence.crestUrl} alt=""/> : <b>{evidence.flag || '⚑'}</b>}</span>
     <small>{evidence.kind === 'club' ? 'PLAYED FOR' : 'REPRESENTS'}</small>
@@ -28,7 +28,7 @@ export function OverlapScreen({ onNavigate }: { onNavigate: (screen: Screen) => 
   const [selected, setSelected] = useState<Player | null>(null)
   const [result, setResult] = useState<OverlapResult | null>(null)
   const startedRef = useRef(0)
-  const evidence = useMemo(() => [puzzle.clubA, puzzle.clubB, puzzle.country], [puzzle])
+  const evidence = useMemo(() => [puzzle.clubA, puzzle.country, puzzle.clubB], [puzzle])
   const expire = () => {
     const timedOut = evaluateOverlap(puzzle, null, new Set())
     setResult({ ...timedOut, elapsedMs: PRACTICE_DURATION_MS })

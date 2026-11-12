@@ -5,7 +5,7 @@ Paper Trail has two deliberately separate forms. **Cold Cases** is replayable, u
 ## Rules
 
 - Cold Cases selects a local eligible player at random and excludes the immediately previous answer for the browser session. Ranked Case stores one randomly chosen eligible path in D1 for the UTC date, shared by everyone.
-- Cold Cases keeps the badges hidden until **Open Paper Trail** starts a monotonic 20-second practice clock. The ranked daily case remains untimed until a server-authoritative deadline is implemented.
+- Cold Cases keeps the badges hidden until **Open Paper Trail** starts its 60-second practice clock. Entering the ranked daily case starts or resumes its own Worker-enforced 60-second deadline.
 - One senior club is visible at the start. Each incorrect player guess reveals the next available club, up to five clubs.
 - The player has six distinct guesses. A correct guess scores 100, 85, 70, 55, 40 or 25 by attempt; a miss scores zero. Practice points stay local; ranked points are authoritative and join the weekly table.
 - A Cold Cases timeout closes the local file at zero points.

@@ -1,14 +1,16 @@
 import { CalendarDays, LoaderCircle, RotateCcw, WifiOff } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { getDailyPaperTrail, submitDailyPaperTrailGuess, type RankedIdentity, type RankedPaperTrailState } from '../api/ranked'
+import { getDailyPaperTrail, startDailyPaperTrail, submitDailyPaperTrailGuess, type RankedIdentity, type RankedPaperTrailState } from '../api/ranked'
 import { CareerGrid } from '../components/CareerGrid'
 import { PaperTrailGuessHistory } from '../components/PaperTrailGuessHistory'
 import { PlayerSearch } from '../components/PlayerSearch'
+import { PracticeTimer } from '../components/PracticeTimer'
 import { fc27Players } from '../data/fc27Players'
 import { PAPER_TRAIL_GUESS_LIMIT } from '../domain/paperTrail'
 import type { Player } from '../domain/types'
 import type { ResultPayload } from './LineupScreen'
+import { useDeadlineTimer } from '../hooks/useDeadlineTimer'
 
 export function RankedPaperTrailScreen({ identity, onResult, onPractice }: {
   identity: RankedIdentity
@@ -24,11 +26,14 @@ export function RankedPaperTrailScreen({ identity, onResult, onPractice }: {
   const usedIds = useMemo(() => daily?.guesses.map(player => player.id) || [], [daily])
 
   useEffect(() => {
-    getDailyPaperTrail(identity).then(state => {
+    startDailyPaperTrail(identity).then(state => {
       setDaily(state)
       setShowReveal(state.status === 'won' || state.status === 'lost')
     }).catch(caught => setError(caught instanceof Error ? caught.message : 'The ranked Paper Trail desk is unavailable.'))
   }, [identity])
+  const timeLeft = useDeadlineTimer(daily?.status === 'playing' ? daily.deadlineAt : undefined, () => {
+    getDailyPaperTrail(identity).then(state => { setDaily(state); setShowReveal(state.status === 'won' || state.status === 'lost') }).catch(() => undefined)
+  })
   useEffect(() => { if (showReveal) revealButtonRef.current?.focus() }, [showReveal])
 
   const submit = async (player: Player) => {
@@ -66,6 +71,7 @@ export function RankedPaperTrailScreen({ identity, onResult, onPractice }: {
       <h1>Follow the Clubs</h1>
       <p className="game-intro">Trace today’s badges, one wrong suspect at a time. Every detective gets the same trail.</p>
       <aside className="daily-case-note"><CalendarDays size={17}/><span><strong>{daily.date} · UTC case</strong><small>Playing as @{identity.user.username} · snapshot {daily.sourceSnapshot}</small></span></aside>
+      {!complete && <PracticeTimer timeLeft={timeLeft}/>}
 
       <CareerGrid clubs={daily.clubs} revealedCount={daily.clubs.length} totalClubs={daily.clubCount} />
       <div className="trail-attempt-row">

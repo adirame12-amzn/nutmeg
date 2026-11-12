@@ -74,7 +74,7 @@ export function CipherScreen({ onNavigate }: { onNavigate: (screen: Screen) => v
   if (status !== 'playing') return <div className={`cipher-result ${status}`}>
     <div className="cipher-result-art"><PlayerPortrait player={caseFile.player} size="hero"/></div>
     <p className="result-stamp">{status === 'won' ? 'CIPHER CRACKED' : 'CODE UNBROKEN'}</p>
-    <small>THE CIPHER · PRACTICE REPORT</small>
+    <small>CIPHER · PRACTICE REPORT</small>
     <h1>{caseFile.displayAnswer}</h1>
     <p>{status === 'won' ? 'Letters restored. Identity confirmed.' : `The scrambled player was ${caseFile.player.displayName}.`}</p>
     <strong className="points">+{score} pts</strong>
@@ -83,7 +83,7 @@ export function CipherScreen({ onNavigate }: { onNavigate: (screen: Screen) => v
   </div>
 
   return <div className="game-page cipher-page">
-    <div className="game-heading"><p className="eyebrow cipher">THE CIPHER</p><p className="demo-pill">CASE 05 · PRACTICE</p></div>
+    <div className="game-heading"><p className="eyebrow cipher">CIPHER</p><p className="demo-pill">CASE 05 · PRACTICE</p></div>
     <h1>Unscramble the Name</h1>
     <p className="game-intro">Every letter belongs to one player. Rebuild the name before the file closes; optional evidence costs {CIPHER_HINT_COST} points.</p>
     {!started ? <PracticeStartGate onStart={() => { timer.start(); setStarted(true) }}/> : <>

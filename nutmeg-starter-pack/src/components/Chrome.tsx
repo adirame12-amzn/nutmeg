@@ -1,7 +1,7 @@
 import { ArrowLeft, BarChart3, CircleUserRound, FileKey2, FileSearch, Home, Menu, ScanText, Trophy, X } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 
-export type Screen = 'home' | 'lineup' | 'mystery' | 'paper-trail' | 'ranked-paper-trail' | 'redacted' | 'ranked-redacted' | 'cipher' | 'ranked-cipher' | 'overlap' | 'wire-preview' | 'leaderboard' | 'credits' | 'result'
+export type Screen = 'home' | 'lineup' | 'mystery' | 'paper-trail' | 'ranked-paper-trail' | 'redacted' | 'ranked-redacted' | 'cipher' | 'ranked-cipher' | 'overlap' | 'ranked-overlap' | 'wire-preview' | 'leaderboard' | 'credits' | 'result'
 
 export function AppHeader({ screen, onNavigate }: { screen: Screen, onNavigate: (screen: Screen) => void }) {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -20,7 +20,7 @@ export function AppHeader({ screen, onNavigate }: { screen: Screen, onNavigate: 
           <button onClick={() => navigate('lineup')}><span className="menu-ticket">6</span> Prime Suspect</button>
           <button onClick={() => navigate('paper-trail')}><FileSearch size={18}/> Paper Trail</button>
           <button onClick={() => navigate('redacted')}><ScanText size={18}/> Redacted</button>
-          <button onClick={() => navigate('cipher')}><FileKey2 size={18}/> The Cipher</button>
+          <button onClick={() => navigate('cipher')}><FileKey2 size={18}/> Cipher</button>
           <button onClick={() => navigate('leaderboard')}><Trophy size={18}/> Friends league</button>
         </nav>
       )}

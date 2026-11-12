@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { getDailyPaperTrail, submitDailyPaperTrailGuess, type RankedPaperTrailState } from '../api/ranked'
+import { startDailyPaperTrail, submitDailyPaperTrailGuess, type RankedPaperTrailState } from '../api/ranked'
 import { fc27Players } from '../data/fc27Players'
 import { RankedPaperTrailScreen } from './RankedPaperTrailScreen'
 
 vi.mock('../api/ranked', async importOriginal => {
   const actual = await importOriginal<typeof import('../api/ranked')>()
-  return { ...actual, getDailyPaperTrail: vi.fn(), submitDailyPaperTrailGuess: vi.fn() }
+  return { ...actual, startDailyPaperTrail: vi.fn(), submitDailyPaperTrailGuess: vi.fn() }
 })
 
 const club = (id: string, name: string) => ({
@@ -26,7 +26,7 @@ describe('ranked Paper Trail', () => {
   it('keeps future clubs server-hidden and reveals the next club after a wrong guess', async () => {
     const user = userEvent.setup()
     const wrong = fc27Players[0]
-    vi.mocked(getDailyPaperTrail).mockResolvedValue(initial)
+    vi.mocked(startDailyPaperTrail).mockResolvedValue(initial)
     vi.mocked(submitDailyPaperTrailGuess).mockResolvedValue({
       ...initial, status: 'playing', guesses: [wrong], guessesUsed: 1,
       clubs: [club('one', 'First FC'), club('two', 'Second FC')],

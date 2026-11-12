@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-export const PRACTICE_SECONDS = 20
+export const PRACTICE_SECONDS = 60
 export const PRACTICE_DURATION_MS = PRACTICE_SECONDS * 1000
 
 export function usePracticeTimer(active: boolean, onExpire: () => void) {

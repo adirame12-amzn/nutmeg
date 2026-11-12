@@ -9,10 +9,10 @@
 
 ## Phase 2: shared daily cases alpha
 
-- The Cloudflare Worker is authoritative for the UTC daily Prime Suspect and Paper Trail targets, six-guess limits, comparisons/reveals, scoring and combined weekly results. The **Cold Cases** practice desk remains entirely local; its replayable games do not call the Worker, request a detective identity or write to D1.
-- Prime Suspect uses `players`, `daily_puzzles`, `attempts`, and `attempt_guesses`. Ranked Paper Trail adds `paper_trail_paths`, `paper_trail_daily_puzzles`, `paper_trail_attempts`, and `paper_trail_guesses`. `users` is shared. A scheduled event creates both puzzle rows at 00:00 UTC; each first request is an idempotent fallback.
+- The Cloudflare Worker is authoritative for the UTC daily Prime Suspect, Paper Trail, Redacted, Cipher and Overlap targets, limits, comparisons/reveals, independent timed-case deadlines, scoring and combined weekly results. The **Cold Cases** practice desk remains entirely local; its replayable games do not call the Worker, request a detective identity or write to D1.
+- Prime Suspect uses `players`, `daily_puzzles`, `attempts`, and `attempt_guesses`. Ranked Paper Trail adds its path, puzzle, attempt and guess tables; Redacted/Cipher share word-game puzzle and attempt tables; Overlap has dedicated puzzle and attempt tables. `users` is shared. A scheduled event creates all puzzle rows at 00:00 UTC; each first status request is an idempotent fallback.
 - A user claims a case-insensitively unique detective name. A random bearer token stays in browser storage while D1 stores only its SHA-256 hash. No email, password, login screen, cross-device recovery, or recovery code is included.
-- A unique `(user_id, puzzle_id)` attempt and unique guess rows enforce one result per mode, browser identity and day. Prime Suspect points are 100/80/65/50/35/20; Paper Trail points are 100/85/70/55/40/25. A miss scores zero. The weekly query unions completed attempts from both modes before aggregation.
+- A unique `(user_id, puzzle_id)` attempt and unique guess rows enforce one result per mode, browser identity and day. Prime Suspect points are 100/80/65/50/35/20; Paper Trail points are 100/85/70/55/40/25; Overlap is 0/10/40/100. A miss scores zero. The weekly query unions completed attempts from all five modes before aggregation.
 - Anonymous browser identities limit identity assurance and cannot stop determined users from creating multiple identities. Rate limiting and private friend groups remain future work.
 
 ## Offline graph

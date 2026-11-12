@@ -12,7 +12,7 @@ describe('Home case desks', () => {
 
     render(<HomeScreen onNavigate={onNavigate} onOpenPracticeLineup={onOpenPracticeLineup} ranked identity={null} />)
 
-    expect(screen.getByRole('button', { name: /ranked case/i })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('button', { name: /daily edition/i })).toHaveAttribute('aria-pressed', 'true')
     expect(screen.getByRole('heading', { name: 'Today’s Cases' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: /casebook.*№ 001/i })).toBeInTheDocument()
     expect(screen.queryByRole('heading', { name: 'Cold Cases' })).not.toBeInTheDocument()
@@ -32,7 +32,7 @@ describe('Home case desks', () => {
     await user.click(screen.getByRole('button', { name: /redacted/i }))
     expect(onNavigate).toHaveBeenCalledWith('redacted')
 
-    await user.click(screen.getByRole('button', { name: /the cipher/i }))
+    await user.click(screen.getByRole('button', { name: /case 05.*cipher/i }))
     expect(onNavigate).toHaveBeenCalledWith('cipher')
 
     await user.click(screen.getByRole('button', { name: /the overlap/i }))
@@ -42,24 +42,20 @@ describe('Home case desks', () => {
     expect(onNavigate).toHaveBeenCalledWith('wire-preview')
   })
 
-  it('opens the shared Prime Suspect from the daily desk', async () => {
+  it('opens the first unfinished case from the single daily call to action', async () => {
     const user = userEvent.setup()
     const onNavigate = vi.fn()
 
     render(<HomeScreen onNavigate={onNavigate} onOpenPracticeLineup={vi.fn()} ranked identity={null} />)
-    await user.click(screen.getByRole('button', { name: /daily case.*prime suspect/i }))
+    await user.click(screen.getByRole('button', { name: /play today’s cases/i }))
 
     expect(onNavigate).toHaveBeenCalledWith('lineup')
   })
 
-  it('opens the shared ranked Paper Trail from the daily desk', async () => {
+  it('keeps individual daily games off the home desk', () => {
     const user = userEvent.setup()
-    const onNavigate = vi.fn()
-
-    render(<HomeScreen onNavigate={onNavigate} onOpenPracticeLineup={vi.fn()} ranked identity={null} />)
-    await user.click(screen.getByRole('button', { name: /daily case 02.*paper trail/i }))
-
-    expect(onNavigate).toHaveBeenCalledWith('ranked-paper-trail')
+    render(<HomeScreen onNavigate={vi.fn()} onOpenPracticeLineup={vi.fn()} ranked identity={null} />)
+    expect(screen.queryByRole('button', { name: /daily case 02.*paper trail/i })).not.toBeInTheDocument()
   })
 
   it('removes the redundant offline control while retaining the weekly table', () => {
@@ -84,6 +80,9 @@ describe('Home case desks', () => {
   it('shows authoritative completion states for a signed-in daily desk', async () => {
     vi.spyOn(rankedApi, 'getDailyLineup').mockResolvedValue({ date: '2026-11-12', status: 'won', guesses: [], guessesUsed: 2, score: 80 })
     vi.spyOn(rankedApi, 'getDailyPaperTrail').mockResolvedValue({ date: '2026-11-12', status: 'playing', guesses: [], guessesUsed: 1, score: 0, clubs: [], clubCount: 4, sourceSnapshot: '2026-11-11' })
+    vi.spyOn(rankedApi, 'getDailyRedacted').mockResolvedValue({ date: '2026-11-12', status: 'not_started', attemptsUsed: 0, wrongAttempts: 0, score: 0, guessedLetters: [], guesses: [], slots: [], evidence: [] })
+    vi.spyOn(rankedApi, 'getDailyCipher').mockResolvedValue({ date: '2026-11-12', status: 'not_started', attemptsUsed: 0, score: 0, guesses: [], guessedLetters: [], scrambled: [], hints: [] })
+    vi.spyOn(rankedApi, 'getDailyOverlap').mockResolvedValue({ date: '2026-11-12', status: 'not_started', score: 0, matches: 0, durationSeconds: 60, clues: [], sourceSnapshot: '2026-11-11' })
 
     render(<HomeScreen
       onNavigate={vi.fn()}
@@ -92,8 +91,8 @@ describe('Home case desks', () => {
       identity={{ user: { id: 'detective-1', username: 'TouchlineFox' }, token: 'browser-token' }}
     />)
 
-    expect(await screen.findByText('SOLVED · +80')).toBeInTheDocument()
-    expect(await screen.findByText('IN PROGRESS')).toBeInTheDocument()
+    expect(await screen.findByText('Continue Today’s Cases')).toBeInTheDocument()
+    expect(screen.getByText('1/5 complete')).toBeInTheDocument()
   })
 
   it('turns completed local files green without involving ranked state', async () => {
@@ -102,7 +101,7 @@ describe('Home case desks', () => {
     render(<HomeScreen onNavigate={vi.fn()} onOpenPracticeLineup={vi.fn()} ranked={false} identity={null} />)
     await user.click(screen.getByRole('button', { name: /^cold cases/i }))
 
-    expect(screen.getByRole('button', { name: /the cipher/i })).toHaveClass('completed')
+    expect(screen.getByRole('button', { name: /case 05.*cipher/i })).toHaveClass('completed')
     expect(screen.getByRole('button', { name: /paper trail/i })).not.toHaveClass('completed')
     localStorage.removeItem('player-press-practice-completed-v1')
   })

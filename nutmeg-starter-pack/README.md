@@ -2,21 +2,21 @@
 
 **Every player leaves clues.**
 
-Player Press is a mobile-first football case-solving game. **Ranked Cases** serves shared server-validated daily Prime Suspect, Paper Trail, Redacted and Cipher cases plus a combined weekly leaderboard; **Cold Cases** is the local, unlimited practice desk for Prime Suspect, Paper Trail, Redacted, The Cipher and The Overlap, plus an early visual preview of The Wire. The visual direction is a warm investigative football newspaper with high-energy orange and cobalt accents.
+Player Press is a mobile-first football case-solving game. **Daily Edition** presents one clear journey through shared server-validated Prime Suspect, Paper Trail, Redacted, Cipher and Overlap cases plus a combined weekly leaderboard; **Cold Cases** is the local, unlimited practice desk for the same games, plus an early visual preview of The Wire. The visual direction is a warm investigative football newspaper with high-energy orange and cobalt accents.
 
 ## Current implementation status
 
 Milestone A is playable and the shared ranked alpha is deployed with an account-owned Cloudflare Worker and D1 database:
 
-- Home with explicit Ranked Case and Cold Cases practice desks, Prime Suspect, Paper Trail, case-report, unique-name onboarding, and weekly leaderboard screens.
-- One server-stored puzzle per UTC date for Prime Suspect, Paper Trail, Redacted and The Cipher, created by a 00:00 UTC cron with an idempotent first-request fallback.
+- Home with one adaptive Play/Continue/Complete Daily Edition call to action, a separate Cold Cases practice desk, case reports, unique-name onboarding, and weekly leaderboard screens.
+- One server-stored puzzle per UTC date for Prime Suspect, Paper Trail, Redacted, Cipher and Overlap, created by a 00:00 UTC cron with an idempotent first-request fallback.
 - Browser-bound unique detective names without email/password login or recovery, and server-authoritative guesses and scores.
-- Weekly Monday–Sunday UTC table combining all four ranked cases. Scores and optional-evidence deductions are calculated by the Worker; an unsolved case scores zero.
+- Weekly Monday–Sunday UTC table combining all five ranked cases. Scores, deadlines and optional-evidence deductions are calculated by the Worker; an unsolved case scores zero.
 - Six-suspect Prime Suspect using 96 imported FC 27 snapshot records, accent-insensitive aliases, reviewed portraits, deterministic comparisons, age/OVR directions, stacked player cards, scoring, and replay.
 - Local and daily ranked Paper Trail with progressive senior-club reveals, six guesses, 87 eligible histories, clean-colour club crests and a complete case-report reveal. Ranked play keeps unrevealed clubs and the answer server-side.
 - Browser-only Redacted practice with accent-safe letter matching, six strikes, optional full-player guesses, evidence unlocks, local scoring and versioned local statistics.
 - Local and daily ranked Cipher with four attempts. Nation and club evidence become available after two and three misses, remain sealed until deliberately opened, and cost ten points each.
-- Browser-only The Overlap with a monotonic 20-second timer, one locked answer, three equal evidence cards, deterministic 0/10/40/100 scoring and 156 audited club-pair/country puzzles. Cipher, Redacted and Paper Trail Cold Cases use the same evidence-gated 20-second practice clock; ranked daily cases remain untimed until their deadline can be server-authoritative.
+- The Overlap with one locked answer, club/country/club evidence, deterministic 0/10/40/100 scoring and 156 audited local puzzles. Paper Trail, Redacted, Cipher and Overlap each receive their own 60-second clock in practice and ranked play; ranked deadlines are stored and enforced by the Worker. Prime Suspect remains untimed.
 - A clearly labelled, non-playable The Wire practice mockup demonstrating the intended vertical club graph and exactly two emphasized active clubs. Its verified route engine, timer and scoring are not implemented yet.
 - Staggered deal-in, sheen and tactile hover/press motion for Cold Cases cards, with reduced-motion support.
 - Responsive mobile shell designed at 390px and adapted for 320px, 768px, and desktop.

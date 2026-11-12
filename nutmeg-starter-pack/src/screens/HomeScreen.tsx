@@ -1,8 +1,9 @@
-import { ArrowRight, CalendarCheck, Clock3, Fingerprint, FolderOpen, Sparkles, Trophy, UserRoundCheck } from 'lucide-react'
+import { ArrowRight, CalendarCheck, Check, Clock3, Fingerprint, FolderOpen, Play, Sparkles, Trophy, UserRoundCheck } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { getDailyCipher, getDailyLineup, getDailyPaperTrail, getDailyRedacted, type RankedIdentity } from '../api/ranked'
+import { getDailyCipher, getDailyLineup, getDailyOverlap, getDailyPaperTrail, getDailyRedacted, type RankedIdentity } from '../api/ranked'
 import type { Screen } from '../components/Chrome'
 import { loadPracticeCompletions, PRACTICE_PROGRESS_EVENT, type PracticeGame } from '../data/practiceProgress'
+import { completedDailyCount, DAILY_CASES, nextDailyScreen, type DailyCaseId, type DailyCaseStatus } from '../domain/dailyJourney'
 
 type CaseProgress = { status: 'checking' | 'open' | 'playing' | 'won' | 'lost'; score?: number }
 
@@ -41,6 +42,7 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
   const [trailProgress, setTrailProgress] = useState<CaseProgress>({ status: identity && ranked ? 'checking' : 'open' })
   const [redactedProgress, setRedactedProgress] = useState<CaseProgress>({ status: identity && ranked ? 'checking' : 'open' })
   const [cipherProgress, setCipherProgress] = useState<CaseProgress>({ status: identity && ranked ? 'checking' : 'open' })
+  const [overlapProgress, setOverlapProgress] = useState<CaseProgress>({ status: identity && ranked ? 'checking' : 'open' })
   const [practiceCompleted, setPracticeCompleted] = useState<Set<PracticeGame>>(loadPracticeCompletions)
 
   useEffect(() => {
@@ -52,7 +54,7 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
 
   useEffect(() => {
     if (!ranked || !identity) return
-    Promise.allSettled([getDailyLineup(identity), getDailyPaperTrail(identity), getDailyRedacted(identity), getDailyCipher(identity)]).then(([lineup, trail, redacted, cipher]) => {
+    Promise.allSettled([getDailyLineup(identity), getDailyPaperTrail(identity), getDailyRedacted(identity), getDailyCipher(identity), getDailyOverlap(identity)]).then(([lineup, trail, redacted, cipher, overlap]) => {
       if (lineup.status === 'fulfilled') setLineupProgress({ status: lineup.value.status === 'not_started' ? 'open' : lineup.value.status, score: lineup.value.score })
       else setLineupProgress({ status: 'open' })
       if (trail.status === 'fulfilled') setTrailProgress({ status: trail.value.status === 'not_started' ? 'open' : trail.value.status, score: trail.value.score })
@@ -61,8 +63,21 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
       else setRedactedProgress({ status: 'open' })
       if (cipher.status === 'fulfilled') setCipherProgress({ status: cipher.value.status === 'not_started' ? 'open' : cipher.value.status, score: cipher.value.score })
       else setCipherProgress({ status: 'open' })
+      if (overlap.status === 'fulfilled') setOverlapProgress({ status: overlap.value.status === 'not_started' ? 'open' : overlap.value.status, score: overlap.value.score })
+      else setOverlapProgress({ status: 'open' })
     })
   }, [identity, ranked])
+
+  const progressById: Record<DailyCaseId, CaseProgress> = { lineup: lineupProgress, 'paper-trail': trailProgress, redacted: redactedProgress, cipher: cipherProgress, overlap: overlapProgress }
+  const statuses = Object.fromEntries(Object.entries(progressById).map(([id, progress]) => [id, progress.status === 'open' || progress.status === 'checking' ? 'not_started' : progress.status])) as Record<DailyCaseId, DailyCaseStatus>
+  const completed = completedDailyCount(statuses)
+  const checking = Object.values(progressById).some(progress => progress.status === 'checking')
+  const allComplete = completed === DAILY_CASES.length
+  const dailyLabel = checking ? 'Checking today’s files…' : allComplete ? 'Today’s Edition Complete' : completed ? 'Continue Today’s Cases' : 'Play Today’s Cases'
+  const openDaily = () => {
+    if (allComplete) { onNavigate('leaderboard'); return }
+    onNavigate(nextDailyScreen(statuses) || 'lineup')
+  }
 
   return (
     <div className="home-page">
@@ -72,7 +87,7 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
       </section>
 
       <div className="desk-switch" role="group" aria-label="Choose a case desk">
-        <button className={desk === 'daily' ? 'active' : ''} onClick={() => setDesk('daily')} aria-pressed={desk === 'daily'}><CalendarCheck/><span><strong>Ranked Cases</strong><small>4 games · shared daily</small></span></button>
+        <button className={desk === 'daily' ? 'active' : ''} onClick={() => setDesk('daily')} aria-pressed={desk === 'daily'}><CalendarCheck/><span><strong>Daily Edition</strong><small>5 cases · shared daily</small></span></button>
         <button className={desk === 'practice' ? 'active' : ''} onClick={() => setDesk('practice')} aria-pressed={desk === 'practice'}><FolderOpen/><span><strong>Cold Cases</strong><small>Unlimited · unscored</small></span></button>
       </div>
 
@@ -82,24 +97,15 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
           <span><small>ONE SHARED FILE · SCORED</small><h2 id="daily-cases-title">Today’s Cases</h2></span>
           <span className="mode-chip">RANKED</span>
         </div>
-        <p>Four shared cases. Solve any—or clear the whole desk—for weekly points.</p>
-        <div className="ranked-case-list">
-          <button className={`game-tile orange ranked-case progress-${lineupProgress.status}`} onClick={() => onNavigate('lineup')}>
-            <GameTicket />
-            <span><CaseProgressChip progress={lineupProgress}/><small>DAILY CASE 01 · 6 SUSPECTS</small><strong>PRIME SUSPECT</strong><em>Six suspect cards. Every clue points you closer.</em></span>
-            <ArrowRight className="tile-arrow" />
-          </button>
-          <button className={`game-tile ranked-case paper-ranked-case progress-${trailProgress.status}`} onClick={() => onNavigate(ranked ? 'ranked-paper-trail' : 'paper-trail')}>
-            <GameTicket game="trail" />
-            <span><CaseProgressChip progress={trailProgress}/><small>DAILY CASE 02 · 6 SUSPECTS</small><strong>PAPER TRAIL</strong><em>Trace the badges. Name the career.</em></span>
-            <ArrowRight className="tile-arrow" />
-          </button>
-          <button className={`game-tile ranked-case redacted-ranked-case progress-${redactedProgress.status}`} onClick={() => onNavigate(ranked ? 'ranked-redacted' : 'redacted')}>
-            <GameTicket game="redacted"/><span><CaseProgressChip progress={redactedProgress}/><small>DAILY CASE 03 · 6 STRIKES</small><strong>REDACTED</strong><em>Strip the ink. Expose today’s hidden name.</em></span><ArrowRight className="tile-arrow"/>
-          </button>
-          <button className={`game-tile ranked-case cipher-ranked-case progress-${cipherProgress.status}`} onClick={() => onNavigate(ranked ? 'ranked-cipher' : 'cipher')}>
-            <GameTicket game="cipher"/><span><CaseProgressChip progress={cipherProgress}/><small>DAILY CASE 04 · 4 ATTEMPTS</small><strong>THE CIPHER</strong><em>Rebuild the same scrambled name as everyone else.</em></span><ArrowRight className="tile-arrow"/>
-          </button>
+        <p>One football edition. Five different investigations. Your progress waits if you need a break.</p>
+        <button className={`daily-edition-cta ${allComplete ? 'complete' : completed ? 'continue' : ''}`} onClick={openDaily} disabled={checking}>
+          <span className="daily-ball" aria-hidden="true"><i/><b>{allComplete ? <Check/> : <Play/>}</b></span>
+          <span className="daily-cta-copy"><small>{allComplete ? 'ALL FILES CLOSED' : 'TODAY’S FOOTBALL EDITION'}</small><strong>{dailyLabel}</strong><em>{checking ? 'Reading the case desk' : allComplete ? 'See where you stand this week' : completed ? `Next: ${DAILY_CASES.find(item => item.screen === nextDailyScreen(statuses))?.label}` : 'Tap to open Case 01'}</em></span>
+          <ArrowRight className="daily-cta-arrow"/>
+        </button>
+        <div className="daily-edition-progress" aria-label={`${completed} of ${DAILY_CASES.length} daily cases completed`}>
+          <div>{DAILY_CASES.map((item, index) => <span key={item.id} className={['won', 'lost'].includes(statuses[item.id]) ? 'done' : statuses[item.id] === 'playing' ? 'current' : ''}><i>{['won', 'lost'].includes(statuses[item.id]) ? <Check/> : index + 1}</i><small>{item.label}</small></span>)}</div>
+          <strong>{completed}/{DAILY_CASES.length} complete</strong>
         </div>
         <div className={`desk-meta ${ranked || identity ? '' : 'single'}`}>
           {(ranked || identity) && <button onClick={() => onNavigate('lineup')}><Fingerprint /> <span><strong>{identity ? `Signed in as @${identity.user.username}` : 'Claim your detective name'}</strong><small>{identity ? 'Identity saved in this browser' : 'No email or password needed'}</small></span></button>}
@@ -125,10 +131,10 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
             <GameTicket game="redacted" /><span><small>CASE 04 · 6 STRIKES</small><strong>Redacted</strong><em>Pick letters. Strip the ink. Name the player.</em></span><ArrowRight />
           </button>
           <button className={`archive-game cipher-archive ${practiceCompleted.has('cipher') ? 'completed' : ''}`} data-file="FILE 05" onClick={() => onNavigate('cipher')}>
-            <GameTicket game="cipher" /><span><small>CASE 05 · 4 ATTEMPTS</small><strong>The Cipher</strong><em>Unscramble the name before the trail goes cold.</em></span><ArrowRight />
+            <GameTicket game="cipher" /><span><small>CASE 05 · 4 ATTEMPTS</small><strong>Cipher</strong><em>Unscramble the name before the trail goes cold.</em></span><ArrowRight />
           </button>
           <button className={`archive-game overlap-archive ${practiceCompleted.has('overlap') ? 'completed' : ''}`} data-file="FILE 06" onClick={() => onNavigate('overlap')}>
-            <GameTicket game="overlap" /><span><small>CASE 06 · 20 SECONDS</small><strong>The Overlap</strong><em>Two clubs. One country. One shot.</em></span><ArrowRight />
+            <GameTicket game="overlap" /><span><small>CASE 06 · 60 SECONDS</small><strong>The Overlap</strong><em>Two clubs. One country. One shot.</em></span><ArrowRight />
           </button>
         </div>
         <div className="archive-foot"><Clock3 size={15}/><span>Play again whenever you like · no points recorded</span></div>

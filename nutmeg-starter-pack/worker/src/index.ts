@@ -1,4 +1,4 @@
-import { compareRankedPlayers, normaliseUsername, previousWeekUtc, rankedCipherScore, rankedLineupScore, rankedPaperTrailScore, RANKED_GUESS_LIMIT, utcDate, validateUsername, weekStartUtc } from './rules'
+import { compareRankedPlayers, normaliseUsername, previousWeekUtc, rankedCipherScore, rankedLineupScore, rankedOverlapScore, rankedPaperTrailScore, RANKED_GUESS_LIMIT, RANKED_TIMED_SECONDS, utcDate, validateUsername, weekStartUtc } from './rules'
 import type { AttemptRow, Env, PaperTrailPuzzleRow, PlayerRow, PuzzleRow, UserRow } from './types'
 
 const DEFAULT_ORIGINS = [
@@ -62,7 +62,11 @@ const playerPublic = (player: PlayerRow) => ({
 
 type WordMode = 'redacted' | 'cipher'
 interface WordPuzzleRow extends PuzzleRow { mode: WordMode; display_answer: string; scrambled_answer: string | null }
-interface WordAttemptRow extends AttemptRow { attempts_used: number; guessed_letters: string; evidence_opened: number; guesses_json: string }
+interface WordAttemptRow extends AttemptRow { attempts_used: number; guessed_letters: string; evidence_opened: number; guesses_json: string; deadline_at: string | null }
+interface TimedAttemptRow extends AttemptRow { deadline_at: string | null }
+
+const deadlineFrom = (date = new Date()) => new Date(date.getTime() + RANKED_TIMED_SECONDS * 1000).toISOString()
+const isExpired = (deadline: string | null) => Boolean(deadline && Date.parse(deadline) <= Date.now())
 
 const wordNames: Record<string, string> = {
   'vini-jr': 'Vini Jr.', 'virgil-van-dijk': 'Van Dijk', 'kevin-de-bruyne': 'De Bruyne',
@@ -101,22 +105,35 @@ async function ensureDailyWordPuzzle(env: Env, mode: WordMode, date = utcDate())
 }
 
 async function ensureWordAttempt(env: Env, userId: string, puzzle: WordPuzzleRow) {
-  let attempt = await env.DB.prepare('SELECT id, status, attempts_used, score, guessed_letters, evidence_opened, guesses_json FROM word_attempts WHERE user_id = ? AND puzzle_id = ?').bind(userId, puzzle.id).first<WordAttemptRow>()
+  let attempt = await env.DB.prepare('SELECT id, status, attempts_used, score, guessed_letters, evidence_opened, guesses_json, deadline_at FROM word_attempts WHERE user_id = ? AND puzzle_id = ?').bind(userId, puzzle.id).first<WordAttemptRow>()
   if (!attempt) {
-    await env.DB.prepare("INSERT OR IGNORE INTO word_attempts (id, user_id, puzzle_id, status, started_at) VALUES (?, ?, ?, 'playing', ?)").bind(crypto.randomUUID(), userId, puzzle.id, new Date().toISOString()).run()
-    attempt = await env.DB.prepare('SELECT id, status, attempts_used, score, guessed_letters, evidence_opened, guesses_json FROM word_attempts WHERE user_id = ? AND puzzle_id = ?').bind(userId, puzzle.id).first<WordAttemptRow>()
+    const now = new Date()
+    await env.DB.prepare("INSERT OR IGNORE INTO word_attempts (id, user_id, puzzle_id, status, started_at, deadline_at) VALUES (?, ?, ?, 'playing', ?, ?)").bind(crypto.randomUUID(), userId, puzzle.id, now.toISOString(), deadlineFrom(now)).run()
+    attempt = await env.DB.prepare('SELECT id, status, attempts_used, score, guessed_letters, evidence_opened, guesses_json, deadline_at FROM word_attempts WHERE user_id = ? AND puzzle_id = ?').bind(userId, puzzle.id).first<WordAttemptRow>()
+  } else if (attempt.status === 'playing' && !attempt.deadline_at) {
+    const deadline = deadlineFrom()
+    await env.DB.prepare('UPDATE word_attempts SET deadline_at = ? WHERE id = ?').bind(deadline, attempt.id).run()
+    attempt.deadline_at = deadline
   }
   if (!attempt) throw new Error('Unable to start the daily word case.')
+  if (attempt.status === 'playing' && isExpired(attempt.deadline_at)) {
+    await env.DB.prepare("UPDATE word_attempts SET status = 'lost', score = 0, completed_at = ? WHERE id = ? AND status = 'playing'").bind(new Date().toISOString(), attempt.id).run()
+    attempt.status = 'lost'; attempt.score = 0
+  }
   return attempt
 }
 
 async function getWordState(env: Env, userId: string, puzzle: WordPuzzleRow) {
-  const attempt = await env.DB.prepare('SELECT id, status, attempts_used, score, guessed_letters, evidence_opened, guesses_json FROM word_attempts WHERE user_id = ? AND puzzle_id = ?').bind(userId, puzzle.id).first<WordAttemptRow>()
+  let attempt = await env.DB.prepare('SELECT id, status, attempts_used, score, guessed_letters, evidence_opened, guesses_json, deadline_at FROM word_attempts WHERE user_id = ? AND puzzle_id = ?').bind(userId, puzzle.id).first<WordAttemptRow>()
+  if (attempt?.status === 'playing' && isExpired(attempt.deadline_at)) {
+    await env.DB.prepare("UPDATE word_attempts SET status = 'lost', score = 0, completed_at = ? WHERE id = ? AND status = 'playing'").bind(new Date().toISOString(), attempt.id).run()
+    attempt = { ...attempt, status: 'lost', score: 0 }
+  }
   const guessedLetters = attempt ? JSON.parse(attempt.guessed_letters) as string[] : []
   const guesses = attempt ? JSON.parse(attempt.guesses_json) as string[] : []
   const complete = attempt && attempt.status !== 'playing'
   const target = complete || (attempt && attempt.evidence_opened) ? await env.DB.prepare('SELECT * FROM players WHERE id = ?').bind(puzzle.target_player_id).first<PlayerRow>() : null
-  const base = { date: puzzle.puzzle_date, status: attempt?.status || 'not_started', attemptsUsed: attempt?.attempts_used || 0, score: attempt?.score || 0, guesses, guessedLetters }
+  const base = { date: puzzle.puzzle_date, status: attempt?.status || 'not_started', attemptsUsed: attempt?.attempts_used || 0, score: attempt?.score || 0, guesses, guessedLetters, deadlineAt: attempt?.deadline_at || undefined, durationSeconds: RANKED_TIMED_SECONDS }
   if (puzzle.mode === 'cipher') {
     const attemptsUsed = attempt?.attempts_used || 0
     const nationOpen = Boolean((attempt?.evidence_opened || 0) & 1)
@@ -173,6 +190,18 @@ interface PaperTrailClub {
   sourceUrl: string
 }
 
+interface OverlapPuzzleRow extends PuzzleRow {
+  club_a_json: string
+  club_b_json: string
+  country: string
+  source_snapshot: string
+}
+interface OverlapAttemptRow extends AttemptRow {
+  selected_player_id: string | null
+  matches: number
+  deadline_at: string
+}
+
 const parsePaperTrailClubs = (value: string): PaperTrailClub[] => {
   const parsed = JSON.parse(value) as unknown
   if (!Array.isArray(parsed) || parsed.length < 2 || parsed.length > 5) throw new Error('The Paper Trail path is invalid.')
@@ -197,11 +226,15 @@ async function ensureDailyPaperTrailPuzzle(env: Env, date = utcDate()): Promise<
 
 async function getPaperTrailAttemptState(env: Env, userId: string, puzzle: PaperTrailPuzzleRow) {
   const clubs = parsePaperTrailClubs(puzzle.clubs_json)
-  const attempt = await env.DB.prepare('SELECT id, status, guesses_used, score FROM paper_trail_attempts WHERE user_id = ? AND puzzle_id = ?')
-    .bind(userId, puzzle.id).first<AttemptRow>()
+  let attempt = await env.DB.prepare('SELECT id, status, guesses_used, score, deadline_at FROM paper_trail_attempts WHERE user_id = ? AND puzzle_id = ?')
+    .bind(userId, puzzle.id).first<TimedAttemptRow>()
+  if (attempt?.status === 'playing' && isExpired(attempt.deadline_at)) {
+    await env.DB.prepare("UPDATE paper_trail_attempts SET status = 'lost', score = 0, completed_at = ? WHERE id = ? AND status = 'playing'").bind(new Date().toISOString(), attempt.id).run()
+    attempt = { ...attempt, status: 'lost', score: 0 }
+  }
   if (!attempt) return {
     date: puzzle.puzzle_date, status: 'not_started', guesses: [], guessesUsed: 0, score: 0,
-    clubs: clubs.slice(0, 1), clubCount: clubs.length, sourceSnapshot: puzzle.source_snapshot,
+    clubs: clubs.slice(0, 1), clubCount: clubs.length, sourceSnapshot: puzzle.source_snapshot, durationSeconds: RANKED_TIMED_SECONDS,
   }
   const rows = await env.DB.prepare('SELECT response_json FROM paper_trail_guesses WHERE attempt_id = ? ORDER BY guess_number')
     .bind(attempt.id).all<{ response_json: string }>()
@@ -216,8 +249,97 @@ async function getPaperTrailAttemptState(env: Env, userId: string, puzzle: Paper
   return {
     date: puzzle.puzzle_date, status: attempt.status, guesses, guessesUsed: attempt.guesses_used,
     score: attempt.score, clubs: clubs.slice(0, revealedCount), clubCount: clubs.length,
-    sourceSnapshot: puzzle.source_snapshot, answer,
+    sourceSnapshot: puzzle.source_snapshot, answer, deadlineAt: attempt.deadline_at || undefined, durationSeconds: RANKED_TIMED_SECONDS,
   }
+}
+
+async function ensurePaperTrailAttempt(env: Env, userId: string, puzzle: PaperTrailPuzzleRow) {
+  let attempt = await env.DB.prepare('SELECT id, status, guesses_used, score, deadline_at FROM paper_trail_attempts WHERE user_id = ? AND puzzle_id = ?')
+    .bind(userId, puzzle.id).first<TimedAttemptRow>()
+  if (!attempt) {
+    const now = new Date()
+    await env.DB.prepare("INSERT OR IGNORE INTO paper_trail_attempts (id, user_id, puzzle_id, status, guesses_used, score, started_at, deadline_at) VALUES (?, ?, ?, 'playing', 0, 0, ?, ?)")
+      .bind(crypto.randomUUID(), userId, puzzle.id, now.toISOString(), deadlineFrom(now)).run()
+    attempt = await env.DB.prepare('SELECT id, status, guesses_used, score, deadline_at FROM paper_trail_attempts WHERE user_id = ? AND puzzle_id = ?')
+      .bind(userId, puzzle.id).first<TimedAttemptRow>()
+  } else if (attempt.status === 'playing' && !attempt.deadline_at) {
+    attempt.deadline_at = deadlineFrom()
+    await env.DB.prepare('UPDATE paper_trail_attempts SET deadline_at = ? WHERE id = ?').bind(attempt.deadline_at, attempt.id).run()
+  }
+  if (!attempt) throw new Error('Unable to start the ranked Paper Trail attempt.')
+  if (attempt.status === 'playing' && isExpired(attempt.deadline_at)) {
+    await env.DB.prepare("UPDATE paper_trail_attempts SET status = 'lost', score = 0, completed_at = ? WHERE id = ? AND status = 'playing'").bind(new Date().toISOString(), attempt.id).run()
+    attempt.status = 'lost'; attempt.score = 0
+  }
+  return attempt
+}
+
+async function ensureDailyOverlapPuzzle(env: Env, date = utcDate()): Promise<OverlapPuzzleRow> {
+  const existing = await env.DB.prepare('SELECT id, puzzle_date, target_player_id, club_a_json, club_b_json, country, source_snapshot FROM overlap_daily_puzzles WHERE puzzle_date = ?')
+    .bind(date).first<OverlapPuzzleRow>()
+  if (existing) return existing
+  const rows = await env.DB.prepare(`
+    SELECT path.player_id, path.clubs_json, path.source_snapshot, players.nation
+    FROM paper_trail_paths path JOIN players ON players.id = path.player_id
+    ORDER BY RANDOM() LIMIT 20
+  `).all<{ player_id: string; clubs_json: string; source_snapshot: string; nation: string }>()
+  const candidate = (rows.results || []).map(row => ({ ...row, clubs: parsePaperTrailClubs(row.clubs_json) }))
+    .find(row => new Set(row.clubs.map(club => club.wikidataClubId)).size >= 2)
+  if (!candidate) throw new Error('The ranked Overlap pool has not been seeded.')
+  const clubs = candidate.clubs.filter((club, index, all) => all.findIndex(item => item.wikidataClubId === club.wikidataClubId) === index)
+  await env.DB.prepare('INSERT OR IGNORE INTO overlap_daily_puzzles (id, puzzle_date, club_a_json, club_b_json, country, target_player_id, source_snapshot, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')
+    .bind(`overlap:${date}`, date, JSON.stringify(clubs[0]), JSON.stringify(clubs[1]), candidate.nation, candidate.player_id, candidate.source_snapshot, new Date().toISOString()).run()
+  const puzzle = await env.DB.prepare('SELECT id, puzzle_date, target_player_id, club_a_json, club_b_json, country, source_snapshot FROM overlap_daily_puzzles WHERE puzzle_date = ?')
+    .bind(date).first<OverlapPuzzleRow>()
+  if (!puzzle) throw new Error('Unable to create the daily Overlap puzzle.')
+  return puzzle
+}
+
+async function getOverlapState(env: Env, userId: string, puzzle: OverlapPuzzleRow) {
+  let attempt = await env.DB.prepare('SELECT id, status, score, selected_player_id, matches, deadline_at FROM overlap_attempts WHERE user_id = ? AND puzzle_id = ?')
+    .bind(userId, puzzle.id).first<OverlapAttemptRow>()
+  if (attempt?.status === 'playing' && isExpired(attempt.deadline_at)) {
+    await env.DB.prepare("UPDATE overlap_attempts SET status = 'lost', score = 0, completed_at = ? WHERE id = ? AND status = 'playing'").bind(new Date().toISOString(), attempt.id).run()
+    attempt = { ...attempt, status: 'lost', score: 0 }
+  }
+  const complete = attempt && attempt.status !== 'playing'
+  const selected = complete && attempt?.selected_player_id ? await env.DB.prepare('SELECT * FROM players WHERE id = ?').bind(attempt.selected_player_id).first<PlayerRow>() : null
+  const selectedPath = selected ? await env.DB.prepare('SELECT clubs_json FROM paper_trail_paths WHERE player_id = ?').bind(selected.id).first<{ clubs_json: string }>() : null
+  const answer = complete ? await env.DB.prepare('SELECT * FROM players WHERE id = ?').bind(puzzle.target_player_id).first<PlayerRow>() : null
+  const clubA = JSON.parse(puzzle.club_a_json) as PaperTrailClub
+  const clubB = JSON.parse(puzzle.club_b_json) as PaperTrailClub
+  const selectedClubIds = new Set(selectedPath ? parsePaperTrailClubs(selectedPath.clubs_json).map(club => club.wikidataClubId) : [])
+  return {
+    date: puzzle.puzzle_date,
+    status: attempt?.status || 'not_started',
+    score: attempt?.score || 0,
+    matches: attempt?.matches || 0,
+    deadlineAt: attempt?.deadline_at,
+    durationSeconds: RANKED_TIMED_SECONDS,
+    clues: [JSON.parse(puzzle.club_a_json), { name: puzzle.country, kind: 'country' }, JSON.parse(puzzle.club_b_json)],
+    selected: selected ? playerPublic(selected) : undefined,
+    verdicts: selected ? [selectedClubIds.has(clubA.wikidataClubId), selected.nation === puzzle.country, selectedClubIds.has(clubB.wikidataClubId)] : undefined,
+    answer: answer ? playerPublic(answer) : undefined,
+    sourceSnapshot: puzzle.source_snapshot,
+  }
+}
+
+async function ensureOverlapAttempt(env: Env, userId: string, puzzle: OverlapPuzzleRow) {
+  let attempt = await env.DB.prepare('SELECT id, status, score, selected_player_id, matches, deadline_at FROM overlap_attempts WHERE user_id = ? AND puzzle_id = ?')
+    .bind(userId, puzzle.id).first<OverlapAttemptRow>()
+  if (!attempt) {
+    const now = new Date()
+    await env.DB.prepare("INSERT OR IGNORE INTO overlap_attempts (id, user_id, puzzle_id, status, started_at, deadline_at) VALUES (?, ?, ?, 'playing', ?, ?)")
+      .bind(crypto.randomUUID(), userId, puzzle.id, now.toISOString(), deadlineFrom(now)).run()
+    attempt = await env.DB.prepare('SELECT id, status, score, selected_player_id, matches, deadline_at FROM overlap_attempts WHERE user_id = ? AND puzzle_id = ?')
+      .bind(userId, puzzle.id).first<OverlapAttemptRow>()
+  }
+  if (!attempt) throw new Error('Unable to start the daily Overlap case.')
+  if (attempt.status === 'playing' && isExpired(attempt.deadline_at)) {
+    await env.DB.prepare("UPDATE overlap_attempts SET status = 'lost', score = 0, completed_at = ? WHERE id = ? AND status = 'playing'").bind(new Date().toISOString(), attempt.id).run()
+    attempt.status = 'lost'; attempt.score = 0
+  }
+  return attempt
 }
 
 async function ensurePreviousWeekChampion(env: Env, date = utcDate()) {
@@ -243,13 +365,17 @@ async function ensurePreviousWeekChampion(env: Env, date = utcDate()) {
         SELECT a.user_id, a.status, a.score, p.puzzle_date
         FROM word_attempts a JOIN word_daily_puzzles p ON p.id = a.puzzle_id
         WHERE a.status IN ('won', 'lost') AND p.puzzle_date BETWEEN ? AND ?
+        UNION ALL
+        SELECT a.user_id, a.status, a.score, p.puzzle_date
+        FROM overlap_attempts a JOIN overlap_daily_puzzles p ON p.id = a.puzzle_id
+        WHERE a.status IN ('won', 'lost') AND p.puzzle_date BETWEEN ? AND ?
       ) c
       JOIN users u ON u.id = c.user_id
       GROUP BY u.id, u.created_at
       ORDER BY points DESC, solved DESC, played ASC, u.created_at ASC
       LIMIT 1
     ) ranked
-  `).bind(start, new Date().toISOString(), start, end, start, end, start, end).run()
+  `).bind(start, new Date().toISOString(), start, end, start, end, start, end, start, end).run()
 }
 
 const suggestionParts = {
@@ -354,19 +480,17 @@ async function route(request: Request, env: Env) {
     return json(await getPaperTrailAttemptState(env, user.id, puzzle))
   }
 
+  if (request.method === 'POST' && path === '/daily/paper-trail/start') {
+    const puzzle = await ensureDailyPaperTrailPuzzle(env)
+    await ensurePaperTrailAttempt(env, user.id, puzzle)
+    return json(await getPaperTrailAttemptState(env, user.id, puzzle))
+  }
+
   if (request.method === 'POST' && path === '/daily/paper-trail/guess') {
     const body = await request.json().catch(() => ({})) as { playerId?: string }
     if (!body.playerId) return json({ error: 'Choose a valid suspect.' }, 400)
     const puzzle = await ensureDailyPaperTrailPuzzle(env)
-    let attempt = await env.DB.prepare('SELECT id, status, guesses_used, score FROM paper_trail_attempts WHERE user_id = ? AND puzzle_id = ?')
-      .bind(user.id, puzzle.id).first<AttemptRow>()
-    if (!attempt) {
-      await env.DB.prepare("INSERT OR IGNORE INTO paper_trail_attempts (id, user_id, puzzle_id, status, guesses_used, score, started_at) VALUES (?, ?, ?, 'playing', 0, 0, ?)")
-        .bind(crypto.randomUUID(), user.id, puzzle.id, new Date().toISOString()).run()
-      attempt = await env.DB.prepare('SELECT id, status, guesses_used, score FROM paper_trail_attempts WHERE user_id = ? AND puzzle_id = ?')
-        .bind(user.id, puzzle.id).first<AttemptRow>()
-    }
-    if (!attempt) throw new Error('Unable to start the ranked Paper Trail attempt.')
+    const attempt = await ensurePaperTrailAttempt(env, user.id, puzzle)
     if (attempt.status !== 'playing') return json({ error: 'Today’s ranked Paper Trail is already complete.', state: await getPaperTrailAttemptState(env, user.id, puzzle) }, 409)
     if (attempt.guesses_used >= RANKED_GUESS_LIMIT) return json({ error: 'No ranked guesses remain.' }, 409)
     const duplicate = await env.DB.prepare('SELECT 1 AS found FROM paper_trail_guesses WHERE attempt_id = ? AND player_id = ?')
@@ -400,6 +524,13 @@ async function route(request: Request, env: Env) {
   const wordMatch = path.match(/^\/daily\/(redacted|cipher)$/)
   if (request.method === 'GET' && wordMatch) {
     const puzzle = await ensureDailyWordPuzzle(env, wordMatch[1] as WordMode)
+    return json(await getWordState(env, user.id, puzzle))
+  }
+
+  const wordStartMatch = path.match(/^\/daily\/(redacted|cipher)\/start$/)
+  if (request.method === 'POST' && wordStartMatch) {
+    const puzzle = await ensureDailyWordPuzzle(env, wordStartMatch[1] as WordMode)
+    await ensureWordAttempt(env, user.id, puzzle)
     return json(await getWordState(env, user.id, puzzle))
   }
 
@@ -487,6 +618,38 @@ async function route(request: Request, env: Env) {
     return json(await getWordState(env, user.id, puzzle))
   }
 
+  if (request.method === 'GET' && path === '/daily/overlap') {
+    const puzzle = await ensureDailyOverlapPuzzle(env)
+    return json(await getOverlapState(env, user.id, puzzle))
+  }
+
+  if (request.method === 'POST' && path === '/daily/overlap/start') {
+    const puzzle = await ensureDailyOverlapPuzzle(env)
+    await ensureOverlapAttempt(env, user.id, puzzle)
+    return json(await getOverlapState(env, user.id, puzzle))
+  }
+
+  if (request.method === 'POST' && path === '/daily/overlap/guess') {
+    const body = await request.json().catch(() => ({})) as { playerId?: string }
+    if (!body.playerId) return json({ error: 'Choose a valid suspect.' }, 400)
+    const puzzle = await ensureDailyOverlapPuzzle(env)
+    const attempt = await ensureOverlapAttempt(env, user.id, puzzle)
+    if (attempt.status !== 'playing') return json({ error: 'Today’s Overlap is already complete.', state: await getOverlapState(env, user.id, puzzle) }, 409)
+    const [player, path] = await Promise.all([
+      env.DB.prepare('SELECT * FROM players WHERE id = ?').bind(body.playerId).first<PlayerRow>(),
+      env.DB.prepare('SELECT clubs_json FROM paper_trail_paths WHERE player_id = ?').bind(body.playerId).first<{ clubs_json: string }>(),
+    ])
+    if (!player) return json({ error: 'That player is not in the ranked pool.' }, 400)
+    const clubIds = new Set(path ? parsePaperTrailClubs(path.clubs_json).map(club => club.wikidataClubId) : [])
+    const clubA = JSON.parse(puzzle.club_a_json) as PaperTrailClub
+    const clubB = JSON.parse(puzzle.club_b_json) as PaperTrailClub
+    const matches = Number(clubIds.has(clubA.wikidataClubId)) + Number(player.nation === puzzle.country) + Number(clubIds.has(clubB.wikidataClubId))
+    const score = rankedOverlapScore(matches)
+    await env.DB.prepare("UPDATE overlap_attempts SET status = ?, selected_player_id = ?, matches = ?, score = ?, completed_at = ? WHERE id = ? AND status = 'playing'")
+      .bind(matches === 3 ? 'won' : 'lost', player.id, matches, score, new Date().toISOString(), attempt.id).run()
+    return json(await getOverlapState(env, user.id, puzzle))
+  }
+
   if (request.method === 'GET' && path === '/leaderboard/weekly') {
     const today = utcDate()
     const start = weekStartUtc(today)
@@ -503,6 +666,10 @@ async function route(request: Request, env: Env) {
         UNION ALL
         SELECT a.user_id, a.status, a.score, p.puzzle_date
         FROM word_attempts a JOIN word_daily_puzzles p ON p.id = a.puzzle_id
+        WHERE a.status IN ('won', 'lost')
+        UNION ALL
+        SELECT a.user_id, a.status, a.score, p.puzzle_date
+        FROM overlap_attempts a JOIN overlap_daily_puzzles p ON p.id = a.puzzle_id
         WHERE a.status IN ('won', 'lost')
       ), star_totals AS (
         SELECT user_id, COUNT(*) AS stars FROM weekly_champions GROUP BY user_id
@@ -550,6 +717,6 @@ export default {
     }
   },
   async scheduled(_controller: unknown, env: Env) {
-    await Promise.all([ensureDailyPuzzle(env), ensureDailyPaperTrailPuzzle(env), ensureDailyWordPuzzle(env, 'redacted'), ensureDailyWordPuzzle(env, 'cipher'), ensurePreviousWeekChampion(env)])
+    await Promise.all([ensureDailyPuzzle(env), ensureDailyPaperTrailPuzzle(env), ensureDailyWordPuzzle(env, 'redacted'), ensureDailyWordPuzzle(env, 'cipher'), ensureDailyOverlapPuzzle(env), ensurePreviousWeekChampion(env)])
   },
 }
