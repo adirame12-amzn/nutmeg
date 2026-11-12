@@ -3,11 +3,11 @@ import { useState } from 'react'
 import type { RankedIdentity } from '../api/ranked'
 import type { Screen } from '../components/Chrome'
 
-function GameTicket({ mystery = false, trail = false }: { mystery?: boolean; trail?: boolean }) {
+function GameTicket({ mystery = false, trail = false, label }: { mystery?: boolean; trail?: boolean; label?: string }) {
   return (
     <span className={`ticket-icon ${mystery ? 'mystery-ticket' : trail ? 'trail-ticket' : 'lineup-ticket'}`} aria-hidden="true">
       <span className="ticket-sheet">
-        {mystery ? <b>?</b> : trail ? <b>03</b> : (
+        {label ? <b>{label}</b> : mystery ? <b>?</b> : trail ? <b>03</b> : (
           <svg viewBox="0 0 48 58"><path d="M10 9h28v40H10z"/><circle cx="18" cy="19" r="2.5"/><circle cx="31" cy="16" r="2.5"/><circle cx="24" cy="30" r="2.5"/><circle cx="16" cy="41" r="2.5"/><circle cx="34" cy="40" r="2.5"/><path d="m19 20 4 8m3-1 4-9m-5 14-7 7m9-7 6 6"/></svg>
         )}
       </span>
@@ -68,6 +68,12 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
           </button>
           <button className="archive-game" data-file="FILE 03" onClick={() => onNavigate('paper-trail')}>
             <GameTicket trail /><span><small>CASE 03 · 6 SUSPECTS</small><strong>Paper Trail</strong><em>Follow the clubs. Find the player.</em></span><ArrowRight />
+          </button>
+          <button className="archive-game redacted-archive" data-file="FILE 04" onClick={() => onNavigate('redacted')}>
+            <GameTicket label="R" /><span><small>CASE 04 · 6 STRIKES</small><strong>Redacted</strong><em>Uncover the name. Close the case.</em></span><ArrowRight />
+          </button>
+          <button className="archive-game wire-archive" data-file="CONCEPT" onClick={() => onNavigate('wire-preview')}>
+            <GameTicket label="W" /><span><small>90-SECOND CONCEPT</small><strong>The Wire</strong><em>Preview the club-connection board.</em></span><ArrowRight />
           </button>
         </div>
         <div className="archive-foot"><Clock3 size={15}/><span>Play again whenever you like · no points recorded</span></div>

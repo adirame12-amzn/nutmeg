@@ -27,6 +27,12 @@ describe('Home case desks', () => {
 
     await user.click(screen.getByRole('button', { name: /paper trail/i }))
     expect(onNavigate).toHaveBeenCalledWith('paper-trail')
+
+    await user.click(screen.getByRole('button', { name: /redacted/i }))
+    expect(onNavigate).toHaveBeenCalledWith('redacted')
+
+    await user.click(screen.getByRole('button', { name: /the wire/i }))
+    expect(onNavigate).toHaveBeenCalledWith('wire-preview')
   })
 
   it('opens the shared Prime Suspect from the daily desk', async () => {

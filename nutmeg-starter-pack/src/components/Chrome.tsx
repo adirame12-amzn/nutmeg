@@ -1,7 +1,7 @@
-import { ArrowLeft, BarChart3, CircleUserRound, FileSearch, Home, Menu, Trophy, X } from 'lucide-react'
+import { ArrowLeft, BarChart3, CircleUserRound, FileSearch, Home, Menu, ScanText, Trophy, X } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 
-export type Screen = 'home' | 'lineup' | 'mystery' | 'paper-trail' | 'ranked-paper-trail' | 'leaderboard' | 'credits' | 'result'
+export type Screen = 'home' | 'lineup' | 'mystery' | 'paper-trail' | 'ranked-paper-trail' | 'redacted' | 'wire-preview' | 'leaderboard' | 'credits' | 'result'
 
 export function AppHeader({ screen, onNavigate }: { screen: Screen, onNavigate: (screen: Screen) => void }) {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -19,6 +19,7 @@ export function AppHeader({ screen, onNavigate }: { screen: Screen, onNavigate: 
           <button onClick={() => navigate('home')}><Home size={18}/> Today’s cases</button>
           <button onClick={() => navigate('lineup')}><span className="menu-ticket">6</span> Prime Suspect</button>
           <button onClick={() => navigate('paper-trail')}><FileSearch size={18}/> Paper Trail</button>
+          <button onClick={() => navigate('redacted')}><ScanText size={18}/> Redacted</button>
           <button onClick={() => navigate('leaderboard')}><Trophy size={18}/> Friends league</button>
         </nav>
       )}

@@ -8,5 +8,7 @@ describe('ranked identity boundary', () => {
     expect(shouldRequestIdentity('ranked-paper-trail', false, true, false)).toBe(true)
     expect(shouldRequestIdentity('lineup', true, true, false)).toBe(false)
     expect(shouldRequestIdentity('paper-trail', false, true, false)).toBe(false)
+    expect(shouldRequestIdentity('redacted', false, true, false)).toBe(false)
+    expect(shouldRequestIdentity('wire-preview', false, true, false)).toBe(false)
   })
 })
