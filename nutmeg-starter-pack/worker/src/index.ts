@@ -676,14 +676,12 @@ async function route(request: Request, env: Env) {
       )
       SELECT u.id AS user_id, u.username, COALESCE(SUM(c.score), 0) AS points,
              SUM(CASE WHEN c.status = 'won' THEN 1 ELSE 0 END) AS solved,
-             COUNT(*) AS played, COALESCE(MAX(s.stars), 0) AS stars
-      FROM scored_cases c
-      JOIN users u ON u.id = c.user_id
+             COUNT(c.user_id) AS played, COALESCE(MAX(s.stars), 0) AS stars
+      FROM users u
+      LEFT JOIN scored_cases c ON c.user_id = u.id AND c.puzzle_date >= ? AND c.puzzle_date <= ?
       LEFT JOIN star_totals s ON s.user_id = u.id
-      WHERE c.puzzle_date >= ? AND c.puzzle_date <= ?
       GROUP BY u.id, u.username
       ORDER BY points DESC, solved DESC, played ASC, u.created_at ASC
-      LIMIT 100
     `).bind(start, today).all<{ user_id: string; username: string; points: number; solved: number; played: number; stars: number }>()
     const leaders = (rows.results || []).map((row, index) => ({ rank: index + 1, username: row.username, points: Number(row.points), solved: Number(row.solved), played: Number(row.played), stars: Number(row.stars), isCurrentUser: row.user_id === user.id }))
     const starRows = await env.DB.prepare(`
@@ -691,7 +689,6 @@ async function route(request: Request, env: Env) {
       FROM weekly_champions w JOIN users u ON u.id = w.user_id
       GROUP BY u.id, u.username
       ORDER BY stars DESC, latest_week DESC, u.created_at ASC
-      LIMIT 50
     `).all<{ user_id: string; username: string; stars: number; latest_week: string }>()
     const starLeaders = (starRows.results || []).map((row, index) => ({ rank: index + 1, username: row.username, stars: Number(row.stars), latestWeek: row.latest_week, isCurrentUser: row.user_id === user.id }))
     return json({ weekStart: start, leaders, currentUser: leaders.find(row => row.isCurrentUser) || null, starLeaders })

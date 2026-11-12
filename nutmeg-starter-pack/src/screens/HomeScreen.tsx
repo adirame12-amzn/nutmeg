@@ -110,20 +110,20 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
         </div>
         <p>Reopen old files and sharpen your instincts. These local rounds never affect the leaderboard.</p>
         <div className="archive-games">
-          <button className={`archive-game suspect-archive ${practiceCompleted.has('lineup') ? 'completed' : ''}`} data-file="FILE 01" onClick={onOpenPracticeLineup}>
-            <GameTicket /><span><small>RANDOM PLAYER</small><strong>Prime Suspect</strong><em>Compare clues. Catch a new player every round.</em></span><ArrowRight />
+          <button className={`archive-game suspect-archive ${practiceCompleted.has('lineup') ? 'completed' : ''}`} data-file="FILE 1" onClick={onOpenPracticeLineup}>
+            <GameTicket /><span><strong>Prime Suspect</strong><em>Compare clues. Catch a new player every round.</em></span><ArrowRight />
           </button>
-          <button className={`archive-game trail-archive ${practiceCompleted.has('paper-trail') ? 'completed' : ''}`} data-file="FILE 02" onClick={() => onNavigate('paper-trail')}>
-            <GameTicket game="trail" /><span><small>CASE 02 · 6 SUSPECTS</small><strong>Paper Trail</strong><em>Club by club, hunt down the traveller.</em></span><ArrowRight />
+          <button className={`archive-game trail-archive ${practiceCompleted.has('paper-trail') ? 'completed' : ''}`} data-file="FILE 2" onClick={() => onNavigate('paper-trail')}>
+            <GameTicket game="trail" /><span><strong>Paper Trail</strong><em>Club by club, hunt down the traveller.</em></span><ArrowRight />
           </button>
-          <button className={`archive-game redacted-archive ${practiceCompleted.has('redacted') ? 'completed' : ''}`} data-file="FILE 03" onClick={() => onNavigate('redacted')}>
-            <GameTicket game="redacted" /><span><small>CASE 03 · 6 STRIKES</small><strong>Redacted</strong><em>Pick letters. Strip the ink. Name the player.</em></span><ArrowRight />
+          <button className={`archive-game redacted-archive ${practiceCompleted.has('redacted') ? 'completed' : ''}`} data-file="FILE 3" onClick={() => onNavigate('redacted')}>
+            <GameTicket game="redacted" /><span><strong>Redacted</strong><em>Pick letters. Strip the ink. Name the player.</em></span><ArrowRight />
           </button>
-          <button className={`archive-game cipher-archive ${practiceCompleted.has('cipher') ? 'completed' : ''}`} data-file="FILE 04" onClick={() => onNavigate('cipher')}>
-            <GameTicket game="cipher" /><span><small>CASE 04 · 4 ATTEMPTS</small><strong>Cipher</strong><em>Unscramble the name before the trail goes cold.</em></span><ArrowRight />
+          <button className={`archive-game cipher-archive ${practiceCompleted.has('cipher') ? 'completed' : ''}`} data-file="FILE 4" onClick={() => onNavigate('cipher')}>
+            <GameTicket game="cipher" /><span><strong>Cipher</strong><em>Unscramble the name before the trail goes cold.</em></span><ArrowRight />
           </button>
-          <button className={`archive-game overlap-archive ${practiceCompleted.has('overlap') ? 'completed' : ''}`} data-file="FILE 05" onClick={() => onNavigate('overlap')}>
-            <GameTicket game="overlap" /><span><small>CASE 05 · 60 SECONDS</small><strong>The Overlap</strong><em>Two clubs. One country. One shot.</em></span><ArrowRight />
+          <button className={`archive-game overlap-archive ${practiceCompleted.has('overlap') ? 'completed' : ''}`} data-file="FILE 5" onClick={() => onNavigate('overlap')}>
+            <GameTicket game="overlap" /><span><strong>The Overlap</strong><em>Two clubs. One country. One shot.</em></span><ArrowRight />
           </button>
         </div>
         <div className="archive-foot"><Clock3 size={15}/><span>Play again whenever you like · no points recorded</span></div>

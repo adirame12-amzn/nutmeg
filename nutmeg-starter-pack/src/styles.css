@@ -283,23 +283,26 @@ h1,h2,.game-tile strong,.leader-list strong { font-family:Georgia,"Times New Rom
 .wire-preview-page::before { content:"PREVIEW CIRCUIT";position:absolute;right:-28px;top:150px;padding:4px 31px;background:var(--blue);color:#fff;font-size:6px;font-weight:950;letter-spacing:.16em;transform:rotate(39deg);pointer-events:none; }
 .wire-preview-note { border:1px dashed var(--blue);border-left:4px solid var(--blue);border-radius:0 9px 9px 0;background:linear-gradient(100deg,#3456cd12,#c9f25420); }
 
-/* Cold Cases is one icy archive drawer; each playable file owns its colour. */
-.archive-desk { margin-top:20px;padding-top:18px;border:1px solid #7199bb;border-radius:18px;background:linear-gradient(145deg,#e8f4fb 0%,#b9d8e9 56%,#8ebbd4 100%);box-shadow:0 12px 24px #1d1d1b24,5px 7px 0 #3456cd52; }
-.archive-desk::before { content:"COLD CASE ARCHIVE";display:block;position:absolute;left:14px;top:-12px;padding:6px 12px;border:1px solid #537e9e;border-bottom:0;border-radius:7px 7px 0 0;background:#cde9f6;color:#24475e;font-size:8px;font-weight:950;letter-spacing:.12em; }
-.archive-desk::after { content:"";display:block;position:absolute;inset:8px;border:1px solid #ffffff99;border-radius:13px;pointer-events:none; }
+/* Cold Cases is a pale archive drawer holding softly coloured paper files. */
+.archive-desk { margin-top:20px;padding-top:15px;border:1px solid #9eb4b4;border-radius:16px;background:linear-gradient(145deg,#f4f5ef 0%,#e7eeeb 58%,#d7e4e2 100%);box-shadow:0 10px 22px #1d1d1b17,3px 4px 0 #8ca7a733; }
+.archive-desk::before { content:"COLD CASE ARCHIVE";display:block;position:absolute;left:14px;top:-11px;width:auto;height:auto;padding:6px 12px;border:1px solid #9eb4b4;border-bottom:0;border-radius:7px 7px 0 0;background:#e8f0ed;color:#50696a;font-size:7px;font-weight:950;letter-spacing:.13em; }
+.archive-desk::after { content:"";display:block;position:absolute;inset:7px;border:1px solid #ffffffc7;border-radius:11px;background:linear-gradient(115deg,#fff8,transparent 35%);box-shadow:inset 0 0 0 1px #819b9b12;pointer-events:none;transform:none; }
 .archive-desk>* { position:relative;z-index:1; }
-.back-to-daily { min-height:40px;display:flex;align-items:center;gap:6px;margin:0 13px 4px;padding:0 10px;border:1px solid #517d9e;border-radius:9px;background:#edf9ff;color:#274e68;font-size:9px;font-weight:900;cursor:pointer;box-shadow:2px 3px 0 #3456cd29; }
+.back-to-daily { width:max-content;min-height:38px;display:flex;align-items:center;gap:7px;margin:0 13px 5px;padding:0 5px;border:0;background:transparent;color:#536c6e;font-size:9px;font-weight:900;cursor:pointer;box-shadow:none; }
+.back-to-daily svg { width:25px;height:25px;padding:6px;border:1px solid #9eb4b4;border-radius:50%;background:#fffaf0;color:var(--ink);box-shadow:1px 2px 0 #819b9b24;transition:transform .18s ease; }
+.back-to-daily:active svg { transform:translateX(-2px); }
 .archive-games { grid-template-columns:repeat(6,minmax(0,1fr));padding-top:8px;perspective:900px; }
-.archive-game { --file-base:#de6b48;--file-paper:#ffe3d7;min-height:148px;grid-column:span 2;overflow:visible;padding:13px 8px 10px;border-color:#1d1d1ba8;background:linear-gradient(155deg,var(--file-paper),color-mix(in srgb,var(--file-base) 34%,white));box-shadow:0 8px 14px #1d1d1b24,3px 5px 0 color-mix(in srgb,var(--file-base) 60%,#1d1d1b);transform:rotateX(1.2deg); }
-.archive-game::before { content:"";display:block;position:absolute;z-index:-1;inset:5px -3px -4px 4px;border:1px solid #1d1d1b45;border-radius:8px;background:var(--file-base);transform:rotate(1.4deg); }
-.archive-game::after { content:attr(data-file);display:block;position:absolute;z-index:-2;right:5px;top:-9px;padding:4px 8px;border:1px solid #1d1d1b66;border-bottom:0;border-radius:5px 5px 0 0;background:var(--file-base);color:#fff;font-size:6px;font-weight:950;letter-spacing:.09em; }
-.archive-game.suspect-archive { --file-base:#e06b43;--file-paper:#ffe5d6; }
-.archive-game.trail-archive { --file-base:#466ad5;--file-paper:#dce8ff; }
-.archive-game.redacted-archive { --file-base:#4d555b;--file-paper:#e1e5e7; }
-.archive-game.cipher-archive { --file-base:#744bc4;--file-paper:#eadfff; }
-.archive-game.overlap-archive { --file-base:#198a84;--file-paper:#d1f0e9;min-height:148px; }
+.archive-game { --folder:#efb393;--paper-sheet:#fff2e8;min-height:148px;grid-column:span 2;overflow:visible;padding:17px 11px 11px;border-color:#1d1d1b70;background:var(--folder)!important;box-shadow:0 7px 13px #1d1d1b18,2px 3px 0 #1d1d1b2b;transform:rotateX(.45deg); }
+.archive-game::before { content:"";display:block;position:absolute;z-index:0;inset:8px 6px 6px;border:1px solid #1d1d1b35;border-radius:3px 10px 10px 5px;background:linear-gradient(145deg,#fffdf7,var(--paper-sheet));box-shadow:1px 2px 0 #1d1d1b18,inset 0 0 0 2px #ffffff8f;transform:rotate(-.5deg); }
+.archive-game::after { content:attr(data-file);display:block;position:absolute;z-index:0;left:-1px;right:auto;top:-9px;width:auto;height:auto;padding:5px 10px 4px;border:1px solid #1d1d1b55;border-bottom:0;border-radius:6px 9px 0 0;background:var(--folder)!important;color:#3f4544!important;font-size:6px;font-weight:950;letter-spacing:.1em; }
+.archive-game>* { position:relative;z-index:1; }
+.archive-game.suspect-archive { --folder:#efb393;--paper-sheet:#fff1e6; }
+.archive-game.trail-archive { --folder:#b7c7e8;--paper-sheet:#edf2ff; }
+.archive-game.redacted-archive { --folder:#c9c7c0;--paper-sheet:#f1efe9; }
+.archive-game.cipher-archive { --folder:#cbb9e5;--paper-sheet:#f5efff; }
+.archive-game.overlap-archive { --folder:#a9d4cb;--paper-sheet:#ebf8f4;min-height:148px; }
 .archive-game:nth-child(4) { grid-column:2/span 2; }.archive-game:nth-child(5) { grid-column:4/span 2; }
-.archive-game.completed { --file-base:#6f993f;--file-paper:#e3f4cf;box-shadow:0 8px 14px #1d1d1b20,3px 5px 0 #5d8438; }
+.archive-game.completed { --folder:#c7dda9;--paper-sheet:#eff8e3;box-shadow:0 7px 13px #1d1d1b16,2px 3px 0 #6f993f55; }
 .archive-game.overlap-archive .ticket-sheet { background:var(--orange); }
 .archive-game em { color:#37342f; }
 .archive-game>.ticket-icon { margin-bottom:7px; }

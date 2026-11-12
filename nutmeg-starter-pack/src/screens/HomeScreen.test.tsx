@@ -21,7 +21,7 @@ describe('Home case desks', () => {
     expect(screen.getByRole('button', { name: /daily edition/i })).toBeInTheDocument()
     expect(screen.queryByText('Question the evidence.')).not.toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: /random player prime suspect/i }))
+    await user.click(screen.getByRole('button', { name: /prime suspect/i }))
     expect(onOpenPracticeLineup).toHaveBeenCalledOnce()
 
     await user.click(screen.getByRole('button', { name: /paper trail/i }))
@@ -30,7 +30,7 @@ describe('Home case desks', () => {
     await user.click(screen.getByRole('button', { name: /redacted/i }))
     expect(onNavigate).toHaveBeenCalledWith('redacted')
 
-    await user.click(screen.getByRole('button', { name: /case 04.*cipher/i }))
+    await user.click(screen.getByRole('button', { name: /cipher/i }))
     expect(onNavigate).toHaveBeenCalledWith('cipher')
 
     await user.click(screen.getByRole('button', { name: /the overlap/i }))
@@ -98,7 +98,7 @@ describe('Home case desks', () => {
     render(<HomeScreen onNavigate={vi.fn()} onOpenPracticeLineup={vi.fn()} ranked={false} identity={null} />)
     await user.click(screen.getByRole('button', { name: /open cold cases/i }))
 
-    expect(screen.getByRole('button', { name: /case 04.*cipher/i })).toHaveClass('completed')
+    expect(screen.getByRole('button', { name: /cipher/i })).toHaveClass('completed')
     expect(screen.getByRole('button', { name: /paper trail/i })).not.toHaveClass('completed')
     localStorage.removeItem('player-press-practice-completed-v1')
   })
