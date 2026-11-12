@@ -79,7 +79,7 @@ export function App() {
     <ScreenFrame screen={screen} onNavigate={navigate} noNav={screen === 'result'}>
       {screen === 'home' && <HomeScreen onNavigate={navigate} onOpenPracticeLineup={openPracticeLineup} ranked={rankedApiEnabled} identity={identity} />}
       {needsIdentity && <UsernameOnboarding onComplete={setIdentity} />}
-      {screen === 'lineup' && !needsIdentity && (rankedApiEnabled && identity && !quickCase ? <RankedLineupScreen identity={identity} onResult={showResult} onQuickCase={() => setQuickCase(true)} /> : <LineupScreen onResult={showResult} />)}
+      {screen === 'lineup' && !needsIdentity && (rankedApiEnabled && identity && !quickCase ? <RankedLineupScreen identity={identity} onQuickCase={() => setQuickCase(true)} onNext={() => continueDaily('lineup')} onHome={() => navigate('home')} /> : <LineupScreen onResult={showResult} />)}
       {screen === 'mystery' && <MysteryScreen onResult={showResult} />}
       {screen === 'paper-trail' && <PaperTrailScreen onResult={showResult} />}
       {screen === 'redacted' && <RedactedScreen onNavigate={navigate} />}
@@ -100,7 +100,7 @@ export function App() {
       {screen === 'ranked-overlap' && rankedApiEnabled && !needsIdentity && identity && <RankedOverlapScreen identity={identity} onNext={() => continueDaily('ranked-overlap')} onHome={() => navigate('home')}/>}
       {screen === 'ranked-overlap' && !rankedApiEnabled && <OverlapScreen onNavigate={navigate}/>}
       {screen === 'wire-preview' && <WirePreviewScreen />}
-      {screen === 'ranked-paper-trail' && rankedApiEnabled && !needsIdentity && identity && <RankedPaperTrailScreen identity={identity} onResult={showResult} onPractice={() => navigate('paper-trail')} />}
+      {screen === 'ranked-paper-trail' && rankedApiEnabled && !needsIdentity && identity && <RankedPaperTrailScreen identity={identity} onPractice={() => navigate('paper-trail')} onNext={() => continueDaily('ranked-paper-trail')} onHome={() => navigate('home')} />}
       {screen === 'ranked-paper-trail' && !rankedApiEnabled && <PaperTrailScreen onResult={showResult} />}
       {screen === 'leaderboard' && !needsIdentity && (rankedApiEnabled && identity ? <LeaderboardScreen identity={identity} /> : <LeaderboardDemo />)}
       {screen === 'credits' && <CreditsScreen />}

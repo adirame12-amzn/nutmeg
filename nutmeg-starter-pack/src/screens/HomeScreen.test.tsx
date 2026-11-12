@@ -5,22 +5,20 @@ import * as rankedApi from '../api/ranked'
 import { HomeScreen } from './HomeScreen'
 
 describe('Home case desks', () => {
-  it('keeps ranked and practice play as explicit independent choices', async () => {
+  it('keeps daily play primary and opens practice from a secondary cold-cases entry', async () => {
     const user = userEvent.setup()
     const onNavigate = vi.fn()
     const onOpenPracticeLineup = vi.fn()
 
     render(<HomeScreen onNavigate={onNavigate} onOpenPracticeLineup={onOpenPracticeLineup} ranked identity={null} />)
 
-    expect(screen.getByRole('button', { name: /daily edition/i })).toHaveAttribute('aria-pressed', 'true')
-    expect(screen.getByRole('heading', { name: 'Today’s Cases' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Daily Edition' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: /casebook.*№ 001/i })).toBeInTheDocument()
     expect(screen.queryByRole('heading', { name: 'Cold Cases' })).not.toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: /^cold cases/i }))
-    expect(screen.getByRole('button', { name: /^cold cases/i })).toHaveAttribute('aria-pressed', 'true')
+    await user.click(screen.getByRole('button', { name: /open cold cases/i }))
     expect(screen.getByRole('heading', { name: 'Cold Cases' })).toBeInTheDocument()
-    expect(screen.queryByRole('heading', { name: 'Today’s Cases' })).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /daily edition/i })).toBeInTheDocument()
     expect(screen.queryByText('Question the evidence.')).not.toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: /random player prime suspect/i }))
@@ -32,7 +30,7 @@ describe('Home case desks', () => {
     await user.click(screen.getByRole('button', { name: /redacted/i }))
     expect(onNavigate).toHaveBeenCalledWith('redacted')
 
-    await user.click(screen.getByRole('button', { name: /case 05.*cipher/i }))
+    await user.click(screen.getByRole('button', { name: /case 04.*cipher/i }))
     expect(onNavigate).toHaveBeenCalledWith('cipher')
 
     await user.click(screen.getByRole('button', { name: /the overlap/i }))
@@ -53,7 +51,6 @@ describe('Home case desks', () => {
   })
 
   it('keeps individual daily games off the home desk', () => {
-    const user = userEvent.setup()
     render(<HomeScreen onNavigate={vi.fn()} onOpenPracticeLineup={vi.fn()} ranked identity={null} />)
     expect(screen.queryByRole('button', { name: /daily case 02.*paper trail/i })).not.toBeInTheDocument()
   })
@@ -99,9 +96,9 @@ describe('Home case desks', () => {
     localStorage.setItem('player-press-practice-completed-v1', JSON.stringify(['cipher']))
     const user = userEvent.setup()
     render(<HomeScreen onNavigate={vi.fn()} onOpenPracticeLineup={vi.fn()} ranked={false} identity={null} />)
-    await user.click(screen.getByRole('button', { name: /^cold cases/i }))
+    await user.click(screen.getByRole('button', { name: /open cold cases/i }))
 
-    expect(screen.getByRole('button', { name: /case 05.*cipher/i })).toHaveClass('completed')
+    expect(screen.getByRole('button', { name: /case 04.*cipher/i })).toHaveClass('completed')
     expect(screen.getByRole('button', { name: /paper trail/i })).not.toHaveClass('completed')
     localStorage.removeItem('player-press-practice-completed-v1')
   })

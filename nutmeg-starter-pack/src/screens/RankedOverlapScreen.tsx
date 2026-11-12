@@ -31,7 +31,7 @@ export function RankedOverlapScreen({ identity, onNext, onHome }: { identity: Ra
     <div className="overlap-evidence-grid result">{evidence.map((item, index) => <EvidenceCard key={item.id} evidence={item} verdict={daily.verdicts?.[index]}/>)}</div>
     <div className="overlap-score"><strong>{daily.matches}/3 CONNECTIONS</strong><b>{daily.score}</b><small>POINTS</small></div>
     {daily.answer && <p className="overlap-reveal">Perfect fit: <strong>{daily.answer.displayName}</strong> · verified club snapshot {daily.sourceSnapshot}</p>}
-    <div className="daily-result-actions"><button className="primary dark" onClick={onNext}>Complete today’s edition <ArrowRight/></button><button onClick={onHome}><Home/> Finish later / Return home</button></div>
+    <div className="daily-result-actions"><button className="primary dark daily-next-action" onClick={onNext}><span><small>5/5 COMPLETE</small>Close today’s edition</span><ArrowRight/></button><button onClick={onHome}><Home/> Return home</button></div>
   </div>
 
   const lockIn = async () => {

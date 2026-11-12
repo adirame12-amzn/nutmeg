@@ -29,7 +29,7 @@ export function RankedRedactedScreen({ identity, onNext, onHome }: { identity: R
     <p className="result-stamp">{daily.status === 'won' ? 'CASE SOLVED' : 'CASE CLOSED'}</p><small>DAILY REDACTED · RANKED</small>
     <h1>{daily.displayAnswer}</h1><p>{daily.status === 'won' ? 'Identity confirmed. The points are on the weekly board.' : `The concealed player was ${daily.answer.displayName}.`}</p>
     <strong className="points">+{daily.score} pts</strong>
-    <div className="daily-result-actions"><button className="primary dark" onClick={onNext}>Play next daily game <ArrowRight/></button><button onClick={onHome}><Home/> Finish later / Return home</button></div>
+    <div className="daily-result-actions"><button className="primary dark daily-next-action" onClick={onNext}><span><small>3/5 COMPLETE</small>Next: Cipher</span><ArrowRight/></button><button onClick={onHome}><Home/> Finish later / Return home</button></div>
   </div>
 
   return <div className="game-page redacted-page">

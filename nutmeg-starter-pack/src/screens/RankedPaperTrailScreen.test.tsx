@@ -34,8 +34,9 @@ describe('ranked Paper Trail', () => {
 
     render(<RankedPaperTrailScreen
       identity={{ user: { id: 'u1', username: 'GoalScout' }, token: 'token' }}
-      onResult={vi.fn()}
       onPractice={vi.fn()}
+      onNext={vi.fn()}
+      onHome={vi.fn()}
     />)
 
     expect(await screen.findByLabelText('Club 1: First FC')).toBeInTheDocument()

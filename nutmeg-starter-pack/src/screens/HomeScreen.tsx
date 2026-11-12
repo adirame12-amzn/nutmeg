@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarCheck, Check, Clock3, Fingerprint, FolderOpen, Play, Sparkles, Trophy, UserRoundCheck } from 'lucide-react'
+import { ArrowLeft, ArrowRight, CalendarCheck, Check, Clock3, Fingerprint, Snowflake, Sparkles, Trophy, UserRoundCheck } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { getDailyCipher, getDailyLineup, getDailyOverlap, getDailyPaperTrail, getDailyRedacted, type RankedIdentity } from '../api/ranked'
 import type { Screen } from '../components/Chrome'
@@ -6,14 +6,6 @@ import { loadPracticeCompletions, PRACTICE_PROGRESS_EVENT, type PracticeGame } f
 import { completedDailyCount, DAILY_CASES, nextDailyScreen, type DailyCaseId, type DailyCaseStatus } from '../domain/dailyJourney'
 
 type CaseProgress = { status: 'checking' | 'open' | 'playing' | 'won' | 'lost'; score?: number }
-
-function CaseProgressChip({ progress }: { progress: CaseProgress }) {
-  const label = progress.status === 'checking' ? 'CHECKING'
-    : progress.status === 'won' ? `SOLVED · +${progress.score ?? 0}`
-      : progress.status === 'lost' ? 'CLOSED · 0'
-        : progress.status === 'playing' ? 'IN PROGRESS' : 'NOT STARTED'
-  return <span className={`case-progress ${progress.status}`}>{label}</span>
-}
 
 type GameMark = 'suspect' | 'trail' | 'redacted' | 'cipher' | 'overlap' | 'wire'
 
@@ -74,6 +66,7 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
   const checking = Object.values(progressById).some(progress => progress.status === 'checking')
   const allComplete = completed === DAILY_CASES.length
   const dailyLabel = checking ? 'Checking today’s files…' : allComplete ? 'Today’s Edition Complete' : completed ? 'Continue Today’s Cases' : 'Play Today’s Cases'
+  const nextIndex = Math.min(DAILY_CASES.length - 1, DAILY_CASES.findIndex(item => item.screen === nextDailyScreen(statuses)))
   const openDaily = () => {
     if (allComplete) { onNavigate('leaderboard'); return }
     onNavigate(nextDailyScreen(statuses) || 'lineup')
@@ -86,55 +79,51 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
         <div className="hero-player" aria-hidden="true"><span>55</span></div>
       </section>
 
-      <div className="desk-switch" role="group" aria-label="Choose a case desk">
-        <button className={desk === 'daily' ? 'active' : ''} onClick={() => setDesk('daily')} aria-pressed={desk === 'daily'}><CalendarCheck/><span><strong>Daily Edition</strong><small>5 cases · shared daily</small></span></button>
-        <button className={desk === 'practice' ? 'active' : ''} onClick={() => setDesk('practice')} aria-pressed={desk === 'practice'}><FolderOpen/><span><strong>Cold Cases</strong><small>Unlimited · unscored</small></span></button>
-      </div>
-
       {desk === 'daily' ? <section className="case-desk daily-desk" aria-labelledby="daily-cases-title">
         <div className="desk-heading">
           <span className="desk-seal"><CalendarCheck /></span>
-          <span><small>ONE SHARED FILE · SCORED</small><h2 id="daily-cases-title">Today’s Cases</h2></span>
+          <span><small>FIVE RANKED CASES · ONE RUN</small><h2 id="daily-cases-title">Daily Edition</h2></span>
           <span className="mode-chip">RANKED</span>
         </div>
-        <p>One football edition. Five different investigations. Your progress waits if you need a break.</p>
         <button className={`daily-edition-cta ${allComplete ? 'complete' : completed ? 'continue' : ''}`} onClick={openDaily} disabled={checking}>
-          <span className="daily-ball" aria-hidden="true"><i/><b>{allComplete ? <Check/> : <Play/>}</b></span>
-          <span className="daily-cta-copy"><small>{allComplete ? 'ALL FILES CLOSED' : 'TODAY’S FOOTBALL EDITION'}</small><strong>{dailyLabel}</strong><em>{checking ? 'Reading the case desk' : allComplete ? 'See where you stand this week' : completed ? `Next: ${DAILY_CASES.find(item => item.screen === nextDailyScreen(statuses))?.label}` : 'Tap to open Case 01'}</em></span>
+          <span className="daily-case-mark" aria-hidden="true"><CalendarCheck/><b>{allComplete ? <Check/> : String(Math.max(1, nextIndex + 1)).padStart(2, '0')}</b><i>CASE</i></span>
+          <span className="daily-cta-copy"><small>{allComplete ? 'ALL FILES CLOSED' : 'MATCHDAY FILE'}</small><strong>{dailyLabel}</strong><em>{checking ? 'Reading the case desk' : allComplete ? 'View the weekly table' : completed ? `Up next · ${DAILY_CASES.find(item => item.screen === nextDailyScreen(statuses))?.label}` : 'Start with Prime Suspect'}</em></span>
           <ArrowRight className="daily-cta-arrow"/>
+          <span className="daily-progress-strip" aria-label={`${completed} of ${DAILY_CASES.length} daily cases completed`}>
+            <span className="progress-track">{DAILY_CASES.map((item, index) => <i key={item.id} className={['won', 'lost'].includes(statuses[item.id]) ? 'done' : index === nextIndex && !allComplete ? 'current' : ''}><b/><em>›</em></i>)}</span>
+            <small>{completed}/{DAILY_CASES.length} complete</small>
+          </span>
         </button>
-        <div className="daily-edition-progress" aria-label={`${completed} of ${DAILY_CASES.length} daily cases completed`}>
-          <div>{DAILY_CASES.map((item, index) => <span key={item.id} className={['won', 'lost'].includes(statuses[item.id]) ? 'done' : statuses[item.id] === 'playing' ? 'current' : ''}><i>{['won', 'lost'].includes(statuses[item.id]) ? <Check/> : index + 1}</i><small>{item.label}</small></span>)}</div>
-          <strong>{completed}/{DAILY_CASES.length} complete</strong>
-        </div>
         <div className={`desk-meta ${ranked || identity ? '' : 'single'}`}>
           {(ranked || identity) && <button onClick={() => onNavigate('lineup')}><Fingerprint /> <span><strong>{identity ? `Signed in as @${identity.user.username}` : 'Claim your detective name'}</strong><small>{identity ? 'Identity saved in this browser' : 'No email or password needed'}</small></span></button>}
           <button onClick={() => onNavigate('leaderboard')} aria-label="Open weekly leaderboard"><Trophy /><span><strong>Weekly table</strong><small>Server-validated points</small></span><ArrowRight /></button>
         </div>
+        <button className="cold-cases-entry" onClick={() => setDesk('practice')}><span><Snowflake/><span><strong>Open Cold Cases</strong><small>Unlimited practice · no points</small></span></span><ArrowRight/></button>
       </section> : null}
 
       {desk === 'practice' ? <section className="case-desk archive-desk" aria-labelledby="cold-cases-title" data-file="ARCHIVE DRAWER">
+        <button className="back-to-daily" onClick={() => setDesk('daily')}><ArrowLeft/> Daily Edition</button>
         <div className="desk-heading">
-          <span className="desk-seal"><FolderOpen /></span>
+          <span className="desk-seal"><Snowflake /></span>
           <span><small>UNLIMITED · UNSCORED · LOCAL FILES</small><h2 id="cold-cases-title">Cold Cases</h2></span>
           <span className="mode-chip practice">PRACTICE</span>
         </div>
         <p>Reopen old files and sharpen your instincts. These local rounds never affect the leaderboard.</p>
         <div className="archive-games">
-          <button className={`archive-game orange ${practiceCompleted.has('lineup') ? 'completed' : ''}`} data-file="FILE 01" onClick={onOpenPracticeLineup}>
+          <button className={`archive-game suspect-archive ${practiceCompleted.has('lineup') ? 'completed' : ''}`} data-file="FILE 01" onClick={onOpenPracticeLineup}>
             <GameTicket /><span><small>RANDOM PLAYER</small><strong>Prime Suspect</strong><em>Compare clues. Catch a new player every round.</em></span><ArrowRight />
           </button>
-          <button className={`archive-game ${practiceCompleted.has('paper-trail') ? 'completed' : ''}`} data-file="FILE 03" onClick={() => onNavigate('paper-trail')}>
-            <GameTicket game="trail" /><span><small>CASE 03 · 6 SUSPECTS</small><strong>Paper Trail</strong><em>Club by club, hunt down the traveller.</em></span><ArrowRight />
+          <button className={`archive-game trail-archive ${practiceCompleted.has('paper-trail') ? 'completed' : ''}`} data-file="FILE 02" onClick={() => onNavigate('paper-trail')}>
+            <GameTicket game="trail" /><span><small>CASE 02 · 6 SUSPECTS</small><strong>Paper Trail</strong><em>Club by club, hunt down the traveller.</em></span><ArrowRight />
           </button>
-          <button className={`archive-game redacted-archive ${practiceCompleted.has('redacted') ? 'completed' : ''}`} data-file="FILE 04" onClick={() => onNavigate('redacted')}>
-            <GameTicket game="redacted" /><span><small>CASE 04 · 6 STRIKES</small><strong>Redacted</strong><em>Pick letters. Strip the ink. Name the player.</em></span><ArrowRight />
+          <button className={`archive-game redacted-archive ${practiceCompleted.has('redacted') ? 'completed' : ''}`} data-file="FILE 03" onClick={() => onNavigate('redacted')}>
+            <GameTicket game="redacted" /><span><small>CASE 03 · 6 STRIKES</small><strong>Redacted</strong><em>Pick letters. Strip the ink. Name the player.</em></span><ArrowRight />
           </button>
-          <button className={`archive-game cipher-archive ${practiceCompleted.has('cipher') ? 'completed' : ''}`} data-file="FILE 05" onClick={() => onNavigate('cipher')}>
-            <GameTicket game="cipher" /><span><small>CASE 05 · 4 ATTEMPTS</small><strong>Cipher</strong><em>Unscramble the name before the trail goes cold.</em></span><ArrowRight />
+          <button className={`archive-game cipher-archive ${practiceCompleted.has('cipher') ? 'completed' : ''}`} data-file="FILE 04" onClick={() => onNavigate('cipher')}>
+            <GameTicket game="cipher" /><span><small>CASE 04 · 4 ATTEMPTS</small><strong>Cipher</strong><em>Unscramble the name before the trail goes cold.</em></span><ArrowRight />
           </button>
-          <button className={`archive-game overlap-archive ${practiceCompleted.has('overlap') ? 'completed' : ''}`} data-file="FILE 06" onClick={() => onNavigate('overlap')}>
-            <GameTicket game="overlap" /><span><small>CASE 06 · 60 SECONDS</small><strong>The Overlap</strong><em>Two clubs. One country. One shot.</em></span><ArrowRight />
+          <button className={`archive-game overlap-archive ${practiceCompleted.has('overlap') ? 'completed' : ''}`} data-file="FILE 05" onClick={() => onNavigate('overlap')}>
+            <GameTicket game="overlap" /><span><small>CASE 05 · 60 SECONDS</small><strong>The Overlap</strong><em>Two clubs. One country. One shot.</em></span><ArrowRight />
           </button>
         </div>
         <div className="archive-foot"><Clock3 size={15}/><span>Play again whenever you like · no points recorded</span></div>
