@@ -1,7 +1,7 @@
 import { ArrowLeft, BarChart3, CircleUserRound, FileSearch, Home, Menu, Trophy, X } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 
-export type Screen = 'home' | 'lineup' | 'mystery' | 'paper-trail' | 'leaderboard' | 'credits' | 'result'
+export type Screen = 'home' | 'lineup' | 'mystery' | 'paper-trail' | 'ranked-paper-trail' | 'leaderboard' | 'credits' | 'result'
 
 export function AppHeader({ screen, onNavigate }: { screen: Screen, onNavigate: (screen: Screen) => void }) {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -31,7 +31,7 @@ export function BottomNav({ active, onNavigate }: { active: Screen, onNavigate: 
     <nav className="bottom-nav" aria-label="Primary navigation">
       <button className={active === 'home' ? 'active' : ''} onClick={() => onNavigate('home')}><Home size={19} /><span>Home</span></button>
       <button className={active === 'lineup' ? 'active' : ''} onClick={() => onNavigate('lineup')}><span className="nav-num">6</span><span>Suspect</span></button>
-      <button className={active === 'paper-trail' ? 'active' : ''} onClick={() => onNavigate('paper-trail')}><FileSearch size={19}/><span>Paper Trail</span></button>
+      <button className={active === 'paper-trail' || active === 'ranked-paper-trail' ? 'active' : ''} onClick={() => onNavigate('paper-trail')}><FileSearch size={19}/><span>Paper Trail</span></button>
       <button className={active === 'leaderboard' ? 'active' : ''} onClick={() => onNavigate('leaderboard')}><Trophy size={19} /><span>Friends</span></button>
     </nav>
   )

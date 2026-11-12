@@ -1,4 +1,5 @@
 import type { Comparison, GameStatus, LineupGuess, Player } from '../domain/types'
+import type { ClubEvidence } from '../domain/paperTrail'
 
 const productionApiUrl = 'https://player-press-ranked.adirame12.workers.dev'
 const configuredUrl = (
@@ -33,12 +34,36 @@ interface ApiGuess {
   isCorrect: boolean
 }
 
+interface ApiPaperTrailClub {
+  clubId: string
+  wikidataClubId: string
+  name: string
+  start: string | null
+  end: string | null
+  appearances: number
+  crestUrl?: string | null
+  crestStatus: string
+  sourceUrl: string
+}
+
 export interface RankedDailyState {
   date: string
   status: 'not_started' | GameStatus
   guesses: LineupGuess[]
   guessesUsed: number
   score: number
+  answer?: Player
+}
+
+export interface RankedPaperTrailState {
+  date: string
+  status: 'not_started' | GameStatus
+  guesses: Player[]
+  guessesUsed: number
+  score: number
+  clubs: ClubEvidence[]
+  clubCount: number
+  sourceSnapshot: string
   answer?: Player
 }
 
@@ -78,6 +103,23 @@ const toPlayer = (player: ApiPlayer): Player => ({
 const toDailyState = (state: Omit<RankedDailyState, 'guesses' | 'answer'> & { guesses: ApiGuess[]; answer?: ApiPlayer }): RankedDailyState => ({
   ...state,
   guesses: state.guesses.map(guess => ({ ...guess, player: toPlayer(guess.player) })),
+  answer: state.answer ? toPlayer(state.answer) : undefined,
+})
+
+const toPaperTrailState = (state: Omit<RankedPaperTrailState, 'guesses' | 'clubs' | 'answer'> & { guesses: ApiPlayer[]; clubs: ApiPaperTrailClub[]; answer?: ApiPlayer }): RankedPaperTrailState => ({
+  ...state,
+  guesses: state.guesses.map(toPlayer),
+  clubs: state.clubs.map(club => ({
+    id: club.clubId,
+    wikidataId: club.wikidataClubId,
+    name: club.name,
+    start: club.start,
+    end: club.end,
+    appearances: club.appearances,
+    crestUrl: club.crestUrl,
+    crestStatus: club.crestStatus,
+    sourceUrl: club.sourceUrl,
+  })),
   answer: state.answer ? toPlayer(state.answer) : undefined,
 })
 
@@ -123,6 +165,14 @@ export async function getDailyLineup(identity: RankedIdentity) {
 
 export async function submitDailyGuess(identity: RankedIdentity, playerId: string) {
   return toDailyState(await request<Parameters<typeof toDailyState>[0]>('/daily/lineup/guess', { method: 'POST', body: JSON.stringify({ playerId }) }, identity))
+}
+
+export async function getDailyPaperTrail(identity: RankedIdentity) {
+  return toPaperTrailState(await request<Parameters<typeof toPaperTrailState>[0]>('/daily/paper-trail', {}, identity))
+}
+
+export async function submitDailyPaperTrailGuess(identity: RankedIdentity, playerId: string) {
+  return toPaperTrailState(await request<Parameters<typeof toPaperTrailState>[0]>('/daily/paper-trail/guess', { method: 'POST', body: JSON.stringify({ playerId }) }, identity))
 }
 
 export function getWeeklyLeaderboard(identity: RankedIdentity) {

@@ -1,5 +1,5 @@
-import { compareRankedPlayers, normaliseUsername, rankedLineupScore, RANKED_GUESS_LIMIT, utcDate, validateUsername, weekStartUtc } from './rules'
-import type { AttemptRow, Env, PlayerRow, PuzzleRow, UserRow } from './types'
+import { compareRankedPlayers, normaliseUsername, rankedLineupScore, rankedPaperTrailScore, RANKED_GUESS_LIMIT, utcDate, validateUsername, weekStartUtc } from './rules'
+import type { AttemptRow, Env, PaperTrailPuzzleRow, PlayerRow, PuzzleRow, UserRow } from './types'
 
 const DEFAULT_ORIGINS = [
   'http://127.0.0.1:5173', 'http://127.0.0.1:5174', 'http://127.0.0.1:5175', 'http://127.0.0.1:5176', 'http://127.0.0.1:5177',
@@ -84,6 +84,65 @@ async function getAttemptState(env: Env, userId: string, puzzle: PuzzleRow) {
     answer = target ? playerPublic(target) : undefined
   }
   return { date: puzzle.puzzle_date, status: attempt.status, guesses, guessesUsed: attempt.guesses_used, score: attempt.score, answer }
+}
+
+interface PaperTrailClub {
+  clubId: string
+  wikidataClubId: string
+  name: string
+  start: string | null
+  end: string | null
+  appearances: number
+  crestUrl?: string | null
+  crestStatus: string
+  sourceUrl: string
+}
+
+const parsePaperTrailClubs = (value: string): PaperTrailClub[] => {
+  const parsed = JSON.parse(value) as unknown
+  if (!Array.isArray(parsed) || parsed.length < 2 || parsed.length > 5) throw new Error('The Paper Trail path is invalid.')
+  return parsed as PaperTrailClub[]
+}
+
+async function ensureDailyPaperTrailPuzzle(env: Env, date = utcDate()): Promise<PaperTrailPuzzleRow> {
+  const existing = await env.DB.prepare('SELECT id, puzzle_date, target_player_id, clubs_json, source_snapshot FROM paper_trail_daily_puzzles WHERE puzzle_date = ?')
+    .bind(date).first<PaperTrailPuzzleRow>()
+  if (existing) return existing
+  const target = await env.DB.prepare('SELECT player_id, clubs_json, source_snapshot FROM paper_trail_paths ORDER BY RANDOM() LIMIT 1')
+    .first<{ player_id: string; clubs_json: string; source_snapshot: string }>()
+  if (!target) throw new Error('The ranked Paper Trail pool has not been seeded.')
+  parsePaperTrailClubs(target.clubs_json)
+  await env.DB.prepare('INSERT OR IGNORE INTO paper_trail_daily_puzzles (id, puzzle_date, target_player_id, clubs_json, source_snapshot, created_at) VALUES (?, ?, ?, ?, ?, ?)')
+    .bind(`paper-trail:${date}`, date, target.player_id, target.clubs_json, target.source_snapshot, new Date().toISOString()).run()
+  const puzzle = await env.DB.prepare('SELECT id, puzzle_date, target_player_id, clubs_json, source_snapshot FROM paper_trail_daily_puzzles WHERE puzzle_date = ?')
+    .bind(date).first<PaperTrailPuzzleRow>()
+  if (!puzzle) throw new Error('Unable to create the daily Paper Trail puzzle.')
+  return puzzle
+}
+
+async function getPaperTrailAttemptState(env: Env, userId: string, puzzle: PaperTrailPuzzleRow) {
+  const clubs = parsePaperTrailClubs(puzzle.clubs_json)
+  const attempt = await env.DB.prepare('SELECT id, status, guesses_used, score FROM paper_trail_attempts WHERE user_id = ? AND puzzle_id = ?')
+    .bind(userId, puzzle.id).first<AttemptRow>()
+  if (!attempt) return {
+    date: puzzle.puzzle_date, status: 'not_started', guesses: [], guessesUsed: 0, score: 0,
+    clubs: clubs.slice(0, 1), clubCount: clubs.length, sourceSnapshot: puzzle.source_snapshot,
+  }
+  const rows = await env.DB.prepare('SELECT response_json FROM paper_trail_guesses WHERE attempt_id = ? ORDER BY guess_number')
+    .bind(attempt.id).all<{ response_json: string }>()
+  const guesses = (rows.results || []).map(row => JSON.parse(row.response_json).player)
+  const complete = attempt.status !== 'playing'
+  let answer
+  if (complete) {
+    const target = await env.DB.prepare('SELECT * FROM players WHERE id = ?').bind(puzzle.target_player_id).first<PlayerRow>()
+    answer = target ? playerPublic(target) : undefined
+  }
+  const revealedCount = complete ? clubs.length : Math.min(clubs.length, attempt.guesses_used + 1)
+  return {
+    date: puzzle.puzzle_date, status: attempt.status, guesses, guessesUsed: attempt.guesses_used,
+    score: attempt.score, clubs: clubs.slice(0, revealedCount), clubCount: clubs.length,
+    sourceSnapshot: puzzle.source_snapshot, answer,
+  }
 }
 
 const suggestionParts = {
@@ -183,17 +242,73 @@ async function route(request: Request, env: Env) {
     return json(await getAttemptState(env, user.id, puzzle))
   }
 
+  if (request.method === 'GET' && path === '/daily/paper-trail') {
+    const puzzle = await ensureDailyPaperTrailPuzzle(env)
+    return json(await getPaperTrailAttemptState(env, user.id, puzzle))
+  }
+
+  if (request.method === 'POST' && path === '/daily/paper-trail/guess') {
+    const body = await request.json().catch(() => ({})) as { playerId?: string }
+    if (!body.playerId) return json({ error: 'Choose a valid suspect.' }, 400)
+    const puzzle = await ensureDailyPaperTrailPuzzle(env)
+    let attempt = await env.DB.prepare('SELECT id, status, guesses_used, score FROM paper_trail_attempts WHERE user_id = ? AND puzzle_id = ?')
+      .bind(user.id, puzzle.id).first<AttemptRow>()
+    if (!attempt) {
+      await env.DB.prepare("INSERT OR IGNORE INTO paper_trail_attempts (id, user_id, puzzle_id, status, guesses_used, score, started_at) VALUES (?, ?, ?, 'playing', 0, 0, ?)")
+        .bind(crypto.randomUUID(), user.id, puzzle.id, new Date().toISOString()).run()
+      attempt = await env.DB.prepare('SELECT id, status, guesses_used, score FROM paper_trail_attempts WHERE user_id = ? AND puzzle_id = ?')
+        .bind(user.id, puzzle.id).first<AttemptRow>()
+    }
+    if (!attempt) throw new Error('Unable to start the ranked Paper Trail attempt.')
+    if (attempt.status !== 'playing') return json({ error: 'Today’s ranked Paper Trail is already complete.', state: await getPaperTrailAttemptState(env, user.id, puzzle) }, 409)
+    if (attempt.guesses_used >= RANKED_GUESS_LIMIT) return json({ error: 'No ranked guesses remain.' }, 409)
+    const duplicate = await env.DB.prepare('SELECT 1 AS found FROM paper_trail_guesses WHERE attempt_id = ? AND player_id = ?')
+      .bind(attempt.id, body.playerId).first()
+    if (duplicate) return json({ error: 'That suspect is already in your case file.' }, 409)
+    const [guess, target] = await Promise.all([
+      env.DB.prepare('SELECT * FROM players WHERE id = ?').bind(body.playerId).first<PlayerRow>(),
+      env.DB.prepare('SELECT * FROM players WHERE id = ?').bind(puzzle.target_player_id).first<PlayerRow>(),
+    ])
+    if (!guess || !target) return json({ error: 'That player is not in the ranked pool.' }, 400)
+    const guessNumber = attempt.guesses_used + 1
+    const correct = guess.id === target.id
+    const status = correct ? 'won' : guessNumber >= RANKED_GUESS_LIMIT ? 'lost' : 'playing'
+    const score = rankedPaperTrailScore(guessNumber, correct)
+    const response = { player: playerPublic(guess), isCorrect: correct }
+    const completedAt = status === 'playing' ? null : new Date().toISOString()
+    try {
+      await env.DB.batch([
+        env.DB.prepare('INSERT INTO paper_trail_guesses (id, attempt_id, guess_number, player_id, response_json, is_correct, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)')
+          .bind(crypto.randomUUID(), attempt.id, guessNumber, guess.id, JSON.stringify(response), correct ? 1 : 0, new Date().toISOString()),
+        env.DB.prepare("UPDATE paper_trail_attempts SET status = ?, guesses_used = ?, score = ?, completed_at = ? WHERE id = ? AND status = 'playing'")
+          .bind(status, guessNumber, score, completedAt, attempt.id),
+      ])
+    } catch (error) {
+      if (String(error).toLowerCase().includes('unique')) return json({ error: 'That guess was already recorded. Refreshing your case file.', state: await getPaperTrailAttemptState(env, user.id, puzzle) }, 409)
+      throw error
+    }
+    return json(await getPaperTrailAttemptState(env, user.id, puzzle))
+  }
+
   if (request.method === 'GET' && path === '/leaderboard/weekly') {
     const today = utcDate()
     const start = weekStartUtc(today)
     const rows = await env.DB.prepare(`
-      SELECT u.id AS user_id, u.username, COALESCE(SUM(a.score), 0) AS points,
-             SUM(CASE WHEN a.status = 'won' THEN 1 ELSE 0 END) AS solved,
+      WITH scored_cases AS (
+        SELECT a.user_id, a.status, a.score, p.puzzle_date
+        FROM attempts a JOIN daily_puzzles p ON p.id = a.puzzle_id
+        WHERE a.status IN ('won', 'lost')
+        UNION ALL
+        SELECT a.user_id, a.status, a.score, p.puzzle_date
+        FROM paper_trail_attempts a JOIN paper_trail_daily_puzzles p ON p.id = a.puzzle_id
+        WHERE a.status IN ('won', 'lost')
+      )
+      SELECT u.id AS user_id, u.username, COALESCE(SUM(c.score), 0) AS points,
+             SUM(CASE WHEN c.status = 'won' THEN 1 ELSE 0 END) AS solved,
              COUNT(*) AS played
-      FROM attempts a
-      JOIN users u ON u.id = a.user_id
-      JOIN daily_puzzles p ON p.id = a.puzzle_id
-      WHERE p.puzzle_date >= ? AND p.puzzle_date <= ? AND a.status IN ('won', 'lost')
+      FROM scored_cases c
+      JOIN users u ON u.id = c.user_id
+      WHERE c.puzzle_date >= ? AND c.puzzle_date <= ?
       GROUP BY u.id, u.username
       ORDER BY points DESC, solved DESC, played ASC, u.created_at ASC
       LIMIT 100
@@ -222,6 +337,6 @@ export default {
     }
   },
   async scheduled(_controller: unknown, env: Env) {
-    await ensureDailyPuzzle(env)
+    await Promise.all([ensureDailyPuzzle(env), ensureDailyPaperTrailPuzzle(env)])
   },
 }

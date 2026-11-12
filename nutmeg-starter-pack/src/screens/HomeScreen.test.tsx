@@ -38,6 +38,16 @@ describe('Home case desks', () => {
     expect(onNavigate).toHaveBeenCalledWith('lineup')
   })
 
+  it('opens the shared ranked Paper Trail from the daily desk', async () => {
+    const user = userEvent.setup()
+    const onNavigate = vi.fn()
+
+    render(<HomeScreen onNavigate={onNavigate} onOpenPracticeLineup={vi.fn()} ranked identity={null} />)
+    await user.click(screen.getByRole('button', { name: /daily case 02.*paper trail/i }))
+
+    expect(onNavigate).toHaveBeenCalledWith('ranked-paper-trail')
+  })
+
   it('removes the redundant offline control while retaining the weekly table', () => {
     render(<HomeScreen onNavigate={vi.fn()} onOpenPracticeLineup={vi.fn()} ranked={false} identity={null} />)
 

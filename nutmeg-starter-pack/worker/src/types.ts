@@ -40,6 +40,11 @@ export interface PuzzleRow {
   target_player_id: string
 }
 
+export interface PaperTrailPuzzleRow extends PuzzleRow {
+  clubs_json: string
+  source_snapshot: string
+}
+
 export interface UserRow {
   id: string
   username: string
@@ -51,4 +56,3 @@ export interface AttemptRow {
   guesses_used: number
   score: number
 }
-

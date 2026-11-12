@@ -10,8 +10,9 @@ import { ResultScreen } from './screens/ResultScreen'
 import { CreditsScreen } from './screens/CreditsScreen'
 import { RankedLineupScreen } from './screens/RankedLineupScreen'
 import { PaperTrailScreen } from './screens/PaperTrailScreen'
+import { RankedPaperTrailScreen } from './screens/RankedPaperTrailScreen'
 
-const screens: Screen[] = ['home', 'lineup', 'mystery', 'paper-trail', 'leaderboard', 'credits', 'result']
+const screens: Screen[] = ['home', 'lineup', 'mystery', 'paper-trail', 'ranked-paper-trail', 'leaderboard', 'credits', 'result']
 
 function screenFromHash(): Screen {
   const value = window.location.hash.replace('#', '') as Screen
@@ -19,7 +20,7 @@ function screenFromHash(): Screen {
 }
 
 export function shouldRequestIdentity(screen: Screen, quickCase: boolean, apiEnabled: boolean, hasIdentity: boolean) {
-  return apiEnabled && !hasIdentity && (screen === 'leaderboard' || (screen === 'lineup' && !quickCase))
+  return apiEnabled && !hasIdentity && (screen === 'leaderboard' || screen === 'ranked-paper-trail' || (screen === 'lineup' && !quickCase))
 }
 
 export function App() {
@@ -58,6 +59,8 @@ export function App() {
       {screen === 'lineup' && !needsIdentity && (rankedApiEnabled && identity && !quickCase ? <RankedLineupScreen identity={identity} onResult={showResult} onQuickCase={() => setQuickCase(true)} /> : <LineupScreen onResult={showResult} />)}
       {screen === 'mystery' && <MysteryScreen onResult={showResult} />}
       {screen === 'paper-trail' && <PaperTrailScreen onResult={showResult} />}
+      {screen === 'ranked-paper-trail' && rankedApiEnabled && !needsIdentity && identity && <RankedPaperTrailScreen identity={identity} onResult={showResult} onPractice={() => navigate('paper-trail')} />}
+      {screen === 'ranked-paper-trail' && !rankedApiEnabled && <PaperTrailScreen onResult={showResult} />}
       {screen === 'leaderboard' && !needsIdentity && (rankedApiEnabled && identity ? <LeaderboardScreen identity={identity} /> : <LeaderboardDemo />)}
       {screen === 'credits' && <CreditsScreen />}
       {screen === 'result' && <ResultScreen result={result} onNavigate={navigate} />}

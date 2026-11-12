@@ -1,6 +1,6 @@
 # Player Press ranked API
 
-This Worker is the authoritative daily Prime Suspect service. D1 stores the player pool, anonymous browser identities, one shared UTC puzzle per day, attempts and weekly scores. The target player is never returned until the attempt ends.
+This Worker is the authoritative service for daily Prime Suspect and Paper Trail. D1 stores the player pool, reviewed club paths, anonymous browser identities, one shared puzzle per mode and UTC date, attempts, guesses and combined weekly scores. Neither target player is returned until its attempt ends; Paper Trail also returns only the club clues earned so far.
 
 ## Local setup
 
@@ -23,6 +23,14 @@ The API runs on `http://127.0.0.1:8787`. Start Vite with `VITE_API_URL=http://12
 
 The current production Worker is deployed at `https://player-press-ranked.adirame12.workers.dev` and is bound to the `player-press-ranked` D1 database. The frontend uses this address for production builds unless `VITE_API_URL` overrides it.
 
-The cron runs at 00:00 UTC. `GET /daily/lineup` also creates the day’s row if the cron has not run, so every user still receives the same stored target.
+The cron runs at 00:00 UTC and creates both daily cases. `GET /daily/lineup` and `GET /daily/paper-trail` also create their day’s row if the cron has not run, so every user still receives the same stored target for each mode.
+
+## Ranked endpoints
+
+- `GET /api/daily/lineup` and `POST /api/daily/lineup/guess`
+- `GET /api/daily/paper-trail` and `POST /api/daily/paper-trail/guess`
+- `GET /api/leaderboard/weekly`, aggregating completed attempts from both modes
+
+Migration `0002_ranked_paper_trail.sql` adds the reviewed path catalogue, frozen daily Paper Trail puzzles, attempts and guesses without changing the existing Prime Suspect tables.
 
 Names are unique case-insensitively. The browser stores a random bearer token; the database stores only its SHA-256 hash. There is intentionally no login or recovery flow in this alpha, so clearing browser storage or changing devices means choosing another name.

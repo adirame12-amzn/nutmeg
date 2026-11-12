@@ -1,7 +1,7 @@
 import type { ClubEvidence } from '../domain/paperTrail'
 import { ClubCard } from './ClubCard'
 
-export function CareerGrid({ clubs, revealedCount, revealAll = false }: { clubs: ClubEvidence[]; revealedCount: number; revealAll?: boolean }) {
+export function CareerGrid({ clubs, revealedCount, revealAll = false, totalClubs = clubs.length }: { clubs: ClubEvidence[]; revealedCount: number; revealAll?: boolean; totalClubs?: number }) {
   return (
     <section className="career-grid" aria-label="Five-card club career trail">
       {Array.from({ length: 5 }, (_, index) => {
@@ -13,7 +13,8 @@ export function CareerGrid({ clubs, revealedCount, revealAll = false }: { clubs:
           club={club}
           sequence={sequence}
           revealed={revealed}
-          trailEnded={!club && index === clubs.length}
+          hiddenClub={!club && index < totalClubs}
+          trailEnded={!club && index === totalClubs}
           newlyRevealed={!revealAll && sequence === revealedCount && sequence > 1}
         />
       })}

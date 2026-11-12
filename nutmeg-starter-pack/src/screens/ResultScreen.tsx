@@ -13,6 +13,7 @@ export function ResultScreen({ result, onNavigate }: { result: ResultPayload | n
     if (navigator.share) await navigator.share({ title: 'My Player Press case report', text })
     else await navigator.clipboard?.writeText(text)
   }
+  const replayScreen: Screen = result.ranked && result.mode === 'paper-trail' ? 'ranked-paper-trail' : result.mode
 
   return (
     <div className={`result-page ${result.won ? 'won' : 'lost'} ${result.mode === 'paper-trail' ? 'paper-trail-result' : ''}`}>
@@ -29,7 +30,7 @@ export function ResultScreen({ result, onNavigate }: { result: ResultPayload | n
       </div>
       <strong className="points">+{result.score} pts</strong>
       <button className="primary dark" onClick={share}><Share2/> Share without spoilers</button>
-      <button onClick={() => onNavigate(result.mode)}><RotateCcw/> {result.ranked ? 'Review today’s case' : result.mode === 'paper-trail' ? 'Open another trail' : 'Reopen this case'}</button>
+      <button onClick={() => onNavigate(replayScreen)}><RotateCcw/> {result.ranked ? 'Review today’s case' : result.mode === 'paper-trail' ? 'Open another trail' : 'Reopen this case'}</button>
       <button className="text-button" onClick={() => onNavigate('home')}><Home/> Back to today’s cases</button>
     </div>
   )

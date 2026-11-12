@@ -5,6 +5,7 @@ describe('ranked identity boundary', () => {
   it('asks only for ranked play and the leaderboard', () => {
     expect(shouldRequestIdentity('lineup', false, true, false)).toBe(true)
     expect(shouldRequestIdentity('leaderboard', false, true, false)).toBe(true)
+    expect(shouldRequestIdentity('ranked-paper-trail', false, true, false)).toBe(true)
     expect(shouldRequestIdentity('lineup', true, true, false)).toBe(false)
     expect(shouldRequestIdentity('paper-trail', false, true, false)).toBe(false)
   })

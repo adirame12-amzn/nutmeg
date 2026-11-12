@@ -1,13 +1,23 @@
 import { CircleStop, LockKeyhole, Minus } from 'lucide-react'
 import type { ClubEvidence } from '../domain/paperTrail'
 
-export function ClubCard({ club, sequence, revealed, trailEnded = false, newlyRevealed = false }: {
+export function ClubCard({ club, sequence, revealed, hiddenClub = false, trailEnded = false, newlyRevealed = false }: {
   club?: ClubEvidence
   sequence: number
   revealed: boolean
+  hiddenClub?: boolean
   trailEnded?: boolean
   newlyRevealed?: boolean
 }) {
+  if (!revealed && (club || hiddenClub)) {
+    return (
+      <article className={`club-card slot-${sequence} locked`} aria-label={`Club ${sequence} locked`}>
+        <small>CLUB {String(sequence).padStart(2, '0')}</small>
+        <LockKeyhole aria-hidden="true" />
+        <strong>LOCKED</strong>
+      </article>
+    )
+  }
   if (!club) {
     const endOfTrail = trailEnded
     return (
@@ -16,15 +26,6 @@ export function ClubCard({ club, sequence, revealed, trailEnded = false, newlyRe
         {endOfTrail ? <CircleStop aria-hidden="true" /> : <Minus aria-hidden="true" />}
         <strong>{endOfTrail ? <>CAREER TRAIL <br/>ENDS HERE</> : <>NO CLUB <br/>IN THIS SLOT</>}</strong>
         <span>{endOfTrail ? 'No further verified senior club in this source' : 'Trail already ended'}</span>
-      </article>
-    )
-  }
-  if (!revealed) {
-    return (
-      <article className={`club-card slot-${sequence} locked`} aria-label={`Club ${sequence} locked`}>
-        <small>CLUB {String(sequence).padStart(2, '0')}</small>
-        <LockKeyhole aria-hidden="true" />
-        <strong>LOCKED</strong>
       </article>
     )
   }

@@ -2,18 +2,19 @@
 
 **Every player leaves clues.**
 
-Player Press is a mobile-first football case-solving game. **Ranked Case** serves a shared server-validated daily Prime Suspect and weekly leaderboard; **Cold Cases** is the local, unlimited practice desk for replayable Prime Suspect rounds and Paper Trail. The visual direction is a warm investigative football newspaper with high-energy orange and cobalt accents.
+Player Press is a mobile-first football case-solving game. **Ranked Case** serves shared server-validated daily Prime Suspect and Paper Trail cases plus a combined weekly leaderboard; **Cold Cases** is the local, unlimited practice desk for replayable versions of both games. The visual direction is a warm investigative football newspaper with high-energy orange and cobalt accents.
 
 ## Current implementation status
 
-Milestone A is playable and the shared Prime Suspect alpha is deployed with an account-owned Cloudflare Worker and D1 database:
+Milestone A is playable and the shared Prime Suspect alpha is deployed with an account-owned Cloudflare Worker and D1 database. Ranked Paper Trail is implemented and locally verified on this feature branch; its new D1 migration and Worker routes must be deployed before it is public:
 
 - Home with explicit Ranked Case and Cold Cases practice desks, Prime Suspect, Paper Trail, case-report, unique-name onboarding, and weekly leaderboard screens.
-- One server-stored Prime Suspect per UTC date for everyone, created by a 00:00 UTC cron with an idempotent first-request fallback.
+- One server-stored Prime Suspect and one server-stored Paper Trail per UTC date for everyone, created by a 00:00 UTC cron with an idempotent first-request fallback.
 - Browser-bound unique detective names without email/password login or recovery, and server-authoritative guesses and scores.
-- Weekly Monday–Sunday UTC table. Prime Suspect awards 100, 80, 65, 50, 35, or 20 points by successful guess; an unsolved case scores zero.
+- Weekly Monday–Sunday UTC table combining both ranked cases. Prime Suspect awards 100, 80, 65, 50, 35, or 20 points; Paper Trail awards 100, 85, 70, 55, 40, or 25; an unsolved case scores zero.
 - Six-suspect Prime Suspect using 96 imported FC 27 snapshot records, accent-insensitive aliases, reviewed portraits, deterministic comparisons, age/OVR directions, stacked player cards, scoring, and replay.
-- Local Paper Trail practice with progressive senior-club reveals, six guesses, 87 eligible histories, clean-colour club crests and a complete case-report reveal.
+- Local and daily ranked Paper Trail with progressive senior-club reveals, six guesses, 87 eligible histories, clean-colour club crests and a complete case-report reveal. Ranked play keeps unrevealed clubs and the answer server-side.
+- Staggered deal-in, sheen and tactile hover/press motion for Cold Cases cards, with reduced-motion support.
 - Responsive mobile shell designed at 390px and adapted for 320px, 768px, and desktop.
 - Installable PWA assets and offline shell generated at build time.
 - GitHub Pages workflow using the repository base path `/nutmeg/`.
@@ -77,7 +78,7 @@ The importer reads `data/selected_players.csv`, resolves identity through the of
 
 The rating-catalogue command builds every men's record at one exact FC rating. Catalogues for ratings 85 through 91 contain 96 verified identities, 96 clean portraits, 96 newspaper-style derivatives, attribution metadata, browser-ready JSON, queryable SQLite databases, contact sheets and HTML review galleries. `npm run merge:rating-85-plus` creates the combined frontend JSON and `data/generated/rating-85-plus/players.sqlite`. `npm run process:cutouts` runs the local U²-Net human-segmentation model, removes disconnected mask debris, creates transparent PNG plus alpha-preserving newspaper WebP assets, updates catalogue metadata and writes `cutouts-contact-sheet.jpg` for visual QA. Use Python 3.11–3.13 for that optional processing step. All 96 records are valid guesses and possible answers. Assets live under `public/players/rating-*/`. To target another exact rating, run `python3 -m ingestion.rating_catalog --rating <number> --source <csv>`.
 
-`npm run ingest:paper-trail` audits Wikidata P54 club statements for all 96 current players, requires a positive P1350 senior appearance count, and exports 87 locally playable histories. It also resolves P154 crests through Commons metadata and publishes only allowlisted transparent clean WebPs; crest colours are preserved in-game while the enclosing card carries the editorial treatment. Generated outputs, attribution and the review report live under `data/generated/paper-trail/`; browser assets live under `public/clubs/`. Paper Trail is static local practice and has no Worker or D1 integration.
+`npm run ingest:paper-trail` audits Wikidata P54 club statements for all 96 current players, requires a positive P1350 senior appearance count, and exports 87 eligible histories. It also resolves P154 crests through Commons metadata and publishes only allowlisted transparent clean WebPs; crest colours are preserved in-game while the enclosing card carries the editorial treatment. Generated outputs, attribution and the review report live under `data/generated/paper-trail/`; browser assets live under `public/clubs/`. `npm run worker:seed` exports the same reviewed histories into D1 seed SQL for ranked play, while Cold Cases continues to read the static browser copy and makes no Worker calls.
 
 ## GitHub Pages
 

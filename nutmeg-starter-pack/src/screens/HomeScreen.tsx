@@ -37,11 +37,18 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
           <span className="mode-chip">RANKED</span>
         </div>
         <p>Everyone investigates the same player. Your best detective work goes onto the weekly table.</p>
-        <button className="game-tile orange ranked-case" onClick={() => onNavigate('lineup')}>
-          <GameTicket />
-          <span><small>DAILY CASE · 6 SUSPECTS</small><strong>PRIME SUSPECT</strong><em>Close today’s shared case before the trail resets.</em></span>
-          <ArrowRight className="tile-arrow" />
-        </button>
+        <div className="ranked-case-list">
+          <button className="game-tile orange ranked-case" onClick={() => onNavigate('lineup')}>
+            <GameTicket />
+            <span><small>DAILY CASE 01 · 6 SUSPECTS</small><strong>PRIME SUSPECT</strong><em>Compare the evidence. Name today’s player.</em></span>
+            <ArrowRight className="tile-arrow" />
+          </button>
+          <button className="game-tile ranked-case paper-ranked-case" onClick={() => onNavigate(ranked ? 'ranked-paper-trail' : 'paper-trail')}>
+            <GameTicket trail />
+            <span><small>DAILY CASE 02 · 6 SUSPECTS</small><strong>PAPER TRAIL</strong><em>Follow the clubs. Close today’s second case.</em></span>
+            <ArrowRight className="tile-arrow" />
+          </button>
+        </div>
         <div className={`desk-meta ${ranked || identity ? '' : 'single'}`}>
           {(ranked || identity) && <button onClick={() => onNavigate('lineup')}><Fingerprint /> <span><strong>{identity ? `Signed in as @${identity.user.username}` : 'Claim your detective name'}</strong><small>{identity ? 'Identity saved in this browser' : 'No email or password needed'}</small></span></button>}
           <button onClick={() => onNavigate('leaderboard')} aria-label="Open weekly leaderboard"><Trophy /><span><strong>Weekly table</strong><small>Server-validated points</small></span><ArrowRight /></button>

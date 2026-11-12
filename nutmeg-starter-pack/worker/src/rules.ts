@@ -2,6 +2,7 @@ import type { PlayerRow } from './types'
 
 export const RANKED_GUESS_LIMIT = 6
 export const RANKED_LINEUP_POINTS = [100, 80, 65, 50, 35, 20] as const
+export const RANKED_PAPER_TRAIL_POINTS = [100, 85, 70, 55, 40, 25] as const
 
 export type RankedStatus = 'match' | 'miss' | 'higher' | 'lower'
 
@@ -44,6 +45,10 @@ export function rankedLineupScore(guessNumber: number, won: boolean) {
   return won && guessNumber >= 1 && guessNumber <= RANKED_GUESS_LIMIT ? RANKED_LINEUP_POINTS[guessNumber - 1] : 0
 }
 
+export function rankedPaperTrailScore(guessNumber: number, won: boolean) {
+  return won && guessNumber >= 1 && guessNumber <= RANKED_GUESS_LIMIT ? RANKED_PAPER_TRAIL_POINTS[guessNumber - 1] : 0
+}
+
 export function utcDate(value = new Date()) {
   return value.toISOString().slice(0, 10)
 }
@@ -66,4 +71,3 @@ export function validateUsername(value: string) {
   }
   return { ok: true as const, username: trimmed, key: normaliseUsername(trimmed) }
 }
-

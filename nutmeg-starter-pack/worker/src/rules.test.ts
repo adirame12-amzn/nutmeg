@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { compareRankedPlayers, rankedLineupScore, validateUsername, weekStartUtc } from './rules'
+import { compareRankedPlayers, rankedLineupScore, rankedPaperTrailScore, validateUsername, weekStartUtc } from './rules'
 import type { PlayerRow } from './types'
 
 const player = (overrides: Partial<PlayerRow> = {}): PlayerRow => ({
@@ -13,6 +13,11 @@ describe('ranked daily rules', () => {
     expect([1, 2, 3, 4, 5, 6].map(number => rankedLineupScore(number, true))).toEqual([100, 80, 65, 50, 35, 20])
     expect(rankedLineupScore(6, false)).toBe(0)
     expect(rankedLineupScore(7, true)).toBe(0)
+  })
+
+  it('scores ranked Paper Trail independently', () => {
+    expect([1, 2, 3, 4, 5, 6].map(number => rankedPaperTrailScore(number, true))).toEqual([100, 85, 70, 55, 40, 25])
+    expect(rankedPaperTrailScore(6, false)).toBe(0)
   })
 
   it('starts the leaderboard week on Monday UTC', () => {

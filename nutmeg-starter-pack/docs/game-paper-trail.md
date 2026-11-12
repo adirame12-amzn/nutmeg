@@ -1,14 +1,16 @@
-# Paper Trail — local Cold Cases practice
+# Paper Trail — Cold Cases practice and daily ranked case
 
-Paper Trail is a replayable, unranked game inside the **Cold Cases** practice desk. It never requests a detective identity, calls the ranked Worker, writes to D1 or contributes to the weekly leaderboard.
+Paper Trail has two deliberately separate forms. **Cold Cases** is replayable, unranked and browser-only: it never requests a detective identity, calls the Worker, writes to D1 or contributes to the weekly leaderboard. **Ranked Case** stores one shared Paper Trail for each UTC date, validates guesses in the Worker and contributes server-calculated points to the combined weekly table.
 
 ## Rules
 
-- A local eligible player is selected at random; the immediately previous answer is excluded for the browser session.
+- Cold Cases selects a local eligible player at random and excludes the immediately previous answer for the browser session. Ranked Case stores one randomly chosen eligible path in D1 for the UTC date, shared by everyone.
 - One senior club is visible at the start. Each incorrect player guess reveals the next available club, up to five clubs.
-- The player has six distinct guesses. A correct guess scores 100, 85, 70, 55, 40 or 25 practice points by attempt; a miss scores zero.
+- The player has six distinct guesses. A correct guess scores 100, 85, 70, 55, 40 or 25 by attempt; a miss scores zero. Practice points stay local; ranked points are authoritative and join the weekly table.
 - The result reveals the answer, nationality, portrait and complete available club trail.
 - The five fixed evidence slots use a three-card first row and a centred two-card second row. The first missing slot clearly marks where the verified career trail ends; later slots remain visually secondary rather than stretching the layout.
+
+In ranked play the Worker returns the first club before the attempt, then one additional club after each incorrect guess until the verified path ends. Future club names and the player answer are not included in the response while the case is still open.
 
 ## Data and verification
 
