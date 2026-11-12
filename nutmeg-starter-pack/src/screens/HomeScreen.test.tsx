@@ -44,4 +44,16 @@ describe('Home case desks', () => {
     expect(screen.queryByText('Ranked desk offline')).not.toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Open weekly leaderboard' })).toBeInTheDocument()
   })
+
+  it('keeps the saved detective identity visible even when ranked play is locally unavailable', () => {
+    render(<HomeScreen
+      onNavigate={vi.fn()}
+      onOpenPracticeLineup={vi.fn()}
+      ranked={false}
+      identity={{ user: { id: 'detective-1', username: 'TouchlineFox' }, token: 'browser-token' }}
+    />)
+
+    expect(screen.getByRole('button', { name: /signed in as @touchlinefox/i })).toBeInTheDocument()
+    expect(screen.queryByText('Ranked desk offline')).not.toBeInTheDocument()
+  })
 })

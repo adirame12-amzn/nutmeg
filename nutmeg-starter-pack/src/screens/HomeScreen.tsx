@@ -42,8 +42,8 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
           <span><small>DAILY CASE · 6 SUSPECTS</small><strong>PRIME SUSPECT</strong><em>Close today’s shared case before the trail resets.</em></span>
           <ArrowRight className="tile-arrow" />
         </button>
-        <div className={`desk-meta ${ranked ? '' : 'single'}`}>
-          {ranked && <button onClick={() => onNavigate('lineup')}><Fingerprint /> <span><strong>{identity ? `Playing as @${identity.user.username}` : 'Claim your detective name'}</strong><small>{identity ? 'Identity saved in this browser' : 'No email or password needed'}</small></span></button>}
+        <div className={`desk-meta ${ranked || identity ? '' : 'single'}`}>
+          {(ranked || identity) && <button onClick={() => onNavigate('lineup')}><Fingerprint /> <span><strong>{identity ? `Signed in as @${identity.user.username}` : 'Claim your detective name'}</strong><small>{identity ? 'Identity saved in this browser' : 'No email or password needed'}</small></span></button>}
           <button onClick={() => onNavigate('leaderboard')} aria-label="Open weekly leaderboard"><Trophy /><span><strong>Weekly table</strong><small>Server-validated points</small></span><ArrowRight /></button>
         </div>
       </section> : null}
