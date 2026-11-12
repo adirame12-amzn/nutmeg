@@ -62,7 +62,7 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
       </section>
 
       <div className="desk-switch" role="group" aria-label="Choose a case desk">
-        <button className={desk === 'daily' ? 'active' : ''} onClick={() => setDesk('daily')} aria-pressed={desk === 'daily'}><CalendarCheck/><span><strong>Ranked Case</strong><small>Daily · shared</small></span></button>
+        <button className={desk === 'daily' ? 'active' : ''} onClick={() => setDesk('daily')} aria-pressed={desk === 'daily'}><CalendarCheck/><span><strong>Ranked Cases</strong><small>4 games · shared daily</small></span></button>
         <button className={desk === 'practice' ? 'active' : ''} onClick={() => setDesk('practice')} aria-pressed={desk === 'practice'}><FolderOpen/><span><strong>Cold Cases</strong><small>Unlimited · unscored</small></span></button>
       </div>
 
@@ -72,7 +72,7 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
           <span><small>ONE SHARED FILE · SCORED</small><h2 id="daily-cases-title">Today’s Cases</h2></span>
           <span className="mode-chip">RANKED</span>
         </div>
-        <p>Everyone investigates the same player. Your best detective work goes onto the weekly table.</p>
+        <p>Four shared cases. Solve any—or clear the whole desk—for weekly points.</p>
         <div className="ranked-case-list">
           <button className={`game-tile orange ranked-case progress-${lineupProgress.status}`} onClick={() => onNavigate('lineup')}>
             <GameTicket />
