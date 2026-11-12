@@ -127,9 +127,22 @@ export function RedactedScreen({ onNavigate }: { onNavigate: (screen: Screen) =>
   return (
     <div className="game-page redacted-page">
       <div className="game-heading"><p className="eyebrow redacted">REDACTED</p><p className="demo-pill">CASE 04 · PRACTICE</p></div>
+      <div className="redacted-scorekey" aria-label="Scoring rules"><span><b>100</b> start</span><i/><span><b>−12</b> strike</span><i/><span><b>−10</b> evidence</span></div>
       <h1>Uncover the Name</h1>
       <p className="game-intro">Lift the black ink before six wrong letters close the file.</p>
-      <div className="redacted-scorecard" aria-label="Scoring rules"><span><b>100</b><small>START</small></span><span><b>−12</b><small>PER STRIKE</small></span><span><b>−10</b><small>PER EVIDENCE</small></span></div>
+
+      <section className="redacted-evidence" aria-labelledby="redacted-evidence-title">
+        <div className="evidence-heading"><span><Eye/></span><div><h2 id="redacted-evidence-title">Evidence</h2><small>UNLOCKS AT 2 / 4 STRIKES · −10 TO OPEN</small></div></div>
+        {[0, 1].map(index => {
+          const available = redactedEvidenceAvailable(index, wrongAttempts)
+          const open = openedEvidence[index]
+          const evidenceState = open ? 'open' : available ? 'available' : 'locked'
+          return <button key={index} disabled={!available} className={evidenceState} onClick={() => openEvidence(index)}>
+            <span className="evidence-status">{open ? <ShieldCheck/> : available ? <Eye/> : <FileLock2/>}<b>{open ? 'OPENED' : available ? 'OPEN −10' : `${index === 0 ? 2 : 4} STRIKES`}</b></span>
+            <span><small>FILE 0{index + 1}</small><strong>{open ? index === 0 ? `${caseFile.player.nationalTeam} · ${caseFile.player.position}` : `${caseFile.player.currentClub} · FC ${caseFile.player.fcOverall ?? '—'}` : available ? 'TAP TO UNSEAL' : 'SEALED'}</strong></span>
+          </button>
+        })}
+      </section>
 
       <section className="redacted-dossier" aria-label="Confidential player name">
         <div className="confidential-row"><FileLock2/><span>CONFIDENTIAL</span><small>PP–004</small></div>
@@ -145,19 +158,6 @@ export function RedactedScreen({ onNavigate }: { onNavigate: (screen: Screen) =>
       </section>
 
       <p className="redacted-feedback" aria-live="polite">{feedback}</p>
-      <section className="redacted-evidence" aria-labelledby="redacted-evidence-title">
-        <div className="evidence-heading"><span><Eye/></span><div><small>UNSEAL FOR −10 PTS</small><h2 id="redacted-evidence-title">The Evidence</h2></div></div>
-        {[0, 1].map(index => {
-          const available = redactedEvidenceAvailable(index, wrongAttempts)
-          const open = openedEvidence[index]
-          const evidenceState = open ? 'open' : available ? 'available' : 'locked'
-          return <button key={index} disabled={!available} className={evidenceState} onClick={() => openEvidence(index)}>
-            <span className="evidence-status">{open ? <ShieldCheck/> : available ? <Eye/> : <FileLock2/>}<b>{open ? 'OPENED' : available ? 'READY' : 'LOCKED'}</b></span>
-            <span><small>EVIDENCE 0{index + 1}</small><strong>{open ? index === 0 ? `${caseFile.player.nationalTeam} · ${caseFile.player.position}` : `${caseFile.player.currentClub} · FC ${caseFile.player.fcOverall ?? '—'}` : available ? 'TAP TO REVEAL' : `UNLOCKS AT ${index === 0 ? 2 : 4} STRIKES`}</strong></span>
-          </button>
-        })}
-      </section>
-
       <RedactedKeyboard guessedLetters={guessedLetters} correctLetters={correctLetters} disabled={false} onGuess={guessLetter} />
       <button className="redacted-search-toggle" onClick={() => setShowSearch(show => !show)} aria-expanded={showSearch}><Search/> Name the Suspect</button>
       {showSearch && <PlayerSearch excludedIds={fullGuessIds} onSelect={submitFullGuess} pool={fc27Players} />}

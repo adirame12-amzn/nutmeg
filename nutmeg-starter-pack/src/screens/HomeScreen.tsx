@@ -13,13 +13,20 @@ function CaseProgressChip({ progress }: { progress: CaseProgress }) {
   return <span className={`case-progress ${progress.status}`}>{label}</span>
 }
 
-function GameTicket({ mystery = false, trail = false, label }: { mystery?: boolean; trail?: boolean; label?: string }) {
+type GameMark = 'suspect' | 'trail' | 'redacted' | 'wire'
+
+function GameGlyph({ game }: { game: GameMark }) {
+  if (game === 'trail') return <svg viewBox="0 0 48 58"><circle cx="14" cy="14" r="6"/><circle cx="34" cy="28" r="6"/><circle cx="15" cy="45" r="6"/><path d="m19 17 10 8m0 7-9 9"/><path d="M11 14h6M31 28h6M12 45h6"/></svg>
+  if (game === 'redacted') return <svg viewBox="0 0 48 58"><path d="M10 8h28v42H10z"/><path d="M15 17h18M15 24h10M15 33h18M15 40h14"/><path className="redaction" d="M12 14h25v7H12zm0 16h25v7H12z"/></svg>
+  if (game === 'wire') return <svg viewBox="0 0 48 58"><circle cx="12" cy="13" r="5"/><circle cx="36" cy="45" r="5"/><path d="M16 16c18 4 1 14 14 18 7 2 7 5 6 6"/><path d="M8 13h8M32 45h8"/><path className="spark" d="m24 24 4 4-5 2 3 5"/></svg>
+  return <svg viewBox="0 0 48 58"><path d="M10 9h28v40H10z"/><circle cx="24" cy="22" r="7"/><path d="M14 42c2-8 18-8 20 0"/><path d="M16 13c5-5 12-5 17 0M13 17c-2 8 1 17 7 22M35 17c2 8-1 17-7 22"/></svg>
+}
+
+function GameTicket({ game = 'suspect' }: { game?: GameMark }) {
   return (
-    <span className={`ticket-icon ${mystery ? 'mystery-ticket' : trail ? 'trail-ticket' : 'lineup-ticket'}`} aria-hidden="true">
+    <span className={`ticket-icon ${game}-ticket`} aria-hidden="true">
       <span className="ticket-sheet">
-        {label ? <b>{label}</b> : mystery ? <b>?</b> : trail ? <b>03</b> : (
-          <svg viewBox="0 0 48 58"><path d="M10 9h28v40H10z"/><circle cx="18" cy="19" r="2.5"/><circle cx="31" cy="16" r="2.5"/><circle cx="24" cy="30" r="2.5"/><circle cx="16" cy="41" r="2.5"/><circle cx="34" cy="40" r="2.5"/><path d="m19 20 4 8m3-1 4-9m-5 14-7 7m9-7 6 6"/></svg>
-        )}
+        <GameGlyph game={game}/>
       </span>
     </span>
   )
@@ -66,7 +73,7 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
             <ArrowRight className="tile-arrow" />
           </button>
           <button className={`game-tile ranked-case paper-ranked-case progress-${trailProgress.status}`} onClick={() => onNavigate(ranked ? 'ranked-paper-trail' : 'paper-trail')}>
-            <GameTicket trail />
+            <GameTicket game="trail" />
             <span><CaseProgressChip progress={trailProgress}/><small>DAILY CASE 02 · 6 SUSPECTS</small><strong>PAPER TRAIL</strong><em>Follow the clubs. Close today’s second case.</em></span>
             <ArrowRight className="tile-arrow" />
           </button>
@@ -89,13 +96,13 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
             <GameTicket /><span><small>RANDOM PLAYER</small><strong>Prime Suspect</strong><em>A fresh suspect every round.</em></span><ArrowRight />
           </button>
           <button className="archive-game" data-file="FILE 03" onClick={() => onNavigate('paper-trail')}>
-            <GameTicket trail /><span><small>CASE 03 · 6 SUSPECTS</small><strong>Paper Trail</strong><em>Follow the clubs. Find the player.</em></span><ArrowRight />
+            <GameTicket game="trail" /><span><small>CASE 03 · 6 SUSPECTS</small><strong>Paper Trail</strong><em>Follow the clubs. Find the player.</em></span><ArrowRight />
           </button>
           <button className="archive-game redacted-archive" data-file="FILE 04" onClick={() => onNavigate('redacted')}>
-            <GameTicket label="R" /><span><small>CASE 04 · 6 STRIKES</small><strong>Redacted</strong><em>Uncover the name. Close the case.</em></span><ArrowRight />
+            <GameTicket game="redacted" /><span><small>CASE 04 · 6 STRIKES</small><strong>Redacted</strong><em>Uncover the name. Close the case.</em></span><ArrowRight />
           </button>
-          <button className="archive-game wire-archive" data-file="CONCEPT" onClick={() => onNavigate('wire-preview')}>
-            <GameTicket label="W" /><span><small>90-SECOND CONCEPT</small><strong>The Wire</strong><em>Preview the club-connection board.</em></span><ArrowRight />
+          <button className="archive-game wire-archive" data-file="COMING SOON" onClick={() => onNavigate('wire-preview')}>
+            <GameTicket game="wire" /><span><small>INTERACTIVE CONCEPT</small><strong>The Wire</strong><em>Enter the connection lab.</em><mark>COMING SOON</mark></span><ArrowRight />
           </button>
         </div>
         <div className="archive-foot"><Clock3 size={15}/><span>Play again whenever you like · no points recorded</span></div>

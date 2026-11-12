@@ -60,6 +60,14 @@ export function weekStartUtc(dateString: string) {
   return utcDate(date)
 }
 
+export function previousWeekUtc(dateString: string) {
+  const currentStart = new Date(`${weekStartUtc(dateString)}T00:00:00.000Z`)
+  currentStart.setUTCDate(currentStart.getUTCDate() - 7)
+  const start = utcDate(currentStart)
+  currentStart.setUTCDate(currentStart.getUTCDate() + 6)
+  return { start, end: utcDate(currentStart) }
+}
+
 export function normaliseUsername(value: string) {
   return value.normalize('NFKC').trim().toLocaleLowerCase('en-US')
 }

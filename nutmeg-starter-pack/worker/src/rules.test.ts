@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { compareRankedPlayers, rankedLineupScore, rankedPaperTrailScore, validateUsername, weekStartUtc } from './rules'
+import { compareRankedPlayers, previousWeekUtc, rankedLineupScore, rankedPaperTrailScore, validateUsername, weekStartUtc } from './rules'
 import type { PlayerRow } from './types'
 
 const player = (overrides: Partial<PlayerRow> = {}): PlayerRow => ({
@@ -23,6 +23,11 @@ describe('ranked daily rules', () => {
   it('starts the leaderboard week on Monday UTC', () => {
     expect(weekStartUtc('2026-11-12')).toBe('2026-11-09')
     expect(weekStartUtc('2026-11-09')).toBe('2026-11-09')
+  })
+
+  it('identifies the completed week that earns a championship star', () => {
+    expect(previousWeekUtc('2026-11-12')).toEqual({ start: '2026-11-02', end: '2026-11-08' })
+    expect(previousWeekUtc('2026-11-09')).toEqual({ start: '2026-11-02', end: '2026-11-08' })
   })
 
   it('normalises and validates unique-name input', () => {

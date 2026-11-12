@@ -1,4 +1,4 @@
-import { compareRankedPlayers, normaliseUsername, rankedLineupScore, rankedPaperTrailScore, RANKED_GUESS_LIMIT, utcDate, validateUsername, weekStartUtc } from './rules'
+import { compareRankedPlayers, normaliseUsername, previousWeekUtc, rankedLineupScore, rankedPaperTrailScore, RANKED_GUESS_LIMIT, utcDate, validateUsername, weekStartUtc } from './rules'
 import type { AttemptRow, Env, PaperTrailPuzzleRow, PlayerRow, PuzzleRow, UserRow } from './types'
 
 const DEFAULT_ORIGINS = [
@@ -143,6 +143,34 @@ async function getPaperTrailAttemptState(env: Env, userId: string, puzzle: Paper
     score: attempt.score, clubs: clubs.slice(0, revealedCount), clubCount: clubs.length,
     sourceSnapshot: puzzle.source_snapshot, answer,
   }
+}
+
+async function ensurePreviousWeekChampion(env: Env, date = utcDate()) {
+  const { start, end } = previousWeekUtc(date)
+  const existing = await env.DB.prepare('SELECT week_start FROM weekly_champions WHERE week_start = ?').bind(start).first()
+  if (existing) return
+  await env.DB.prepare(`
+    INSERT OR IGNORE INTO weekly_champions (week_start, user_id, points, solved, played, awarded_at)
+    SELECT ?, ranked.user_id, ranked.points, ranked.solved, ranked.played, ?
+    FROM (
+      SELECT u.id AS user_id, COALESCE(SUM(c.score), 0) AS points,
+             SUM(CASE WHEN c.status = 'won' THEN 1 ELSE 0 END) AS solved,
+             COUNT(*) AS played, u.created_at
+      FROM (
+        SELECT a.user_id, a.status, a.score, p.puzzle_date
+        FROM attempts a JOIN daily_puzzles p ON p.id = a.puzzle_id
+        WHERE a.status IN ('won', 'lost') AND p.puzzle_date BETWEEN ? AND ?
+        UNION ALL
+        SELECT a.user_id, a.status, a.score, p.puzzle_date
+        FROM paper_trail_attempts a JOIN paper_trail_daily_puzzles p ON p.id = a.puzzle_id
+        WHERE a.status IN ('won', 'lost') AND p.puzzle_date BETWEEN ? AND ?
+      ) c
+      JOIN users u ON u.id = c.user_id
+      GROUP BY u.id, u.created_at
+      ORDER BY points DESC, solved DESC, played ASC, u.created_at ASC
+      LIMIT 1
+    ) ranked
+  `).bind(start, new Date().toISOString(), start, end, start, end).run()
 }
 
 const suggestionParts = {
@@ -293,6 +321,7 @@ async function route(request: Request, env: Env) {
   if (request.method === 'GET' && path === '/leaderboard/weekly') {
     const today = utcDate()
     const start = weekStartUtc(today)
+    await ensurePreviousWeekChampion(env, today)
     const rows = await env.DB.prepare(`
       WITH scored_cases AS (
         SELECT a.user_id, a.status, a.score, p.puzzle_date
@@ -302,19 +331,30 @@ async function route(request: Request, env: Env) {
         SELECT a.user_id, a.status, a.score, p.puzzle_date
         FROM paper_trail_attempts a JOIN paper_trail_daily_puzzles p ON p.id = a.puzzle_id
         WHERE a.status IN ('won', 'lost')
+      ), star_totals AS (
+        SELECT user_id, COUNT(*) AS stars FROM weekly_champions GROUP BY user_id
       )
       SELECT u.id AS user_id, u.username, COALESCE(SUM(c.score), 0) AS points,
              SUM(CASE WHEN c.status = 'won' THEN 1 ELSE 0 END) AS solved,
-             COUNT(*) AS played
+             COUNT(*) AS played, COALESCE(MAX(s.stars), 0) AS stars
       FROM scored_cases c
       JOIN users u ON u.id = c.user_id
+      LEFT JOIN star_totals s ON s.user_id = u.id
       WHERE c.puzzle_date >= ? AND c.puzzle_date <= ?
       GROUP BY u.id, u.username
       ORDER BY points DESC, solved DESC, played ASC, u.created_at ASC
       LIMIT 100
-    `).bind(start, today).all<{ user_id: string; username: string; points: number; solved: number; played: number }>()
-    const leaders = (rows.results || []).map((row, index) => ({ rank: index + 1, username: row.username, points: Number(row.points), solved: Number(row.solved), played: Number(row.played), isCurrentUser: row.user_id === user.id }))
-    return json({ weekStart: start, leaders, currentUser: leaders.find(row => row.isCurrentUser) || null })
+    `).bind(start, today).all<{ user_id: string; username: string; points: number; solved: number; played: number; stars: number }>()
+    const leaders = (rows.results || []).map((row, index) => ({ rank: index + 1, username: row.username, points: Number(row.points), solved: Number(row.solved), played: Number(row.played), stars: Number(row.stars), isCurrentUser: row.user_id === user.id }))
+    const starRows = await env.DB.prepare(`
+      SELECT u.id AS user_id, u.username, COUNT(*) AS stars, MAX(w.week_start) AS latest_week
+      FROM weekly_champions w JOIN users u ON u.id = w.user_id
+      GROUP BY u.id, u.username
+      ORDER BY stars DESC, latest_week DESC, u.created_at ASC
+      LIMIT 50
+    `).all<{ user_id: string; username: string; stars: number; latest_week: string }>()
+    const starLeaders = (starRows.results || []).map((row, index) => ({ rank: index + 1, username: row.username, stars: Number(row.stars), latestWeek: row.latest_week, isCurrentUser: row.user_id === user.id }))
+    return json({ weekStart: start, leaders, currentUser: leaders.find(row => row.isCurrentUser) || null, starLeaders })
   }
 
   return json({ error: 'Not found.' }, 404)
@@ -337,6 +377,6 @@ export default {
     }
   },
   async scheduled(_controller: unknown, env: Env) {
-    await Promise.all([ensureDailyPuzzle(env), ensureDailyPaperTrailPuzzle(env)])
+    await Promise.all([ensureDailyPuzzle(env), ensureDailyPaperTrailPuzzle(env), ensurePreviousWeekChampion(env)])
   },
 }

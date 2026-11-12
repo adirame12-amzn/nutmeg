@@ -73,6 +73,15 @@ export interface WeeklyLeader {
   points: number
   solved: number
   played: number
+  stars: number
+  isCurrentUser: boolean
+}
+
+export interface StarLeader {
+  rank: number
+  username: string
+  stars: number
+  latestWeek: string
   isCurrentUser: boolean
 }
 
@@ -80,6 +89,7 @@ export interface WeeklyLeaderboard {
   weekStart: string
   leaders: WeeklyLeader[]
   currentUser: WeeklyLeader | null
+  starLeaders: StarLeader[]
 }
 
 export class RankedApiError extends Error {

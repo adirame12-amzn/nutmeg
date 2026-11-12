@@ -10,10 +10,10 @@ const clubs = [
 export function WirePreviewScreen() {
   return (
     <div className="game-page wire-preview-page">
-      <div className="game-heading"><p className="eyebrow wire">THE WIRE</p><p className="demo-pill">CONCEPT FILE · PRACTICE</p></div>
+      <div className="game-heading"><p className="eyebrow wire">THE WIRE</p><p className="demo-pill wire-soon-pill">COMING SOON</p></div>
       <h1>Connect the Clubs</h1>
-      <p className="game-intro">A first look at the 90-second connection game. Gameplay and route data are not active yet.</p>
-      <aside className="wire-preview-note"><LockKeyhole/><span><strong>Mockup only</strong><small>No timer, score, answers or records are running on this screen.</small></span></aside>
+      <p className="game-intro">Trace a player through the clubs before the wire goes cold.</p>
+      <aside className="wire-preview-note"><LockKeyhole/><span><strong>Connection lab · preview access</strong><small>The board is interactive-looking, but timers and answers stay sealed until route data is verified.</small></span></aside>
 
       <div className="wire-scoreboard" aria-label="Example scoreboard"><span><b>00:58</b><small>TIME</small></span><span><b>1,450</b><small>SCORE</small></span><span><b>×4</b><small>COMBO</small></span></div>
       <section className="wire-graph" aria-label="Example vertical club connection">
