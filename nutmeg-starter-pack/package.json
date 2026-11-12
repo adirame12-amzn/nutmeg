@@ -15,6 +15,7 @@
     "merge:rating-85-plus": "python3 -m ingestion.merge_catalogs --min-rating 85 --max-rating 91",
     "process:cutouts": "python3 -m ingestion.cutout_catalog",
     "ingest:paper-trail": "python3 -m ingestion.club_history",
+    "backfill:club-crests": "python3 -m ingestion.crest_backfill",
     "test:ingestion": "python3 -m unittest discover -s ingestion/tests -p 'test_*.py'",
     "worker:seed": "python3 -m ingestion.export_worker_seed",
     "worker:typecheck": "tsc -p worker/tsconfig.json",

@@ -33,7 +33,7 @@ export function CreditsScreen() {
       </section>
       <details className="club-credits">
         <summary>Paper Trail crest credits ({publishedClubCredits.length})</summary>
-        <p>Published crests keep their original club colours. Player Press applies its editorial treatment to the evidence card, not the crest artwork.</p>
+        <p>Published crests keep their original club colours. Commons assets use their file-level licence; repository backfills use the pinned MIT source recorded below. Club marks remain the trademarks of their respective owners and appear only for identification. Seven unavailable marks use clearly labelled Player Press editorial monograms.</p>
         <div>
           {publishedClubCredits.map(credit => <article key={credit.clubId}>
             <strong>{clubNames.get(credit.clubId) || credit.clubId}</strong>
@@ -47,6 +47,7 @@ export function CreditsScreen() {
         <p>Attributes cover all 96 men's records rated 85–91 in the EA FC Analysis repository’s 12 September 2026 snapshot. That repository currently exposes no redistribution licence, so Player Press marks these records as review-required and does not treat them as production data.</p>
         <p>Wikidata identifiers are used for identity resolution. Wikimedia Commons images are resized to 400 × 500 WebP; approved CC BY-SA derivatives remain under their source licence. Gameplay uses separately reviewed transparent cutouts where available and falls back to the editorial crop when extraction is unavailable.</p>
         <p>Paper Trail club histories come from Wikidata P54 statements with a positive senior appearance count (P1350). Youth, reserve and national-team claims are excluded conservatively. The 2026-11-11 snapshot has 87 locally playable player histories and remains under editorial completeness review.</p>
+        <p>Club-art coverage combines 59 Wikimedia Commons assets, 113 reviewed SVG matches from the pinned MIT-licensed football-logos repository snapshot, and seven generated editorial fallback badges where no reviewed crest asset was available.</p>
       </section>
     </div>
   )

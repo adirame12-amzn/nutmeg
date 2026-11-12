@@ -18,12 +18,13 @@ In ranked play the Worker returns the first club before the attempt, then one ad
 
 The 2026-11-11 snapshot contains 87 players with at least two eligible senior clubs, including 29 with a five-club trail. Wikidata can be incomplete, so the generated report is marked `editorial_review_required`; this is practice data, not a production claim of complete career history.
 
-Club crests come from Wikidata P154 and Wikimedia Commons metadata. Only allowlisted public-domain, CC0 and CC BY assets are published automatically. The browser uses transparent clean WebP assets so each crest keeps its real colours; the surrounding evidence card carries the Player Press treatment. Missing or review-required art uses a text mark. Attribution is available on the in-app Credits screen.
+Club art first comes from Wikidata P154 and allowlisted Wikimedia Commons metadata. Reviewed gaps are filled from a pinned MIT-licensed football-logos repository snapshot; unsafe SVGs and weak/ambiguous automatic matches are rejected. Seven clubs unavailable from either reviewed source use clearly generic Player Press editorial monograms rather than fabricated official crests. Every club now has a visual badge, while the surrounding evidence card—not the crest—carries the colour treatment. Attribution and the trademark-use note are available on the in-app Credits screen.
 
 ## Regeneration
 
 ```bash
 npm run ingest:paper-trail
+npm run backfill:club-crests -- --source /absolute/path/to/football-logos
 npm run test:ingestion
 ```
 

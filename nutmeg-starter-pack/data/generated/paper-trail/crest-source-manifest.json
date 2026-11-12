@@ -1,0 +1,848 @@
+{
+  "repository": "https://github.com/JoseArroyave/football-logos",
+  "commit": "5ab11fed47427b3003f4b276554491fe683387b1",
+  "license": "MIT",
+  "licenseUrl": "https://github.com/JoseArroyave/football-logos/blob/5ab11fed47427b3003f4b276554491fe683387b1/LICENSE",
+  "entries": [
+    {
+      "clubId": "1-fc-koln",
+      "clubName": "1. FC Köln",
+      "kind": "repository",
+      "sourcePath": "logos/germany/Cologne.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "1-fc-union-berlin",
+      "clubName": "1. FC Union Berlin",
+      "kind": "repository",
+      "sourcePath": "logos/germany/Union_Berlin.svg",
+      "matchScore": 1.0031
+    },
+    {
+      "clubId": "ac-cesena",
+      "clubName": "AC Cesena",
+      "kind": "repository",
+      "sourcePath": "logos/italy/Cesena_FC.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "afc-ajax",
+      "clubName": "AFC Ajax",
+      "kind": "repository",
+      "sourcePath": "logos/netherlands/Ajax.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "afc-bournemouth",
+      "clubName": "AFC Bournemouth",
+      "kind": "repository",
+      "sourcePath": "logos/england/Bournemouth.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "aik-fotboll",
+      "clubName": "AIK Fotboll",
+      "kind": "repository",
+      "sourcePath": "logos/sweden/AIK.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "aj-auxerre",
+      "clubName": "AJ Auxerre",
+      "kind": "repository",
+      "sourcePath": "logos/france/Auxerre.svg",
+      "matchScore": 0.9035
+    },
+    {
+      "clubId": "al-mokawloon-al-arab-sc",
+      "clubName": "Al Mokawloon Al Arab SC",
+      "kind": "repository",
+      "sourcePath": "logos/egypt/Al_Mokawloon_Al_Arab_SC.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "alfreton-town-f-c",
+      "clubName": "Alfreton Town F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Alfreton_Town.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "amiens-sc",
+      "clubName": "Amiens SC",
+      "kind": "repository",
+      "sourcePath": "logos/france/Amiens_SC.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "arsenal-f-c",
+      "clubName": "Arsenal F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Arsenal.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "as-monaco-fc",
+      "clubName": "AS Monaco FC",
+      "kind": "repository",
+      "sourcePath": "logos/france/AS_Monaco.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "ascoli-calcio-1898-fc",
+      "clubName": "Ascoli Calcio 1898 FC",
+      "kind": "repository",
+      "sourcePath": "logos/italy/Ascoli.svg",
+      "matchScore": 0.7859
+    },
+    {
+      "clubId": "aston-villa-f-c",
+      "clubName": "Aston Villa F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Aston_Villa.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "athletic-club",
+      "clubName": "Athletic Club",
+      "kind": "repository",
+      "sourcePath": "logos/spain/Athletic_Club_Bilbao.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "atletico-madrid",
+      "clubName": "Atlético Madrid",
+      "kind": "repository",
+      "sourcePath": "logos/spain/Atletico_Madrid.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "barranquilla-f-c",
+      "clubName": "Barranquilla F.C.",
+      "kind": "generated_editorial_fallback",
+      "sourcePath": null,
+      "matchScore": 0.6682
+    },
+    {
+      "clubId": "bath-city-f-c",
+      "clubName": "Bath City F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Bath_City.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "beerschot-a-c",
+      "clubName": "Beerschot A.C.",
+      "kind": "repository",
+      "sourcePath": "logos/belgium/Beerschot.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "birmingham-city-f-c",
+      "clubName": "Birmingham City F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Birmingham_City.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "blackburn-rovers-f-c",
+      "clubName": "Blackburn Rovers F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Blackburn_Rovers.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "bradford-city-a-f-c",
+      "clubName": "Bradford City A.F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Bradford_City.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "brentford-f-c",
+      "clubName": "Brentford F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Brentford.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "brescia-calcio",
+      "clubName": "Brescia Calcio",
+      "kind": "repository",
+      "sourcePath": "logos/italy/Brescia.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "brighton-hove-albion-f-c",
+      "clubName": "Brighton & Hove Albion F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Brighton.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "bristol-city-f-c",
+      "clubName": "Bristol City F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Bristol_City.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "bryne-fk",
+      "clubName": "Bryne FK",
+      "kind": "repository",
+      "sourcePath": "logos/norway/Bryne.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "burton-albion-f-c",
+      "clubName": "Burton Albion F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Burton_Albion.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "cagliari-calcio",
+      "clubName": "Cagliari Calcio",
+      "kind": "repository",
+      "sourcePath": "logos/italy/Cagliari.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "carlisle-united-f-c",
+      "clubName": "Carlisle United F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Carlisle_United.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "cd-aurrera-de-vitoria",
+      "clubName": "CD Aurrerá de Vitoria",
+      "kind": "generated_editorial_fallback",
+      "sourcePath": null,
+      "matchScore": 0.7164
+    },
+    {
+      "clubId": "cd-baskonia",
+      "clubName": "CD Baskonia",
+      "kind": "repository",
+      "sourcePath": "logos/spain/CD_Basconia.svg",
+      "matchScore": 0.875
+    },
+    {
+      "clubId": "cd-laguna-de-tenerife",
+      "clubName": "CD Laguna de Tenerife",
+      "kind": "generated_editorial_fallback",
+      "sourcePath": null,
+      "matchScore": 0.7757
+    },
+    {
+      "clubId": "celtic-f-c",
+      "clubName": "Celtic F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/scotland/Celtic.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "cf-rayo-majadahonda",
+      "clubName": "CF Rayo Majadahonda",
+      "kind": "repository",
+      "sourcePath": "logos/spain/Rayo_Majadahonda.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "chelsea-f-c",
+      "clubName": "Chelsea F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Chelsea.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "club-athletico-paranaense",
+      "clubName": "Club Athletico Paranaense",
+      "kind": "repository",
+      "sourcePath": "logos/brazil/Athletico_Paranaense.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "clube-de-regatas-do-flamengo",
+      "clubName": "Clube de Regatas do Flamengo",
+      "kind": "repository",
+      "sourcePath": "logos/brazil/Flamengo.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "coventry-city-f-c",
+      "clubName": "Coventry City F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Coventry_City.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "crystal-palace-f-c",
+      "clubName": "Crystal Palace F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Crystal_Palace.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "darlington-f-c",
+      "clubName": "Darlington F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Darlington.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "deportivo-alaves",
+      "clubName": "Deportivo Alavés",
+      "kind": "repository",
+      "sourcePath": "logos/spain/Deportivo_Alavés.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "deportivo-de-a-coruna",
+      "clubName": "Deportivo de A Coruña",
+      "kind": "repository",
+      "sourcePath": "logos/spain/Deportivo_La_Coruña.svg",
+      "matchScore": 0.9143
+    },
+    {
+      "clubId": "eintracht-frankfurt",
+      "clubName": "Eintracht Frankfurt",
+      "kind": "repository",
+      "sourcePath": "logos/germany/Eintracht_Frankfurt.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "elche-cf",
+      "clubName": "Elche CF",
+      "kind": "repository",
+      "sourcePath": "logos/spain/Elche.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "everton-f-c",
+      "clubName": "Everton F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Everton.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "fc-augsburg",
+      "clubName": "FC Augsburg",
+      "kind": "repository",
+      "sourcePath": "logos/germany/Augsburg.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "fc-dinamo-batumi",
+      "clubName": "FC Dinamo Batumi",
+      "kind": "repository",
+      "sourcePath": "logos/georgia/Dinamo_Batumi.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "fc-liefering",
+      "clubName": "FC Liefering",
+      "kind": "repository",
+      "sourcePath": "logos/austria/FC_Liefering.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "fc-lokomotiv-moscow",
+      "clubName": "FC Lokomotiv Moscow",
+      "kind": "repository",
+      "sourcePath": "logos/russia/Lokomotiv_Moscow.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "fc-porto",
+      "clubName": "FC Porto",
+      "kind": "repository",
+      "sourcePath": "logos/portugal/FC_Porto.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "fc-red-bull-salzburg",
+      "clubName": "FC Red Bull Salzburg",
+      "kind": "repository",
+      "sourcePath": "logos/austria/Salzburg.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "fc-rustavi",
+      "clubName": "FC Rustavi",
+      "kind": "repository",
+      "sourcePath": "logos/georgia/FC_Rustavi.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "fc-sochaux-montbeliard",
+      "clubName": "FC Sochaux-Montbéliard",
+      "kind": "repository",
+      "sourcePath": "logos/france/FC_Sochaux-Montbéliard.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "fc-st-pauli",
+      "clubName": "FC St. Pauli",
+      "kind": "repository",
+      "sourcePath": "logos/germany/St_Pauli.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "getafe-cf",
+      "clubName": "Getafe CF",
+      "kind": "repository",
+      "sourcePath": "logos/spain/Getafe.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "girona-fc",
+      "clubName": "Girona FC",
+      "kind": "repository",
+      "sourcePath": "logos/spain/Girona.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "hellas-verona-fc",
+      "clubName": "Hellas Verona FC",
+      "kind": "repository",
+      "sourcePath": "logos/italy/Hellas_Verona.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "hsk-zrinjski-mostar",
+      "clubName": "HŠK Zrinjski Mostar",
+      "kind": "repository",
+      "sourcePath": "logos/bosnia-and-herzegovina/Zrinjski_Mostar.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "if-brommapojkarna",
+      "clubName": "IF Brommapojkarna",
+      "kind": "repository",
+      "sourcePath": "logos/sweden/Brommapojkarna.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "ifk-aspudden-tellus",
+      "clubName": "IFK Aspudden-Tellus",
+      "kind": "generated_editorial_fallback",
+      "sourcePath": null,
+      "matchScore": 0.5217
+    },
+    {
+      "clubId": "leeds-united-f-c",
+      "clubName": "Leeds United F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Leeds_United.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "leicester-city-f-c",
+      "clubName": "Leicester City F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Leicester.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "leyton-orient-f-c",
+      "clubName": "Leyton Orient F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Leyton_Orient.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "lille-osc",
+      "clubName": "Lille OSC",
+      "kind": "repository",
+      "sourcePath": "logos/france/Lille.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "linares-deportivo",
+      "clubName": "Linares Deportivo",
+      "kind": "repository",
+      "sourcePath": "logos/spain/Linares_Deportivo.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "manchester-city-f-c",
+      "clubName": "Manchester City F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Manchester_City.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "manchester-united-f-c",
+      "clubName": "Manchester United F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Manchester_United.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "millwall-f-c",
+      "clubName": "Millwall F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Millwall.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "newcastle-united-f-c",
+      "clubName": "Newcastle United F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Newcastle_United.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "newport-county-a-f-c",
+      "clubName": "Newport County A.F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Newport_County.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "nk-inter-zapresic",
+      "clubName": "NK Inter Zaprešić",
+      "kind": "generated_editorial_fallback",
+      "sourcePath": null,
+      "matchScore": 0.72
+    },
+    {
+      "clubId": "nk-olimpija-ljubljana",
+      "clubName": "NK Olimpija Ljubljana",
+      "kind": "repository",
+      "sourcePath": "logos/slovenia/Olimpija.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "norwich-city-f-c",
+      "clubName": "Norwich City F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Norwich_City.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "novara-calcio",
+      "clubName": "Novara Calcio",
+      "kind": "repository",
+      "sourcePath": "logos/italy/Novara.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "olympique-lyonnais",
+      "clubName": "Olympique Lyonnais",
+      "kind": "repository",
+      "sourcePath": "logos/france/Olympique_Lyonnais.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "oxford-united-f-c",
+      "clubName": "Oxford United F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Oxford_United.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "palermo-f-c",
+      "clubName": "Palermo F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/italy/Palermo.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "paris-saint-germain-fc",
+      "clubName": "Paris Saint-Germain FC",
+      "kind": "repository",
+      "sourcePath": "logos/france/Paris_Saint-Germain_(PSG).svg",
+      "matchScore": 0.9848
+    },
+    {
+      "clubId": "preston-north-end-f-c",
+      "clubName": "Preston North End F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Preston_North_End.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "r-s-c-anderlecht",
+      "clubName": "R.S.C. Anderlecht",
+      "kind": "repository",
+      "sourcePath": "logos/belgium/RSC_Anderlecht.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "rb-leipzig",
+      "clubName": "RB Leipzig",
+      "kind": "repository",
+      "sourcePath": "logos/germany/RB_Leipzig.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "rcd-espanyol-de-barcelona",
+      "clubName": "RCD Espanyol de Barcelona",
+      "kind": "repository",
+      "sourcePath": "logos/spain/Espanyol.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "reading-f-c",
+      "clubName": "Reading F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Reading.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "real-betis-balompie",
+      "clubName": "Real Betis Balompié",
+      "kind": "repository",
+      "sourcePath": "logos/spain/Real_Betis.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "real-madrid-club-de-futbol",
+      "clubName": "Real Madrid Club de Fútbol",
+      "kind": "repository",
+      "sourcePath": "logos/spain/Real_Madrid.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "real-sociedad",
+      "clubName": "Real Sociedad",
+      "kind": "repository",
+      "sourcePath": "logos/spain/Real_Sociedad.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "recreativo-de-huelva",
+      "clubName": "Recreativo de Huelva",
+      "kind": "repository",
+      "sourcePath": "logos/spain/Recreativo_de_Huelva.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "rio-ave-f-c",
+      "clubName": "Rio Ave F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/portugal/Rio_Ave.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "rotherham-united-f-c",
+      "clubName": "Rotherham United F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Rotherham_United.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "royal-antwerp-f-c",
+      "clubName": "Royal Antwerp F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/belgium/Royal_Antwerp_FC.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "royal-charleroi-s-c",
+      "clubName": "Royal Charleroi S.C.",
+      "kind": "repository",
+      "sourcePath": "logos/belgium/Royal_Charleroi_S.C..svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "rubin-kazan",
+      "clubName": "Rubin Kazan",
+      "kind": "repository",
+      "sourcePath": "logos/russia/Rubin_Kazan.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "s-c-beira-mar",
+      "clubName": "S.C. Beira-Mar",
+      "kind": "repository",
+      "sourcePath": "logos/portugal/Beira-Mar.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "s-c-olhanense",
+      "clubName": "S.C. Olhanense",
+      "kind": "repository",
+      "sourcePath": "logos/portugal/Olhanense.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "s-l-benfica",
+      "clubName": "S.L. Benfica",
+      "kind": "repository",
+      "sourcePath": "logos/portugal/Benfica.svg",
+      "matchScore": 0.955
+    },
+    {
+      "clubId": "sbv-vitesse",
+      "clubName": "SBV Vitesse",
+      "kind": "repository",
+      "sourcePath": "logos/netherlands/Vitesse.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "sc-freiburg",
+      "clubName": "SC Freiburg",
+      "kind": "repository",
+      "sourcePath": "logos/germany/Freiburg.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "sc-heerenveen",
+      "clubName": "SC Heerenveen",
+      "kind": "repository",
+      "sourcePath": "logos/netherlands/sc_Heerenveen.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "sd-eibar",
+      "clubName": "SD Eibar",
+      "kind": "repository",
+      "sourcePath": "logos/spain/Eibar.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "sevilla-fc",
+      "clubName": "Sevilla FC",
+      "kind": "repository",
+      "sourcePath": "logos/spain/Sevilla.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "sheffield-wednesday-f-c",
+      "clubName": "Sheffield Wednesday F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Sheffield_Wednesday.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "southampton-f-c",
+      "clubName": "Southampton F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Southampton.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "southport-f-c",
+      "clubName": "Southport F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Southport.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "str-msgodset-tf",
+      "clubName": "Strømsgodset TF",
+      "kind": "repository",
+      "sourcePath": "logos/norway/Strømsgodset.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "sunderland-a-f-c",
+      "clubName": "Sunderland A.F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Sunderland.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "swansea-city-a-f-c",
+      "clubName": "Swansea City A.F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Swansea_City.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "torino-fc",
+      "clubName": "Torino FC",
+      "kind": "repository",
+      "sourcePath": "logos/italy/Torino.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "tottenham-hotspur-f-c",
+      "clubName": "Tottenham Hotspur F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Tottenham.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "toulouse-fc",
+      "clubName": "Toulouse FC",
+      "kind": "repository",
+      "sourcePath": "logos/france/Toulouse.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "trabzonspor",
+      "clubName": "Trabzonspor",
+      "kind": "repository",
+      "sourcePath": "logos/turkey/Trabzonspor.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "u-d-leiria",
+      "clubName": "U.D. Leiria",
+      "kind": "repository",
+      "sourcePath": "logos/portugal/União_de_Leiria.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "ud-las-palmas",
+      "clubName": "UD Las Palmas",
+      "kind": "repository",
+      "sourcePath": "logos/spain/Las_Palmas.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "ud-tegueste",
+      "clubName": "UD Tegueste",
+      "kind": "generated_editorial_fallback",
+      "sourcePath": null,
+      "matchScore": 0.7467
+    },
+    {
+      "clubId": "vejle-boldklub",
+      "clubName": "Vejle Boldklub",
+      "kind": "generated_editorial_fallback",
+      "sourcePath": null,
+      "matchScore": 0.6667
+    },
+    {
+      "clubId": "villarreal-cf",
+      "clubName": "Villarreal CF",
+      "kind": "repository",
+      "sourcePath": "logos/spain/Villarreal.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "vitoria-s-c",
+      "clubName": "Vitória S.C.",
+      "kind": "repository",
+      "sourcePath": "logos/portugal/Vitória_de_Guimarães.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "west-ham-united-f-c",
+      "clubName": "West Ham United F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/West_Ham.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "wolverhampton-wanderers-f-c",
+      "clubName": "Wolverhampton Wanderers F.C.",
+      "kind": "repository",
+      "sourcePath": "logos/england/Wolverhampton_Wanderers.svg",
+      "matchScore": 1.0
+    },
+    {
+      "clubId": "evreux-fc-27",
+      "clubName": "Évreux FC 27",
+      "kind": "repository",
+      "sourcePath": "logos/france/Évreux_FC_27.svg",
+      "matchScore": 1.0
+    }
+  ]
+}

@@ -71,6 +71,8 @@ npm run ingest:rating-85 -- --source /absolute/path/to/players.csv
 npm run merge:rating-85-plus
 npm run process:cutouts
 npm run ingest:paper-trail
+# after checking out JoseArroyave/football-logos at the pinned commit:
+npm run backfill:club-crests -- --source /absolute/path/to/football-logos
 npm run test:ingestion
 ```
 
@@ -78,7 +80,7 @@ The importer reads `data/selected_players.csv`, resolves identity through the of
 
 The rating-catalogue command builds every men's record at one exact FC rating. Catalogues for ratings 85 through 91 contain 96 verified identities, 96 clean portraits, 96 newspaper-style derivatives, attribution metadata, browser-ready JSON, queryable SQLite databases, contact sheets and HTML review galleries. `npm run merge:rating-85-plus` creates the combined frontend JSON and `data/generated/rating-85-plus/players.sqlite`. `npm run process:cutouts` runs the local U²-Net human-segmentation model, removes disconnected mask debris, creates transparent PNG plus alpha-preserving newspaper WebP assets, updates catalogue metadata and writes `cutouts-contact-sheet.jpg` for visual QA. Use Python 3.11–3.13 for that optional processing step. All 96 records are valid guesses and possible answers. Assets live under `public/players/rating-*/`. To target another exact rating, run `python3 -m ingestion.rating_catalog --rating <number> --source <csv>`.
 
-`npm run ingest:paper-trail` audits Wikidata P54 club statements for all 96 current players, requires a positive P1350 senior appearance count, and exports 87 eligible histories. It also resolves P154 crests through Commons metadata and publishes only allowlisted transparent clean WebPs; crest colours are preserved in-game while the enclosing card carries the editorial treatment. Generated outputs, attribution and the review report live under `data/generated/paper-trail/`; browser assets live under `public/clubs/`. `npm run worker:seed` exports the same reviewed histories into D1 seed SQL for ranked play, while Cold Cases continues to read the static browser copy and makes no Worker calls.
+`npm run ingest:paper-trail` audits Wikidata P54 club statements for all 96 current players, requires a positive P1350 senior appearance count, and exports 87 eligible histories. It resolves P154 crests through Commons metadata and publishes only allowlisted assets. `npm run backfill:club-crests` fills reviewed gaps from the explicitly pinned MIT-licensed `JoseArroyave/football-logos` checkout, rejects executable/external SVG constructs, and records per-club provenance. Current coverage is 59 Commons crests, 113 repository backfills and seven clearly labelled generated editorial badges, so every one of the 179 club records has a visual asset. Club marks remain their owners’ trademarks and are used for identification. Generated outputs, attribution and the review report live under `data/generated/paper-trail/`; browser assets live under `public/clubs/`. `npm run worker:seed` exports the same reviewed histories into D1 seed SQL for ranked play, while Cold Cases continues to read the static browser copy and makes no Worker calls.
 
 ## GitHub Pages
 

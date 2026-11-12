@@ -8,13 +8,13 @@ describe('Paper Trail catalogue', () => {
     expect(getRandomPaperTrailPuzzle(undefined, () => .95).clubs.length).toBeLessThan(5)
   })
 
-  it('excludes the previous answer and retains crest fallbacks', () => {
+  it('excludes the previous answer and gives every club a visual badge', () => {
     const first = getRandomPaperTrailPuzzle(undefined, () => 0)
     const next = getRandomPaperTrailPuzzle(first.answer.id, () => 0)
     const puzzles = paperTrailHistories.map(historyToPuzzle)
     expect(next.answer.id).not.toBe(first.answer.id)
     expect(paperTrailHistories.some(history => history.clubs.length < 5)).toBe(true)
-    expect(puzzles.some(puzzle => puzzle.clubs.some(club => Boolean(club.crestUrl)))).toBe(true)
-    expect(puzzles.some(puzzle => puzzle.clubs.some(club => !club.crestUrl))).toBe(true)
+    expect(puzzles.every(puzzle => puzzle.clubs.every(club => Boolean(club.crestUrl)))).toBe(true)
+    expect(puzzles.some(puzzle => puzzle.clubs.some(club => club.crestStatus === 'generated_editorial_fallback'))).toBe(true)
   })
 })

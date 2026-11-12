@@ -6,10 +6,10 @@
     "description": "German football club based in Cologne, in North Rhine-Westphalia",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": "1. FC Koeln Logo 2014–.svg",
-    "crestUrl": null,
+    "crestSourceFile": "logos/germany/Cologne.svg",
+    "crestUrl": "/nutmeg/clubs/1-fc-koln.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "review_required",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q104770"
   },
   {
@@ -19,10 +19,10 @@
     "description": "association football club in Berlin, Germany",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/germany/Union_Berlin.svg",
+    "crestUrl": "/nutmeg/clubs/1-fc-union-berlin.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q141971"
   },
   {
@@ -32,10 +32,10 @@
     "description": "defunct Italian association football club",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/italy/Cesena_FC.svg",
+    "crestUrl": "/nutmeg/clubs/ac-cesena.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q6664"
   },
   {
@@ -71,10 +71,10 @@
     "description": "Dutch association football team",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/netherlands/Ajax.svg",
+    "crestUrl": "/nutmeg/clubs/afc-ajax.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q81888"
   },
   {
@@ -84,10 +84,10 @@
     "description": "association football club in Bournemouth, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Bournemouth.svg",
+    "crestUrl": "/nutmeg/clubs/afc-bournemouth.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q19568"
   },
   {
@@ -97,10 +97,10 @@
     "description": "association football club in Solna, Sweden",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/sweden/AIK.svg",
+    "crestUrl": "/nutmeg/clubs/aik-fotboll.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q221602"
   },
   {
@@ -110,10 +110,10 @@
     "description": "football club based in Auxerre, France",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/france/Auxerre.svg",
+    "crestUrl": "/nutmeg/clubs/aj-auxerre.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q182876"
   },
   {
@@ -123,10 +123,10 @@
     "description": "Egyptian sports club",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/egypt/Al_Mokawloon_Al_Arab_SC.svg",
+    "crestUrl": "/nutmeg/clubs/al-mokawloon-al-arab-sc.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q2073915"
   },
   {
@@ -136,10 +136,10 @@
     "description": "association football club in Alfreton, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Alfreton_Town.svg",
+    "crestUrl": "/nutmeg/clubs/alfreton-town-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q18506"
   },
   {
@@ -149,10 +149,10 @@
     "description": "association football club in France",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/france/Amiens_SC.svg",
+    "crestUrl": "/nutmeg/clubs/amiens-sc.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q866884"
   },
   {
@@ -162,10 +162,10 @@
     "description": "association football club in London, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Arsenal.svg",
+    "crestUrl": "/nutmeg/clubs/arsenal-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q9617"
   },
   {
@@ -175,10 +175,10 @@
     "description": "association football club in Monaco",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/france/AS_Monaco.svg",
+    "crestUrl": "/nutmeg/clubs/as-monaco-fc.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q180305"
   },
   {
@@ -214,10 +214,10 @@
     "description": "Italian football club based in Ascoli Piceno, Marche",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/italy/Ascoli.svg",
+    "crestUrl": "/nutmeg/clubs/ascoli-calcio-1898-fc.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q6630"
   },
   {
@@ -227,10 +227,10 @@
     "description": "association football club in Birmingham, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Aston_Villa.svg",
+    "crestUrl": "/nutmeg/clubs/aston-villa-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q18711"
   },
   {
@@ -253,10 +253,10 @@
     "description": "Spanish association football team from Bilbao, Spain",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/spain/Athletic_Club_Bilbao.svg",
+    "crestUrl": "/nutmeg/clubs/athletic-club.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q8687"
   },
   {
@@ -266,10 +266,10 @@
     "description": "Spanish professional football club in Madrid",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/spain/Atletico_Madrid.svg",
+    "crestUrl": "/nutmeg/clubs/atletico-madrid.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q8701"
   },
   {
@@ -293,9 +293,9 @@
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
     "crestSourceFile": null,
-    "crestUrl": null,
+    "crestUrl": "/nutmeg/clubs/barranquilla-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "generated_editorial_fallback",
     "sourceUrl": "https://www.wikidata.org/wiki/Q3293573"
   },
   {
@@ -305,10 +305,10 @@
     "description": "English association football club based in Bath",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Bath_City.svg",
+    "crestUrl": "/nutmeg/clubs/bath-city-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q368500"
   },
   {
@@ -331,10 +331,10 @@
     "description": "Belgian football club",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/belgium/Beerschot.svg",
+    "crestUrl": "/nutmeg/clubs/beerschot-a-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q646079"
   },
   {
@@ -344,10 +344,10 @@
     "description": "association football club in Birmingham, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Birmingham_City.svg",
+    "crestUrl": "/nutmeg/clubs/birmingham-city-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q19444"
   },
   {
@@ -357,10 +357,10 @@
     "description": "association football club in Blackburn, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Blackburn_Rovers.svg",
+    "crestUrl": "/nutmeg/clubs/blackburn-rovers-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q19446"
   },
   {
@@ -396,10 +396,10 @@
     "description": "association football club in Bradford, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Bradford_City.svg",
+    "crestUrl": "/nutmeg/clubs/bradford-city-a-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q48879"
   },
   {
@@ -409,10 +409,10 @@
     "description": "association football club in London, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Brentford.svg",
+    "crestUrl": "/nutmeg/clubs/brentford-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q19571"
   },
   {
@@ -422,10 +422,10 @@
     "description": "Italian football club based in Brescia, Lombardy",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/italy/Brescia.svg",
+    "crestUrl": "/nutmeg/clubs/brescia-calcio.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q6651"
   },
   {
@@ -435,10 +435,10 @@
     "description": "football club in Brighton & Hove, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Brighton.svg",
+    "crestUrl": "/nutmeg/clubs/brighton-hove-albion-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q19453"
   },
   {
@@ -448,10 +448,10 @@
     "description": "association football club in Bristol, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Bristol_City.svg",
+    "crestUrl": "/nutmeg/clubs/bristol-city-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q19456"
   },
   {
@@ -461,10 +461,10 @@
     "description": "association football club in Bryne, Norway",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/norway/Bryne.svg",
+    "crestUrl": "/nutmeg/clubs/bryne-fk.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q995313"
   },
   {
@@ -474,10 +474,10 @@
     "description": "association football club in Burton upon Trent, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Burton_Albion.svg",
+    "crestUrl": "/nutmeg/clubs/burton-albion-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q48929"
   },
   {
@@ -487,10 +487,10 @@
     "description": "association football club in Cagliari, Italy",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/italy/Cagliari.svg",
+    "crestUrl": "/nutmeg/clubs/cagliari-calcio.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q1900"
   },
   {
@@ -500,10 +500,10 @@
     "description": "association football club in Carlisle, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Carlisle_United.svg",
+    "crestUrl": "/nutmeg/clubs/carlisle-united-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q19575"
   },
   {
@@ -514,9 +514,9 @@
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
     "crestSourceFile": null,
-    "crestUrl": null,
+    "crestUrl": "/nutmeg/clubs/cd-aurrera-de-vitoria.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "generated_editorial_fallback",
     "sourceUrl": "https://www.wikidata.org/wiki/Q856073"
   },
   {
@@ -526,10 +526,10 @@
     "description": "Spanish association football team",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/spain/CD_Basconia.svg",
+    "crestUrl": "/nutmeg/clubs/cd-baskonia.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q727093"
   },
   {
@@ -540,9 +540,9 @@
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
     "crestSourceFile": null,
-    "crestUrl": null,
+    "crestUrl": "/nutmeg/clubs/cd-laguna-de-tenerife.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "generated_editorial_fallback",
     "sourceUrl": "https://www.wikidata.org/wiki/Q5010092"
   },
   {
@@ -552,10 +552,10 @@
     "description": "association football club in Glasgow, Scotland",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/scotland/Celtic.svg",
+    "crestUrl": "/nutmeg/clubs/celtic-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q19593"
   },
   {
@@ -565,10 +565,10 @@
     "description": "association football club in Spain",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/spain/Rayo_Majadahonda.svg",
+    "crestUrl": "/nutmeg/clubs/cf-rayo-majadahonda.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q2511257"
   },
   {
@@ -578,10 +578,10 @@
     "description": "association football club in London, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Chelsea.svg",
+    "crestUrl": "/nutmeg/clubs/chelsea-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q9616"
   },
   {
@@ -591,10 +591,10 @@
     "description": "association football club in Brazil",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/brazil/Athletico_Paranaense.svg",
+    "crestUrl": "/nutmeg/clubs/club-athletico-paranaense.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q506832"
   },
   {
@@ -643,10 +643,10 @@
     "description": "Brazilian sports club based in Rio de Janeiro",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/brazil/Flamengo.svg",
+    "crestUrl": "/nutmeg/clubs/clube-de-regatas-do-flamengo.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q17479"
   },
   {
@@ -669,10 +669,10 @@
     "description": "association football club in Coventry, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Coventry_City.svg",
+    "crestUrl": "/nutmeg/clubs/coventry-city-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q19580"
   },
   {
@@ -682,10 +682,10 @@
     "description": "association football club in London, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Crystal_Palace.svg",
+    "crestUrl": "/nutmeg/clubs/crystal-palace-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q19467"
   },
   {
@@ -695,10 +695,10 @@
     "description": "association football club in Darlington, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Darlington.svg",
+    "crestUrl": "/nutmeg/clubs/darlington-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q909189"
   },
   {
@@ -721,10 +721,10 @@
     "description": "association football club in Vitoria-Gasteiz, Spain",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/spain/Deportivo_Alavés.svg",
+    "crestUrl": "/nutmeg/clubs/deportivo-alaves.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q223620"
   },
   {
@@ -734,10 +734,10 @@
     "description": "Spanish association football club",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/spain/Deportivo_La_Coruña.svg",
+    "crestUrl": "/nutmeg/clubs/deportivo-de-a-coruna.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q8760"
   },
   {
@@ -747,10 +747,10 @@
     "description": "sports club based in Frankfurt am Main, Hesse, Germany",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/germany/Eintracht_Frankfurt.svg",
+    "crestUrl": "/nutmeg/clubs/eintracht-frankfurt.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q38245"
   },
   {
@@ -760,10 +760,10 @@
     "description": "Spanish association football team",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/spain/Elche.svg",
+    "crestUrl": "/nutmeg/clubs/elche-cf.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q10512"
   },
   {
@@ -812,10 +812,10 @@
     "description": "association football club in Liverpool, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Everton.svg",
+    "crestUrl": "/nutmeg/clubs/everton-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q5794"
   },
   {
@@ -825,10 +825,10 @@
     "description": "German association football club",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/germany/Augsburg.svg",
+    "crestUrl": "/nutmeg/clubs/fc-augsburg.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q15755"
   },
   {
@@ -877,10 +877,10 @@
     "description": "Georgian association football club based in Batumi, Adjara",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/georgia/Dinamo_Batumi.svg",
+    "crestUrl": "/nutmeg/clubs/fc-dinamo-batumi.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q1346756"
   },
   {
@@ -929,10 +929,10 @@
     "description": "association football club",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/austria/FC_Liefering.svg",
+    "crestUrl": "/nutmeg/clubs/fc-liefering.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q1387293"
   },
   {
@@ -942,10 +942,10 @@
     "description": "association football club in Moscow, Russia",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/russia/Lokomotiv_Moscow.svg",
+    "crestUrl": "/nutmeg/clubs/fc-lokomotiv-moscow.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q29115"
   },
   {
@@ -955,10 +955,10 @@
     "description": "professional association football club based in Porto, Portugal",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": "Emblema F C Porto (derived).jpg",
-    "crestUrl": null,
+    "crestSourceFile": "logos/portugal/FC_Porto.svg",
+    "crestUrl": "/nutmeg/clubs/fc-porto.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "review_required",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q128446"
   },
   {
@@ -968,10 +968,10 @@
     "description": "Austrian professional football club",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/austria/Salzburg.svg",
+    "crestUrl": "/nutmeg/clubs/fc-red-bull-salzburg.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q994811"
   },
   {
@@ -981,10 +981,10 @@
     "description": "Georgian football club",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/georgia/FC_Rustavi.svg",
+    "crestUrl": "/nutmeg/clubs/fc-rustavi.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q107630644"
   },
   {
@@ -1007,10 +1007,10 @@
     "description": "French association football club",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/france/FC_Sochaux-Montbéliard.svg",
+    "crestUrl": "/nutmeg/clubs/fc-sochaux-montbeliard.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q19512"
   },
   {
@@ -1020,10 +1020,10 @@
     "description": "sports club in Hamburg, Germany",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/germany/St_Pauli.svg",
+    "crestUrl": "/nutmeg/clubs/fc-st-pauli.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q6463"
   },
   {
@@ -1059,10 +1059,10 @@
     "description": "Spanish professional football club based in Getafe",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": "Getafe CF Logo.png",
-    "crestUrl": null,
+    "crestSourceFile": "logos/spain/Getafe.svg",
+    "crestUrl": "/nutmeg/clubs/getafe-cf.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "review_required",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q8806"
   },
   {
@@ -1072,10 +1072,10 @@
     "description": "Spanish football club",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/spain/Girona.svg",
+    "crestUrl": "/nutmeg/clubs/girona-fc.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q11945"
   },
   {
@@ -1124,10 +1124,10 @@
     "description": "Italian football club based in Verona, Veneto",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/italy/Hellas_Verona.svg",
+    "crestUrl": "/nutmeg/clubs/hellas-verona-fc.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q8639"
   },
   {
@@ -1137,10 +1137,10 @@
     "description": "association football club in Mostar, Bosnia and Herzegovina",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/bosnia-and-herzegovina/Zrinjski_Mostar.svg",
+    "crestUrl": "/nutmeg/clubs/hsk-zrinjski-mostar.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q399282"
   },
   {
@@ -1150,10 +1150,10 @@
     "description": "association football club from Bromma, Sweden",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/sweden/Brommapojkarna.svg",
+    "crestUrl": "/nutmeg/clubs/if-brommapojkarna.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q754339"
   },
   {
@@ -1164,9 +1164,9 @@
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
     "crestSourceFile": null,
-    "crestUrl": null,
+    "crestUrl": "/nutmeg/clubs/ifk-aspudden-tellus.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "generated_editorial_fallback",
     "sourceUrl": "https://www.wikidata.org/wiki/Q16841102"
   },
   {
@@ -1280,10 +1280,10 @@
     "description": "association football club in Leeds, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Leeds_United.svg",
+    "crestUrl": "/nutmeg/clubs/leeds-united-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q1128631"
   },
   {
@@ -1293,10 +1293,10 @@
     "description": "association football club in Leicester, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Leicester.svg",
+    "crestUrl": "/nutmeg/clubs/leicester-city-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q19481"
   },
   {
@@ -1306,10 +1306,10 @@
     "description": "association football club in London, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Leyton_Orient.svg",
+    "crestUrl": "/nutmeg/clubs/leyton-orient-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q19595"
   },
   {
@@ -1319,10 +1319,10 @@
     "description": "association football club in Lille, France",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/france/Lille.svg",
+    "crestUrl": "/nutmeg/clubs/lille-osc.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q19516"
   },
   {
@@ -1332,10 +1332,10 @@
     "description": "association football club in Spain",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/spain/Linares_Deportivo.svg",
+    "crestUrl": "/nutmeg/clubs/linares-deportivo.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q5976634"
   },
   {
@@ -1358,10 +1358,10 @@
     "description": "association football club in Manchester, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Manchester_City.svg",
+    "crestUrl": "/nutmeg/clubs/manchester-city-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q50602"
   },
   {
@@ -1371,10 +1371,10 @@
     "description": "association football club in Manchester, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Manchester_United.svg",
+    "crestUrl": "/nutmeg/clubs/manchester-united-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q18656"
   },
   {
@@ -1384,10 +1384,10 @@
     "description": "association football club in London, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Millwall.svg",
+    "crestUrl": "/nutmeg/clubs/millwall-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q19487"
   },
   {
@@ -1410,10 +1410,10 @@
     "description": "association football club in Newcastle upon Tyne, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Newcastle_United.svg",
+    "crestUrl": "/nutmeg/clubs/newcastle-united-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q18716"
   },
   {
@@ -1423,10 +1423,10 @@
     "description": "association football club in Newport, Wales",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Newport_County.svg",
+    "crestUrl": "/nutmeg/clubs/newport-county-a-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q18523"
   },
   {
@@ -1437,9 +1437,9 @@
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
     "crestSourceFile": null,
-    "crestUrl": null,
+    "crestUrl": "/nutmeg/clubs/nk-inter-zapresic.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "generated_editorial_fallback",
     "sourceUrl": "https://www.wikidata.org/wiki/Q723644"
   },
   {
@@ -1449,10 +1449,10 @@
     "description": "association football club in Ljubljana, Slovenia",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/slovenia/Olimpija.svg",
+    "crestUrl": "/nutmeg/clubs/nk-olimpija-ljubljana.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q31932"
   },
   {
@@ -1462,10 +1462,10 @@
     "description": "association football club in Norwich, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Norwich_City.svg",
+    "crestUrl": "/nutmeg/clubs/norwich-city-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q18721"
   },
   {
@@ -1475,10 +1475,10 @@
     "description": "Italian football club based in Novara, Piedmont",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/italy/Novara.svg",
+    "crestUrl": "/nutmeg/clubs/novara-calcio.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q8416"
   },
   {
@@ -1514,10 +1514,10 @@
     "description": "association football club in Lyon, France",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/france/Olympique_Lyonnais.svg",
+    "crestUrl": "/nutmeg/clubs/olympique-lyonnais.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q704"
   },
   {
@@ -1527,10 +1527,10 @@
     "description": "association football club in Oxford, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Oxford_United.svg",
+    "crestUrl": "/nutmeg/clubs/oxford-united-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q48946"
   },
   {
@@ -1540,10 +1540,10 @@
     "description": "association football club in Palermo, Sicily, Italy",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/italy/Palermo.svg",
+    "crestUrl": "/nutmeg/clubs/palermo-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q2674"
   },
   {
@@ -1553,10 +1553,10 @@
     "description": "association football club in Paris, France having two UCL",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/france/Paris_Saint-Germain_(PSG).svg",
+    "crestUrl": "/nutmeg/clubs/paris-saint-germain-fc.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q483020"
   },
   {
@@ -1579,10 +1579,10 @@
     "description": "association football club in Preston, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Preston_North_End.svg",
+    "crestUrl": "/nutmeg/clubs/preston-north-end-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q19612"
   },
   {
@@ -1592,10 +1592,10 @@
     "description": "Belgian association football club",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/belgium/RSC_Anderlecht.svg",
+    "crestUrl": "/nutmeg/clubs/r-s-c-anderlecht.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q187528"
   },
   {
@@ -1618,10 +1618,10 @@
     "description": "association football club in Leipzig, Saxony, Germany",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": "2019-07-12 Fußball; Freundschaftsspiel RB Leipzig - FC Zürich 1DX 0881 by Stepro 2.png",
-    "crestUrl": null,
+    "crestSourceFile": "logos/germany/RB_Leipzig.svg",
+    "crestUrl": "/nutmeg/clubs/rb-leipzig.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "review_required",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q702455"
   },
   {
@@ -1631,10 +1631,10 @@
     "description": "sports club in Spain",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/spain/Espanyol.svg",
+    "crestUrl": "/nutmeg/clubs/rcd-espanyol-de-barcelona.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q8780"
   },
   {
@@ -1644,10 +1644,10 @@
     "description": "association football club in Reading, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Reading.svg",
+    "crestUrl": "/nutmeg/clubs/reading-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q18729"
   },
   {
@@ -1657,10 +1657,10 @@
     "description": "Spanish professional football club",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/spain/Real_Betis.svg",
+    "crestUrl": "/nutmeg/clubs/real-betis-balompie.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q8723"
   },
   {
@@ -1670,10 +1670,10 @@
     "description": "association football club in Madrid, Spain",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/spain/Real_Madrid.svg",
+    "crestUrl": "/nutmeg/clubs/real-madrid-club-de-futbol.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q8682"
   },
   {
@@ -1683,10 +1683,10 @@
     "description": "association football club in San Sebastián, Spain",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/spain/Real_Sociedad.svg",
+    "crestUrl": "/nutmeg/clubs/real-sociedad.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q10315"
   },
   {
@@ -1696,10 +1696,10 @@
     "description": "Spanish football club",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/spain/Recreativo_de_Huelva.svg",
+    "crestUrl": "/nutmeg/clubs/recreativo-de-huelva.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q12249"
   },
   {
@@ -1709,10 +1709,10 @@
     "description": "Portuguese professional football club",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/portugal/Rio_Ave.svg",
+    "crestUrl": "/nutmeg/clubs/rio-ave-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q622432"
   },
   {
@@ -1722,10 +1722,10 @@
     "description": "association football club in Rotherham, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Rotherham_United.svg",
+    "crestUrl": "/nutmeg/clubs/rotherham-united-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q48950"
   },
   {
@@ -1735,10 +1735,10 @@
     "description": "association football club in Belgium",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/belgium/Royal_Antwerp_FC.svg",
+    "crestUrl": "/nutmeg/clubs/royal-antwerp-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q732002"
   },
   {
@@ -1748,10 +1748,10 @@
     "description": "Belgian association football club",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/belgium/Royal_Charleroi_S.C..svg",
+    "crestUrl": "/nutmeg/clubs/royal-charleroi-s-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q19585"
   },
   {
@@ -1774,10 +1774,10 @@
     "description": "Russian association football club in Kazan, Tatarstan",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/russia/Rubin_Kazan.svg",
+    "crestUrl": "/nutmeg/clubs/rubin-kazan.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q170040"
   },
   {
@@ -1787,10 +1787,10 @@
     "description": "professional association football club based in Aveiro, Portugal",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/portugal/Beira-Mar.svg",
+    "crestUrl": "/nutmeg/clubs/s-c-beira-mar.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q688300"
   },
   {
@@ -1826,10 +1826,10 @@
     "description": "sports club in Portugal",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": "SC Olhanense.svg",
-    "crestUrl": null,
+    "crestSourceFile": "logos/portugal/Olhanense.svg",
+    "crestUrl": "/nutmeg/clubs/s-c-olhanense.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "review_required",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q621259"
   },
   {
@@ -1839,10 +1839,10 @@
     "description": "professional association football club based in Lisbon, Portugal",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/portugal/Benfica.svg",
+    "crestUrl": "/nutmeg/clubs/s-l-benfica.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q131499"
   },
   {
@@ -1852,10 +1852,10 @@
     "description": "Dutch association football club based in Arnhem",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/netherlands/Vitesse.svg",
+    "crestUrl": "/nutmeg/clubs/sbv-vitesse.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q219233"
   },
   {
@@ -1865,10 +1865,10 @@
     "description": "German football club",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/germany/Freiburg.svg",
+    "crestUrl": "/nutmeg/clubs/sc-freiburg.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q106394"
   },
   {
@@ -1878,10 +1878,10 @@
     "description": "football club from Heerenveen, Netherlands",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/netherlands/sc_Heerenveen.svg",
+    "crestUrl": "/nutmeg/clubs/sc-heerenveen.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q200321"
   },
   {
@@ -1891,10 +1891,10 @@
     "description": "men's association football club from Spain",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/spain/Eibar.svg",
+    "crestUrl": "/nutmeg/clubs/sd-eibar.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q770740"
   },
   {
@@ -1904,10 +1904,10 @@
     "description": "Spanish professional football club based in Seville",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/spain/Sevilla.svg",
+    "crestUrl": "/nutmeg/clubs/sevilla-fc.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q10329"
   },
   {
@@ -1917,10 +1917,10 @@
     "description": "association football club in Sheffield, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Sheffield_Wednesday.svg",
+    "crestUrl": "/nutmeg/clubs/sheffield-wednesday-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q19498"
   },
   {
@@ -1930,10 +1930,10 @@
     "description": "association football club in Southampton, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Southampton.svg",
+    "crestUrl": "/nutmeg/clubs/southampton-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q18732"
   },
   {
@@ -1943,10 +1943,10 @@
     "description": "association football club in Southport, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Southport.svg",
+    "crestUrl": "/nutmeg/clubs/southport-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q18525"
   },
   {
@@ -2021,10 +2021,10 @@
     "description": "association football club in Drammen, Norway",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/norway/Strømsgodset.svg",
+    "crestUrl": "/nutmeg/clubs/str-msgodset-tf.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q7482049"
   },
   {
@@ -2034,10 +2034,10 @@
     "description": "association football club in Sunderland, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Sunderland.svg",
+    "crestUrl": "/nutmeg/clubs/sunderland-a-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q18739"
   },
   {
@@ -2073,10 +2073,10 @@
     "description": "association football club in Swansea, Wales",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Swansea_City.svg",
+    "crestUrl": "/nutmeg/clubs/swansea-city-a-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q18659"
   },
   {
@@ -2086,10 +2086,10 @@
     "description": "Italian football club based in Turin, Piedmont",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/italy/Torino.svg",
+    "crestUrl": "/nutmeg/clubs/torino-fc.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q2768"
   },
   {
@@ -2099,10 +2099,10 @@
     "description": "association football club in London, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Tottenham.svg",
+    "crestUrl": "/nutmeg/clubs/tottenham-hotspur-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q18741"
   },
   {
@@ -2112,10 +2112,10 @@
     "description": "French association football club",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/france/Toulouse.svg",
+    "crestUrl": "/nutmeg/clubs/toulouse-fc.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q19518"
   },
   {
@@ -2125,10 +2125,10 @@
     "description": "Turkish association football club",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/turkey/Trabzonspor.svg",
+    "crestUrl": "/nutmeg/clubs/trabzonspor.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q192641"
   },
   {
@@ -2177,10 +2177,10 @@
     "description": "professional association football club based in Leiria, Portugal",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/portugal/União_de_Leiria.svg",
+    "crestUrl": "/nutmeg/clubs/u-d-leiria.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q211401"
   },
   {
@@ -2190,10 +2190,10 @@
     "description": "Spanish association football team",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/spain/Las_Palmas.svg",
+    "crestUrl": "/nutmeg/clubs/ud-las-palmas.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q11979"
   },
   {
@@ -2204,9 +2204,9 @@
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
     "crestSourceFile": null,
-    "crestUrl": null,
+    "crestUrl": "/nutmeg/clubs/ud-tegueste.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "generated_editorial_fallback",
     "sourceUrl": "https://www.wikidata.org/wiki/Q7864301"
   },
   {
@@ -2230,9 +2230,9 @@
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
     "crestSourceFile": null,
-    "crestUrl": null,
+    "crestUrl": "/nutmeg/clubs/vejle-boldklub.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "generated_editorial_fallback",
     "sourceUrl": "https://www.wikidata.org/wiki/Q737936"
   },
   {
@@ -2268,10 +2268,10 @@
     "description": "association football club in Villarreal, Spain",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/spain/Villarreal.svg",
+    "crestUrl": "/nutmeg/clubs/villarreal-cf.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q12297"
   },
   {
@@ -2281,10 +2281,10 @@
     "description": "professional association football club based in Guimarães, Portugal",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/portugal/Vitória_de_Guimarães.svg",
+    "crestUrl": "/nutmeg/clubs/vitoria-s-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q223450"
   },
   {
@@ -2294,10 +2294,10 @@
     "description": "association football club in London, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/West_Ham.svg",
+    "crestUrl": "/nutmeg/clubs/west-ham-united-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q18747"
   },
   {
@@ -2307,10 +2307,10 @@
     "description": "association football club in Wolverhampton, England",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/england/Wolverhampton_Wanderers.svg",
+    "crestUrl": "/nutmeg/clubs/wolverhampton-wanderers-f-c.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q19500"
   },
   {
@@ -2320,10 +2320,10 @@
     "description": "French association football club",
     "classification": "senior_club",
     "classificationReason": "Wikidata team statement passed conservative exclusions",
-    "crestSourceFile": null,
-    "crestUrl": null,
+    "crestSourceFile": "logos/france/Évreux_FC_27.svg",
+    "crestUrl": "/nutmeg/clubs/evreux-fc-27.svg",
     "crestEditorialUrl": null,
-    "crestStatus": "fallback",
+    "crestStatus": "approved_repository_mit",
     "sourceUrl": "https://www.wikidata.org/wiki/Q3592915"
   }
 ]

@@ -30,7 +30,11 @@ The named FC source repository currently exposes no redistribution licence. Acco
 
 `ingestion/club_history.py` audits every player in the current 96-player catalogue against Wikidata P54 statements. It only accepts a club claim with a positive P1350 senior appearance count, excludes national/youth/reserve/academy/B-team descriptions conservatively, and orders accepted stints using P580/P582 qualifiers. The generated 2026-11-11 snapshot contains 87 players with two or more eligible senior clubs, 29 full five-club trails and 179 distinct clubs. Completeness remains `editorial_review_required`.
 
-For club art, P154 is resolved through the Wikimedia Commons API. Public-domain, CC0 and CC BY files pass the automatic allowlist; CC BY-SA and ambiguous records remain review-required unless explicitly approved. The pipeline emits a transparent clean 160 × 160 WebP and a review-only editorial derivative. Paper Trail renders the clean asset to preserve the crest's real colours and places the visual treatment on the card. Missing or unapproved crests use a deterministic text mark. Attribution metadata and a contact sheet are emitted with the report.
+For club art, P154 is first resolved through the Wikimedia Commons API. Public-domain, CC0 and CC BY files pass the automatic allowlist; CC BY-SA and ambiguous records remain review-required unless explicitly approved. The primary pipeline emits a transparent clean 160 × 160 WebP and a review-only editorial derivative.
+
+`ingestion/crest_backfill.py` covers gaps from a checkout of `JoseArroyave/football-logos` pinned to commit `5ab11fed47427b3003f4b276554491fe683387b1` and its included MIT licence. Ambiguous names use explicit reviewed mappings, matches below the confidence threshold are rejected, and SVGs containing executable elements or external references fail validation. Seven clubs absent from both reviewed sources receive visibly generic Player Press editorial monograms rather than fabricated official crests. Current coverage is 59 Commons assets, 113 repository assets and seven generated fallbacks across all 179 clubs. Source paths and match decisions are frozen in `crest-source-manifest.json`; club trademarks remain the property of their owners and are shown for identification.
+
+Paper Trail renders clean crest colours and places the editorial treatment on the surrounding card. Attribution metadata and the original Commons contact sheet are emitted with the report.
 
 ## Pipeline
 
