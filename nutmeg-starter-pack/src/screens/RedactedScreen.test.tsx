@@ -25,8 +25,8 @@ describe('Redacted interaction', () => {
     await user.click(screen.getByRole('button', { name: `Guess ${wrong[0]}` }))
     await user.click(screen.getByRole('button', { name: `Guess ${wrong[1]}` }))
     expect(screen.getByLabelText('2 of 6 strikes used')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /open −10 file 01 tap to unseal/i })).toBeEnabled()
-    expect(screen.getByRole('button', { name: /4 strikes file 02 sealed/i })).toBeDisabled()
+    expect(screen.getByRole('button', { name: /file 01 unseal evidence tap to open/i })).toBeEnabled()
+    expect(screen.getByRole('button', { name: /file 02 sealed 4 strikes to unlock/i })).toBeDisabled()
   })
 
   it('solves immediately from the full-player search and stores a local record', async () => {

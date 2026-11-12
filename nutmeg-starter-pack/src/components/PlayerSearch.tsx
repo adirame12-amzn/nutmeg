@@ -15,6 +15,7 @@ export function PlayerSearch({ excludedIds, onSelect, disabled = false, accent =
   const results = useMemo(() => searchPlayers(query, excludedIds, pool), [query, excludedIds, pool])
 
   const choose = (player: Player) => {
+    ;(document.activeElement as HTMLElement | null)?.blur()
     onSelect(player)
     setQuery('')
   }

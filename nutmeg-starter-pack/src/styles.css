@@ -248,6 +248,75 @@ h1,h2,.game-tile strong,.leader-list strong { font-family:Georgia,"Times New Rom
 .wire-preview-page::before { content:"PREVIEW CIRCUIT";position:absolute;right:-28px;top:150px;padding:4px 31px;background:var(--blue);color:#fff;font-size:6px;font-weight:950;letter-spacing:.16em;transform:rotate(39deg);pointer-events:none; }
 .wire-preview-note { border:1px dashed var(--blue);border-left:4px solid var(--blue);border-radius:0 9px 9px 0;background:linear-gradient(100deg,#3456cd12,#c9f25420); }
 
+/* Cold Cases is one archive drawer; each playable file owns its color. */
+.archive-desk { margin-top:12px;padding-top:14px;border-radius:18px;background:#d7c8a5;box-shadow:4px 6px 0 #3456cd38; }
+.archive-desk::before,.archive-desk::after,.archive-game::before,.archive-game::after { display:none; }
+.archive-desk>* { position:relative;z-index:1; }
+.archive-games { padding-top:8px; }
+.archive-game { min-height:154px;overflow:hidden;padding:12px 10px;background:#f1c5aa;box-shadow:3px 4px 0 #1d1d1b2c; }
+.archive-game:nth-child(2) { background:#bfcaf0; }
+.archive-game.redacted-archive { background:#d8d2c8; }
+.archive-game.cipher-archive { background:#d5e8a7; }
+.archive-game.redacted-archive::after,.archive-game.wire-archive::after { display:none; }
+.archive-game em { color:#37342f; }
+.archive-game>.ticket-icon { margin-bottom:7px; }
+.cipher-ticket .ticket-sheet { background:#703fc2;color:#fff; }
+.cipher-ticket .ticket-sheet svg { stroke-width:2.1; }
+.coming-soon-shelf { position:relative;margin:14px 13px 8px;padding:22px 10px 10px;overflow:hidden;border:1.4px solid var(--ink);border-radius:16px;background:linear-gradient(135deg,#3456cd55,#c9f25466);box-shadow:3px 4px 0 #1d1d1b25; }
+.coming-soon-shelf::before { content:"";position:absolute;inset:-20px;background:radial-gradient(circle at 20% 30%,#fff9 0 8%,transparent 25%),radial-gradient(circle at 80% 70%,#3456cd55,transparent 38%);filter:blur(12px); }
+.coming-soon-label { position:absolute;z-index:2;left:13px;top:8px;font-size:7px;font-weight:950;letter-spacing:.16em; }
+.coming-soon-shelf>button { position:relative;z-index:1;width:100%;min-height:91px;display:grid;grid-template-columns:50px 1fr 25px;align-items:center;gap:9px;padding:9px;text-align:left;border:1px solid #fff8;border-radius:12px;background:#fffaf0c7;backdrop-filter:blur(8px);box-shadow:inset 0 0 0 1px #1d1d1b22;cursor:pointer; }
+.coming-soon-shelf .ticket-icon { width:44px;height:58px;filter:drop-shadow(2px 2px 0 var(--ink)); }
+.coming-soon-shelf .ticket-icon::before,.coming-soon-shelf .ticket-icon::after { inset:4px 5px; }
+.coming-soon-shelf .ticket-sheet { width:36px;height:50px; }
+.coming-soon-shelf .ticket-sheet svg { width:31px;height:41px; }
+.coming-soon-shelf small,.coming-soon-shelf strong,.coming-soon-shelf em { display:block; }
+.coming-soon-shelf small { color:#5a554e;font-size:7px;font-weight:950;letter-spacing:.08em; }
+.coming-soon-shelf strong { margin:2px 0;font:italic 900 21px Georgia,serif; }
+.coming-soon-shelf em { color:#4d4942;font-size:10px;font-style:normal; }
+.coming-soon-shelf>button>svg { width:22px;padding:5px;border-radius:50%;background:var(--ink);color:#fff; }
+
+/* Evidence behaves like two small seals, with a clear locked → ready → opened progression. */
+.redacted-evidence>button { min-height:67px;display:grid;grid-template-columns:39px 1fr;align-items:center;gap:7px;padding:7px; }
+.evidence-seal { width:35px;height:35px;display:grid!important;place-items:center;border:1.5px solid currentColor;border-radius:50%;background:#c9c3b9;box-shadow:inset 0 0 0 3px #fff5; }
+.evidence-seal svg { width:16px;height:16px; }
+.evidence-copy { min-width:0; }
+.evidence-copy small,.evidence-copy strong,.evidence-copy em { display:block; }
+.evidence-copy strong { margin:1px 0;font-size:9px!important; }
+.evidence-copy em { color:#6e685f;font-size:6px;font-style:normal;font-weight:850;letter-spacing:.04em;text-transform:uppercase; }
+.redacted-evidence>button.available .evidence-seal { background:var(--orange);color:#fff;box-shadow:0 0 0 3px #ef5a1b2b,inset 0 0 0 3px #fff3;animation:seal-pulse 1.5s ease-in-out infinite; }
+.redacted-evidence>button.open .evidence-seal { background:var(--lime);color:#395516; }
+@keyframes seal-pulse { 50% { transform:scale(1.07) rotate(-3deg);box-shadow:0 0 0 5px #ef5a1b18,inset 0 0 0 3px #fff3; } }
+
+/* The Cipher — local, four-attempt anagram case. */
+.eyebrow.cipher { background:#703fc2; }
+.cipher-board { margin:4px 0 10px;padding:10px;border:1.5px solid var(--ink);border-radius:5px;background:#ded6c9;box-shadow:4px 5px 0 #1d1d1b2a; }
+.cipher-file { display:grid;grid-template-columns:20px 1fr auto;align-items:center;gap:6px;padding-bottom:7px;border-bottom:1px solid #1d1d1b55;font-size:8px;font-weight:950;letter-spacing:.1em; }
+.cipher-file svg { width:17px;color:#703fc2; }
+.cipher-file small { font-size:7px; }
+.cipher-tiles { display:flex;flex-wrap:wrap;justify-content:center;gap:5px;padding:15px 2px 11px; }
+.cipher-tiles span { width:34px;height:40px;display:grid;place-items:center;border:1.5px solid var(--ink);border-radius:5px;background:#fffaf0;font:900 20px Georgia,serif;box-shadow:2px 3px 0 #1d1d1b35; }
+.cipher-board>small { display:block;text-align:center;color:#625c54;font-size:6px;font-weight:900;letter-spacing:.12em; }
+.cipher-clues { display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:9px; }
+.cipher-clues>span { min-height:58px;display:grid;grid-template-columns:22px 1fr;grid-template-rows:auto auto;align-items:center;padding:7px;border:1px dashed #1d1d1b70;border-radius:9px;background:#e1dbd1;color:#716b62; }
+.cipher-clues>span.revealed { border-style:solid;border-color:#668d35;background:#e7f5d7;color:#314b17;animation:evidence-unseal .3s ease; }
+.cipher-clues svg { grid-row:1/3;width:16px; }
+.cipher-clues small { font-size:6px;font-weight:950;letter-spacing:.1em; }
+.cipher-clues b { overflow:hidden;font:800 10px Georgia,serif;text-overflow:ellipsis;white-space:nowrap; }
+.cipher-attempts { display:flex;align-items:center;justify-content:space-between;margin:4px 1px 6px;font-size:8px;font-weight:900;text-transform:uppercase; }
+.cipher-attempts>div { display:flex;gap:5px; }.cipher-attempts i { width:25px;height:6px;border:1px solid #1d1d1b66;border-radius:99px;background:#fffaf0; }.cipher-attempts i.used { background:var(--orange); }
+.cipher-feedback { min-height:17px;margin:0 1px 7px;color:#615b53;font-size:9px;font-weight:800; }
+.cipher-form { display:grid;grid-template-columns:1fr auto;gap:7px; }
+.cipher-form label { min-width:0; }.cipher-form input { width:100%;height:49px;padding:0 12px;border:1.5px solid var(--ink);border-radius:12px;background:#fffaf0;font-size:14px;outline:none; }
+.cipher-form button { min-width:91px;display:flex;align-items:center;justify-content:center;gap:5px;border:1.5px solid var(--ink);border-radius:12px;background:#703fc2;color:#fff;font-size:10px;font-weight:900; }
+.cipher-form button:disabled { background:#aaa39a; }
+.cipher-misses { display:flex;flex-wrap:wrap;gap:5px;margin-top:10px; }.cipher-misses small { width:100%;font-size:7px;font-weight:950;letter-spacing:.1em; }.cipher-misses span { padding:4px 7px;border-radius:99px;background:#f5cdc1;color:#8c2919;font-size:8px;font-weight:850;text-decoration:line-through; }
+.cipher-result { min-height:calc(100dvh - 68px);display:flex;flex-direction:column;align-items:center;padding:16px 18px 36px;text-align:center; }
+.cipher-result-art { width:100%;height:230px;display:grid;place-items:end center;overflow:hidden;background:radial-gradient(circle at 50% 65%,#703fc2 0 32%,transparent 33%); }
+.cipher-result-art .player-portrait { width:165px;height:215px;border:0;background:transparent;box-shadow:none; }.cipher-result-art .player-portrait img { object-fit:contain;object-position:center bottom;filter:grayscale(.75) contrast(1.1); }
+.cipher-result>small { font-size:8px;font-weight:950;letter-spacing:.1em; }.cipher-result h1 { margin:6px 0 4px;font:italic 900 clamp(41px,12vw,55px)/.9 Georgia,serif; }.cipher-result>p:not(.result-stamp) { margin:5px 0 13px;color:#5f5951;font-size:12px; }
+.cipher-result>button { width:100%;min-height:48px;display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:7px;border:1.4px solid var(--ink);border-radius:13px;background:#fffaf0;font-weight:900; }
+
 @media (max-width:350px) { .game-page,.leaderboard-page,.result-page { padding-left:13px;padding-right:13px; }.home-hero { grid-template-columns:1fr 105px;padding-left:14px;padding-right:11px; }.home-hero h1 { font-size:51px; }.hero-player { width:96px; }.game-tile { grid-template-columns:54px 1fr 27px;padding:10px;gap:8px; }.ticket-icon { width:50px;height:68px; }.game-tile strong { font-size:20px; }.attribute>span { font-size:13px; }.button-pair { grid-template-columns:1fr; }.career-grid { gap:5px; }.club-card { height:118px;padding-left:3px;padding-right:3px; }.club-crest { width:51px;height:51px; }.club-card>strong { font-size:8.5px; }.club-card>small { font-size:6px; } }
 @media (min-width:768px) { body { padding:30px 0; }.app-shell { min-height:calc(100dvh - 60px);border-radius:28px; }.masthead { position:relative; }.screen { min-height:calc(100dvh - 128px); }.app-shell::after { bottom:30px; } }
 @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important; } }

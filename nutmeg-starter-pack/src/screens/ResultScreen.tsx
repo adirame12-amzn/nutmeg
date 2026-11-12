@@ -1,9 +1,11 @@
 import { Home, RotateCcw, Share2, Trophy } from 'lucide-react'
+import { useEffect } from 'react'
 import type { Screen } from '../components/Chrome'
 import { CareerGrid } from '../components/CareerGrid'
 import type { ResultPayload } from './LineupScreen'
 
 export function ResultScreen({ result, onNavigate }: { result: ResultPayload | null, onNavigate: (screen: Screen) => void }) {
+  useEffect(() => { window.scrollTo({ top: 0, behavior: 'auto' }) }, [result])
   if (!result) return <div className="result-page empty"><Trophy/><h1>No case report yet</h1><p>Open a case to build your report.</p><button className="primary" onClick={() => onNavigate('lineup')}>Play Prime Suspect</button></div>
 
   const share = async () => {

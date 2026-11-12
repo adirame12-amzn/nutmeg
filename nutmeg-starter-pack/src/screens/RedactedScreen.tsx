@@ -138,8 +138,8 @@ export function RedactedScreen({ onNavigate }: { onNavigate: (screen: Screen) =>
           const open = openedEvidence[index]
           const evidenceState = open ? 'open' : available ? 'available' : 'locked'
           return <button key={index} disabled={!available} className={evidenceState} onClick={() => openEvidence(index)}>
-            <span className="evidence-status">{open ? <ShieldCheck/> : available ? <Eye/> : <FileLock2/>}<b>{open ? 'OPENED' : available ? 'OPEN −10' : `${index === 0 ? 2 : 4} STRIKES`}</b></span>
-            <span><small>FILE 0{index + 1}</small><strong>{open ? index === 0 ? `${caseFile.player.nationalTeam} · ${caseFile.player.position}` : `${caseFile.player.currentClub} · FC ${caseFile.player.fcOverall ?? '—'}` : available ? 'TAP TO UNSEAL' : 'SEALED'}</strong></span>
+            <span className="evidence-seal">{open ? <ShieldCheck/> : available ? <Eye/> : <FileLock2/>}</span>
+            <span className="evidence-copy"><small>FILE 0{index + 1}</small><strong>{open ? index === 0 ? `${caseFile.player.nationalTeam} · ${caseFile.player.position}` : `${caseFile.player.currentClub} · FC ${caseFile.player.fcOverall ?? '—'}` : available ? 'UNSEAL EVIDENCE' : 'SEALED'}</strong><em>{open ? 'Verified clue' : available ? 'Tap to open · −10' : `${index === 0 ? 2 : 4} strikes to unlock`}</em></span>
           </button>
         })}
       </section>

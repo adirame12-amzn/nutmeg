@@ -64,7 +64,7 @@ export function RankedPaperTrailScreen({ identity, onResult, onPractice }: {
     <div className="game-page paper-trail-page ranked-paper-trail-page">
       <div className="game-heading"><p className="eyebrow trail">TODAY’S PAPER TRAIL</p><p className="ranked-pill">RANKED</p></div>
       <h1>Follow the Clubs</h1>
-      <p className="game-intro">The same server-hidden career trail for every detective today.</p>
+      <p className="game-intro">Trace today’s badges, one wrong suspect at a time. Every detective gets the same trail.</p>
       <aside className="daily-case-note"><CalendarDays size={17}/><span><strong>{daily.date} · UTC case</strong><small>Playing as @{identity.user.username} · snapshot {daily.sourceSnapshot}</small></span></aside>
 
       <CareerGrid clubs={daily.clubs} revealedCount={daily.clubs.length} totalClubs={daily.clubCount} />

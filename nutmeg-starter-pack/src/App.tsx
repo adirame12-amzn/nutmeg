@@ -13,8 +13,9 @@ import { PaperTrailScreen } from './screens/PaperTrailScreen'
 import { RankedPaperTrailScreen } from './screens/RankedPaperTrailScreen'
 import { RedactedScreen } from './screens/RedactedScreen'
 import { WirePreviewScreen } from './screens/WirePreviewScreen'
+import { CipherScreen } from './screens/CipherScreen'
 
-const screens: Screen[] = ['home', 'lineup', 'mystery', 'paper-trail', 'ranked-paper-trail', 'redacted', 'wire-preview', 'leaderboard', 'credits', 'result']
+const screens: Screen[] = ['home', 'lineup', 'mystery', 'paper-trail', 'ranked-paper-trail', 'redacted', 'cipher', 'wire-preview', 'leaderboard', 'credits', 'result']
 
 function screenFromHash(): Screen {
   const value = window.location.hash.replace('#', '') as Screen
@@ -41,7 +42,7 @@ export function App() {
     if (next === 'lineup' && screen !== 'result') setQuickCase(false)
     window.location.hash = next
     setScreen(next)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    window.scrollTo({ top: 0, behavior: next === 'result' ? 'auto' : 'smooth' })
   }
 
   const openPracticeLineup = () => {
@@ -62,6 +63,7 @@ export function App() {
       {screen === 'mystery' && <MysteryScreen onResult={showResult} />}
       {screen === 'paper-trail' && <PaperTrailScreen onResult={showResult} />}
       {screen === 'redacted' && <RedactedScreen onNavigate={navigate} />}
+      {screen === 'cipher' && <CipherScreen onNavigate={navigate} />}
       {screen === 'wire-preview' && <WirePreviewScreen />}
       {screen === 'ranked-paper-trail' && rankedApiEnabled && !needsIdentity && identity && <RankedPaperTrailScreen identity={identity} onResult={showResult} onPractice={() => navigate('paper-trail')} />}
       {screen === 'ranked-paper-trail' && !rankedApiEnabled && <PaperTrailScreen onResult={showResult} />}

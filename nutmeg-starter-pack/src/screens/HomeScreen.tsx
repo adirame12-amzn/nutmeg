@@ -13,11 +13,12 @@ function CaseProgressChip({ progress }: { progress: CaseProgress }) {
   return <span className={`case-progress ${progress.status}`}>{label}</span>
 }
 
-type GameMark = 'suspect' | 'trail' | 'redacted' | 'wire'
+type GameMark = 'suspect' | 'trail' | 'redacted' | 'cipher' | 'wire'
 
 function GameGlyph({ game }: { game: GameMark }) {
   if (game === 'trail') return <svg viewBox="0 0 48 58"><circle cx="14" cy="14" r="6"/><circle cx="34" cy="28" r="6"/><circle cx="15" cy="45" r="6"/><path d="m19 17 10 8m0 7-9 9"/><path d="M11 14h6M31 28h6M12 45h6"/></svg>
   if (game === 'redacted') return <svg viewBox="0 0 48 58"><path d="M10 8h28v42H10z"/><path d="M15 17h18M15 24h10M15 33h18M15 40h14"/><path className="redaction" d="M12 14h25v7H12zm0 16h25v7H12z"/></svg>
+  if (game === 'cipher') return <svg viewBox="0 0 48 58"><path d="M8 10h32v38H8z"/><rect x="13" y="16" width="9" height="10" rx="2"/><rect x="26" y="16" width="9" height="10" rx="2"/><rect x="13" y="31" width="9" height="10" rx="2"/><rect x="26" y="31" width="9" height="10" rx="2"/><path d="m17 19 14 19m0-19L17 38"/></svg>
   if (game === 'wire') return <svg viewBox="0 0 48 58"><circle cx="12" cy="13" r="5"/><circle cx="36" cy="45" r="5"/><path d="M16 16c18 4 1 14 14 18 7 2 7 5 6 6"/><path d="M8 13h8M32 45h8"/><path className="spark" d="m24 24 4 4-5 2 3 5"/></svg>
   return <svg viewBox="0 0 48 58"><path d="M10 9h28v40H10z"/><circle cx="24" cy="22" r="7"/><path d="M14 42c2-8 18-8 20 0"/><path d="M16 13c5-5 12-5 17 0M13 17c-2 8 1 17 7 22M35 17c2 8-1 17-7 22"/></svg>
 }
@@ -51,7 +52,7 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
     <div className="home-page">
       <section className="home-hero">
         <div><p className="edition">DAILY FOOTBALL CASE FILE</p><h1><span>Casebook</span><br/><em>№ 001</em></h1><p>Every player leaves clues. Follow the evidence.</p></div>
-        <div className="hero-player" aria-hidden="true"><span>10</span></div>
+        <div className="hero-player" aria-hidden="true"><span>55</span></div>
       </section>
 
       <div className="desk-switch" role="group" aria-label="Choose a case desk">
@@ -69,12 +70,12 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
         <div className="ranked-case-list">
           <button className={`game-tile orange ranked-case progress-${lineupProgress.status}`} onClick={() => onNavigate('lineup')}>
             <GameTicket />
-            <span><CaseProgressChip progress={lineupProgress}/><small>DAILY CASE 01 · 6 SUSPECTS</small><strong>PRIME SUSPECT</strong><em>Compare the evidence. Name today’s player.</em></span>
+            <span><CaseProgressChip progress={lineupProgress}/><small>DAILY CASE 01 · 6 SUSPECTS</small><strong>PRIME SUSPECT</strong><em>Six suspect cards. Every clue points you closer.</em></span>
             <ArrowRight className="tile-arrow" />
           </button>
           <button className={`game-tile ranked-case paper-ranked-case progress-${trailProgress.status}`} onClick={() => onNavigate(ranked ? 'ranked-paper-trail' : 'paper-trail')}>
             <GameTicket game="trail" />
-            <span><CaseProgressChip progress={trailProgress}/><small>DAILY CASE 02 · 6 SUSPECTS</small><strong>PAPER TRAIL</strong><em>Follow the clubs. Close today’s second case.</em></span>
+            <span><CaseProgressChip progress={trailProgress}/><small>DAILY CASE 02 · 6 SUSPECTS</small><strong>PAPER TRAIL</strong><em>Trace the badges. Name the career.</em></span>
             <ArrowRight className="tile-arrow" />
           </button>
         </div>
@@ -93,19 +94,25 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
         <p>Reopen old files and sharpen your instincts. These local rounds never affect the leaderboard.</p>
         <div className="archive-games">
           <button className="archive-game orange" data-file="FILE 01" onClick={onOpenPracticeLineup}>
-            <GameTicket /><span><small>RANDOM PLAYER</small><strong>Prime Suspect</strong><em>A fresh suspect every round.</em></span><ArrowRight />
+            <GameTicket /><span><small>RANDOM PLAYER</small><strong>Prime Suspect</strong><em>Compare clues. Catch a new player every round.</em></span><ArrowRight />
           </button>
           <button className="archive-game" data-file="FILE 03" onClick={() => onNavigate('paper-trail')}>
-            <GameTicket game="trail" /><span><small>CASE 03 · 6 SUSPECTS</small><strong>Paper Trail</strong><em>Follow the clubs. Find the player.</em></span><ArrowRight />
+            <GameTicket game="trail" /><span><small>CASE 03 · 6 SUSPECTS</small><strong>Paper Trail</strong><em>Club by club, hunt down the traveller.</em></span><ArrowRight />
           </button>
           <button className="archive-game redacted-archive" data-file="FILE 04" onClick={() => onNavigate('redacted')}>
-            <GameTicket game="redacted" /><span><small>CASE 04 · 6 STRIKES</small><strong>Redacted</strong><em>Uncover the name. Close the case.</em></span><ArrowRight />
+            <GameTicket game="redacted" /><span><small>CASE 04 · 6 STRIKES</small><strong>Redacted</strong><em>Pick letters. Strip the ink. Name the player.</em></span><ArrowRight />
           </button>
-          <button className="archive-game wire-archive" data-file="COMING SOON" onClick={() => onNavigate('wire-preview')}>
-            <GameTicket game="wire" /><span><small>INTERACTIVE CONCEPT</small><strong>The Wire</strong><em>Enter the connection lab.</em><mark>COMING SOON</mark></span><ArrowRight />
+          <button className="archive-game cipher-archive" data-file="FILE 05" onClick={() => onNavigate('cipher')}>
+            <GameTicket game="cipher" /><span><small>CASE 05 · 4 ATTEMPTS</small><strong>The Cipher</strong><em>Unscramble the name before the trail goes cold.</em></span><ArrowRight />
           </button>
         </div>
         <div className="archive-foot"><Clock3 size={15}/><span>Play again whenever you like · no points recorded</span></div>
+      </section> : null}
+      {desk === 'practice' ? <section className="coming-soon-shelf" aria-label="Coming soon games">
+        <span className="coming-soon-label">COMING SOON</span>
+        <button onClick={() => onNavigate('wire-preview')}>
+          <GameTicket game="wire"/><span><small>IN THE CONNECTION LAB</small><strong>The Wire</strong><em>Link clubs through the players they share.</em></span><ArrowRight/>
+        </button>
       </section> : null}
       <aside className="demo-note pool-note">
         <Sparkles size={18}/>

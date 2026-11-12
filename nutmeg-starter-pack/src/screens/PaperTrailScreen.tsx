@@ -50,7 +50,7 @@ export function PaperTrailScreen({ onResult }: { onResult: (payload: ResultPaylo
     <div className="game-page paper-trail-page">
       <div className="game-heading"><p className="eyebrow trail">PAPER TRAIL</p><p className="demo-pill">CASE 03 · PRACTICE</p></div>
       <h1>Follow the Clubs</h1>
-      <p className="game-intro">A club-by-club investigation. Name the footballer behind this senior career trail.</p>
+      <p className="game-intro">Trace the badges through a senior career. Name the player before six suspects run out.</p>
       <aside className="trail-source-note"><FileSearch/><span><strong>Local practice file · unscored leaderboard</strong><small>Wikidata club statements snapshot {puzzle.sourceSnapshot} · editorial completeness review pending.</small></span></aside>
 
       <CareerGrid clubs={puzzle.clubs} revealedCount={revealCount} />

@@ -32,6 +32,9 @@ describe('Home case desks', () => {
     await user.click(screen.getByRole('button', { name: /redacted/i }))
     expect(onNavigate).toHaveBeenCalledWith('redacted')
 
+    await user.click(screen.getByRole('button', { name: /the cipher/i }))
+    expect(onNavigate).toHaveBeenCalledWith('cipher')
+
     await user.click(screen.getByRole('button', { name: /the wire/i }))
     expect(onNavigate).toHaveBeenCalledWith('wire-preview')
   })
