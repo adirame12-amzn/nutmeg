@@ -27,7 +27,11 @@ export function WirePreviewScreen() {
         </div>)}
       </section>
 
-      <div className="wire-connect"><ArrowLeftRight/><span><small>CONNECT</small><strong>BARCELONA ↔ PSG</strong></span></div>
+      <div className="wire-connect" aria-label="Connect Barcelona and PSG">
+        <span className="wire-club-chip"><img src="/nutmeg/clubs/fc-barcelona.webp" alt=""/><b>BARCELONA</b></span>
+        <span className="wire-bridge"><small>CONNECT</small><i><span/><ArrowLeftRight/><span/></i></span>
+        <span className="wire-club-chip"><img src="/nutmeg/clubs/paris-saint-germain-fc.svg" alt=""/><b>PSG</b></span>
+      </div>
       <div className="wire-disabled-search"><Search/><span>Search a player…</span></div>
       <button className="wire-skip" disabled><Clock3/> SKIP · −10 SECONDS</button>
       <p className="wire-next-note">Next milestone: validate every route from the reviewed Paper Trail club graph before this becomes playable.</p>

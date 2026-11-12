@@ -81,6 +81,16 @@ export function revealRedactedName(caseFile: RedactedCase, guessedLetters: strin
   }).join(' ')
 }
 
+export function redactedNameSlots(caseFile: RedactedCase, guessedLetters: string[]) {
+  const guessed = new Set(guessedLetters.map(normalizeRedactedText))
+  return Array.from(caseFile.displayAnswer).map((character, index) => {
+    const normalized = normalizeRedactedText(character)
+    if (!normalized) return { id: `${index}-${character}`, kind: 'separator' as const, character }
+    const revealed = normalized.split('').every(letter => guessed.has(letter))
+    return { id: `${index}-${normalized}`, kind: 'letter' as const, character: revealed ? character.toLocaleUpperCase('en-US') : '', normalized, revealed }
+  })
+}
+
 export function isCorrectRedactedLetter(caseFile: RedactedCase, letter: string) {
   const normalized = normalizeRedactedText(letter)
   return normalized.length === 1 && caseFile.normalizedAnswer.includes(normalized)

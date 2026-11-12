@@ -13,6 +13,7 @@ import {
   parseRedactedStats,
   recordRedactedResult,
   redactedEvidenceAvailable,
+  redactedNameSlots,
   REDACTED_STATS_KEY,
   redactedScore,
   revealRedactedName,
@@ -41,6 +42,8 @@ export function RedactedScreen({ onNavigate }: { onNavigate: (screen: Screen) =>
 
   const score = redactedScore(status === 'won', wrongAttempts, openedEvidence.filter(Boolean).length)
   const redactedName = useMemo(() => revealRedactedName(caseFile, guessedLetters), [caseFile, guessedLetters])
+  const nameSlots = useMemo(() => redactedNameSlots(caseFile, guessedLetters), [caseFile, guessedLetters])
+  const correctLetters = useMemo(() => guessedLetters.filter(letter => isCorrectRedactedLetter(caseFile, letter)), [caseFile, guessedLetters])
 
   useEffect(() => { sessionStorage.setItem(LAST_TARGET_KEY, caseFile.player.id) }, [caseFile.player.id])
 
@@ -126,14 +129,19 @@ export function RedactedScreen({ onNavigate }: { onNavigate: (screen: Screen) =>
       <div className="game-heading"><p className="eyebrow redacted">REDACTED</p><p className="demo-pill">CASE 04 · PRACTICE</p></div>
       <h1>Uncover the Name</h1>
       <p className="game-intro">Lift the black ink before six wrong letters close the file.</p>
+      <div className="redacted-scorecard" aria-label="Scoring rules"><span><b>100</b><small>START</small></span><span><b>−12</b><small>PER STRIKE</small></span><span><b>−10</b><small>PER EVIDENCE</small></span></div>
 
       <section className="redacted-dossier" aria-label="Confidential player name">
         <div className="confidential-row"><FileLock2/><span>CONFIDENTIAL</span><small>PP–004</small></div>
-        <p className="redacted-word" aria-label={`Redacted name: ${redactedName}`}>{redactedName}</p>
-        <div className="strike-row" aria-label={`${wrongAttempts} of ${REDACTED_STRIKE_LIMIT} strikes used`}>
-          {Array.from({ length: REDACTED_STRIKE_LIMIT }, (_, index) => <span className={index < wrongAttempts ? 'used' : ''} key={index}>{index < wrongAttempts ? <X/> : null}</span>)}
+        <div className="redacted-nameplate" aria-label={`Redacted name: ${redactedName}`}>
+          {nameSlots.map(slot => slot.kind === 'separator'
+            ? <span className="name-separator" key={slot.id}>{slot.character}</span>
+            : <span className={`name-letter ${slot.revealed ? 'revealed' : ''}`} key={slot.id}>{slot.character}</span>)}
         </div>
-        <strong>{REDACTED_STRIKE_LIMIT - wrongAttempts} remaining</strong>
+        <div className="strike-heading"><span><b>STRIKE LEDGER</b><small>Wrong letter or suspect = 1 strike</small></span><strong>{REDACTED_STRIKE_LIMIT - wrongAttempts} LEFT</strong></div>
+        <div className="strike-row" aria-label={`${wrongAttempts} of ${REDACTED_STRIKE_LIMIT} strikes used`}>
+          {Array.from({ length: REDACTED_STRIKE_LIMIT }, (_, index) => <span className={index < wrongAttempts ? 'used' : ''} key={index}><small>{index + 1}</small>{index < wrongAttempts ? <X/> : <i/>}</span>)}
+        </div>
       </section>
 
       <p className="redacted-feedback" aria-live="polite">{feedback}</p>
@@ -142,14 +150,15 @@ export function RedactedScreen({ onNavigate }: { onNavigate: (screen: Screen) =>
         {[0, 1].map(index => {
           const available = redactedEvidenceAvailable(index, wrongAttempts)
           const open = openedEvidence[index]
-          return <button key={index} disabled={!available} className={open ? 'open' : ''} onClick={() => openEvidence(index)}>
-            <span><small>EVIDENCE 0{index + 1}</small><strong>{open ? index === 0 ? `${caseFile.player.nationalTeam} · ${caseFile.player.position}` : `${caseFile.player.currentClub} · FC ${caseFile.player.fcOverall ?? '—'}` : available ? 'AVAILABLE — TAP TO UNSEAL' : `LOCKED — ${index === 0 ? 2 : 4} STRIKES`}</strong></span>
-            {open ? <ShieldCheck/> : <FileLock2/>}
+          const evidenceState = open ? 'open' : available ? 'available' : 'locked'
+          return <button key={index} disabled={!available} className={evidenceState} onClick={() => openEvidence(index)}>
+            <span className="evidence-status">{open ? <ShieldCheck/> : available ? <Eye/> : <FileLock2/>}<b>{open ? 'OPENED' : available ? 'READY' : 'LOCKED'}</b></span>
+            <span><small>EVIDENCE 0{index + 1}</small><strong>{open ? index === 0 ? `${caseFile.player.nationalTeam} · ${caseFile.player.position}` : `${caseFile.player.currentClub} · FC ${caseFile.player.fcOverall ?? '—'}` : available ? 'TAP TO REVEAL' : `UNLOCKS AT ${index === 0 ? 2 : 4} STRIKES`}</strong></span>
           </button>
         })}
       </section>
 
-      <RedactedKeyboard guessedLetters={guessedLetters} disabled={false} onGuess={guessLetter} />
+      <RedactedKeyboard guessedLetters={guessedLetters} correctLetters={correctLetters} disabled={false} onGuess={guessLetter} />
       <button className="redacted-search-toggle" onClick={() => setShowSearch(show => !show)} aria-expanded={showSearch}><Search/> Name the Suspect</button>
       {showSearch && <PlayerSearch excludedIds={fullGuessIds} onSelect={submitFullGuess} pool={fc27Players} />}
       <p className="redacted-rule-note">Full-player misses also use one strike. Accents are optional.</p>

@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
+import * as rankedApi from '../api/ranked'
 import { HomeScreen } from './HomeScreen'
 
 describe('Home case desks', () => {
@@ -72,5 +73,20 @@ describe('Home case desks', () => {
 
     expect(screen.getByRole('button', { name: /signed in as @touchlinefox/i })).toBeInTheDocument()
     expect(screen.queryByText('Ranked desk offline')).not.toBeInTheDocument()
+  })
+
+  it('shows authoritative completion states for a signed-in daily desk', async () => {
+    vi.spyOn(rankedApi, 'getDailyLineup').mockResolvedValue({ date: '2026-11-12', status: 'won', guesses: [], guessesUsed: 2, score: 80 })
+    vi.spyOn(rankedApi, 'getDailyPaperTrail').mockResolvedValue({ date: '2026-11-12', status: 'playing', guesses: [], guessesUsed: 1, score: 0, clubs: [], clubCount: 4, sourceSnapshot: '2026-11-11' })
+
+    render(<HomeScreen
+      onNavigate={vi.fn()}
+      onOpenPracticeLineup={vi.fn()}
+      ranked
+      identity={{ user: { id: 'detective-1', username: 'TouchlineFox' }, token: 'browser-token' }}
+    />)
+
+    expect(await screen.findByText('SOLVED · +80')).toBeInTheDocument()
+    expect(await screen.findByText('IN PROGRESS')).toBeInTheDocument()
   })
 })

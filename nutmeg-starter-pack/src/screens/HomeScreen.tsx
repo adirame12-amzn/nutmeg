@@ -1,7 +1,17 @@
 import { ArrowRight, CalendarCheck, Clock3, Fingerprint, FolderOpen, Sparkles, Trophy, UserRoundCheck } from 'lucide-react'
-import { useState } from 'react'
-import type { RankedIdentity } from '../api/ranked'
+import { useEffect, useState } from 'react'
+import { getDailyLineup, getDailyPaperTrail, type RankedIdentity } from '../api/ranked'
 import type { Screen } from '../components/Chrome'
+
+type CaseProgress = { status: 'checking' | 'open' | 'playing' | 'won' | 'lost'; score?: number }
+
+function CaseProgressChip({ progress }: { progress: CaseProgress }) {
+  const label = progress.status === 'checking' ? 'CHECKING'
+    : progress.status === 'won' ? `SOLVED · +${progress.score ?? 0}`
+      : progress.status === 'lost' ? 'CLOSED · 0'
+        : progress.status === 'playing' ? 'IN PROGRESS' : 'NOT STARTED'
+  return <span className={`case-progress ${progress.status}`}>{label}</span>
+}
 
 function GameTicket({ mystery = false, trail = false, label }: { mystery?: boolean; trail?: boolean; label?: string }) {
   return (
@@ -17,6 +27,18 @@ function GameTicket({ mystery = false, trail = false, label }: { mystery?: boole
 
 export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity }: { onNavigate: (screen: Screen) => void; onOpenPracticeLineup: () => void; ranked: boolean; identity: RankedIdentity | null }) {
   const [desk, setDesk] = useState<'daily' | 'practice'>('daily')
+  const [lineupProgress, setLineupProgress] = useState<CaseProgress>({ status: identity && ranked ? 'checking' : 'open' })
+  const [trailProgress, setTrailProgress] = useState<CaseProgress>({ status: identity && ranked ? 'checking' : 'open' })
+
+  useEffect(() => {
+    if (!ranked || !identity) return
+    Promise.allSettled([getDailyLineup(identity), getDailyPaperTrail(identity)]).then(([lineup, trail]) => {
+      if (lineup.status === 'fulfilled') setLineupProgress({ status: lineup.value.status === 'not_started' ? 'open' : lineup.value.status, score: lineup.value.score })
+      else setLineupProgress({ status: 'open' })
+      if (trail.status === 'fulfilled') setTrailProgress({ status: trail.value.status === 'not_started' ? 'open' : trail.value.status, score: trail.value.score })
+      else setTrailProgress({ status: 'open' })
+    })
+  }, [identity, ranked])
 
   return (
     <div className="home-page">
@@ -38,14 +60,14 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
         </div>
         <p>Everyone investigates the same player. Your best detective work goes onto the weekly table.</p>
         <div className="ranked-case-list">
-          <button className="game-tile orange ranked-case" onClick={() => onNavigate('lineup')}>
+          <button className={`game-tile orange ranked-case progress-${lineupProgress.status}`} onClick={() => onNavigate('lineup')}>
             <GameTicket />
-            <span><small>DAILY CASE 01 · 6 SUSPECTS</small><strong>PRIME SUSPECT</strong><em>Compare the evidence. Name today’s player.</em></span>
+            <span><CaseProgressChip progress={lineupProgress}/><small>DAILY CASE 01 · 6 SUSPECTS</small><strong>PRIME SUSPECT</strong><em>Compare the evidence. Name today’s player.</em></span>
             <ArrowRight className="tile-arrow" />
           </button>
-          <button className="game-tile ranked-case paper-ranked-case" onClick={() => onNavigate(ranked ? 'ranked-paper-trail' : 'paper-trail')}>
+          <button className={`game-tile ranked-case paper-ranked-case progress-${trailProgress.status}`} onClick={() => onNavigate(ranked ? 'ranked-paper-trail' : 'paper-trail')}>
             <GameTicket trail />
-            <span><small>DAILY CASE 02 · 6 SUSPECTS</small><strong>PAPER TRAIL</strong><em>Follow the clubs. Close today’s second case.</em></span>
+            <span><CaseProgressChip progress={trailProgress}/><small>DAILY CASE 02 · 6 SUSPECTS</small><strong>PAPER TRAIL</strong><em>Follow the clubs. Close today’s second case.</em></span>
             <ArrowRight className="tile-arrow" />
           </button>
         </div>

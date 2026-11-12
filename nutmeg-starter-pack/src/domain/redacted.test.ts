@@ -8,6 +8,7 @@ import {
   parseRedactedStats,
   recordRedactedResult,
   redactedEvidenceAvailable,
+  redactedNameSlots,
   redactedScore,
   revealRedactedName,
   selectRedactedCase,
@@ -27,6 +28,7 @@ describe('Redacted rules', () => {
     const caseFile = toRedactedCase(player('kevin-de-bruyne', 'Kevin De Bruyne'))!
     expect(revealRedactedName(caseFile, ['E'])).toBe('_ E   _ _ _ _ _ E')
     expect(isCorrectRedactedLetter(caseFile, 'e')).toBe(true)
+    expect(redactedNameSlots(caseFile, ['E']).filter(slot => slot.kind === 'letter' && slot.revealed)).toHaveLength(2)
   })
 
   it('recognizes a solved name and rejects missing letters', () => {
