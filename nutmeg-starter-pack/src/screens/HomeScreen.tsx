@@ -26,14 +26,14 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
       </section>
 
       <div className="desk-switch" role="group" aria-label="Choose a case desk">
-        <button className={desk === 'daily' ? 'active' : ''} onClick={() => setDesk('daily')} aria-pressed={desk === 'daily'}><CalendarCheck/><span><strong>Daily Ranked</strong><small>Shared case · scored</small></span></button>
-        <button className={desk === 'practice' ? 'active' : ''} onClick={() => setDesk('practice')} aria-pressed={desk === 'practice'}><FolderOpen/><span><strong>Cold Case</strong><small>Unlimited · unscored</small></span></button>
+        <button className={desk === 'daily' ? 'active' : ''} onClick={() => setDesk('daily')} aria-pressed={desk === 'daily'}><CalendarCheck/><span><strong>Ranked Case</strong><small>Daily · shared</small></span></button>
+        <button className={desk === 'practice' ? 'active' : ''} onClick={() => setDesk('practice')} aria-pressed={desk === 'practice'}><FolderOpen/><span><strong>Cold Cases</strong><small>Unlimited · unscored</small></span></button>
       </div>
 
-      {desk === 'daily' ? <section className="case-desk daily-desk" aria-labelledby="daily-dossier-title">
+      {desk === 'daily' ? <section className="case-desk daily-desk" aria-labelledby="daily-investigation-title">
         <div className="desk-heading">
           <span className="desk-seal"><CalendarCheck /></span>
-          <span><small>SHARED · SCORED · ONCE A DAY</small><h2 id="daily-dossier-title">Today’s Dossier</h2></span>
+          <span><small>ONE SHARED FILE · SCORED</small><h2 id="daily-investigation-title">Today’s Investigation</h2></span>
           <span className="mode-chip">RANKED</span>
         </div>
         <p>Everyone investigates the same player. Your best detective work goes onto the weekly table.</p>
@@ -42,16 +42,16 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
           <span><small>DAILY CASE · 6 SUSPECTS</small><strong>PRIME SUSPECT</strong><em>Close today’s shared case before the trail resets.</em></span>
           <ArrowRight className="tile-arrow" />
         </button>
-        <div className="desk-meta">
-          <button onClick={() => onNavigate('lineup')}><Fingerprint /> <span><strong>{identity ? `Playing as @${identity.user.username}` : ranked ? 'Claim your detective name' : 'Ranked desk offline'}</strong><small>{identity ? 'Identity saved in this browser' : 'No email or password needed'}</small></span></button>
+        <div className={`desk-meta ${ranked ? '' : 'single'}`}>
+          {ranked && <button onClick={() => onNavigate('lineup')}><Fingerprint /> <span><strong>{identity ? `Playing as @${identity.user.username}` : 'Claim your detective name'}</strong><small>{identity ? 'Identity saved in this browser' : 'No email or password needed'}</small></span></button>}
           <button onClick={() => onNavigate('leaderboard')} aria-label="Open weekly leaderboard"><Trophy /><span><strong>Weekly table</strong><small>Server-validated points</small></span><ArrowRight /></button>
         </div>
       </section> : null}
 
-      {desk === 'practice' ? <section className="case-desk archive-desk" aria-labelledby="cold-case-title">
+      {desk === 'practice' ? <section className="case-desk archive-desk" aria-labelledby="cold-cases-title">
         <div className="desk-heading">
           <span className="desk-seal"><FolderOpen /></span>
-          <span><small>UNLIMITED · UNSCORED · LOCAL FILES</small><h2 id="cold-case-title">Cold Case</h2></span>
+          <span><small>UNLIMITED · UNSCORED · LOCAL FILES</small><h2 id="cold-cases-title">Cold Cases</h2></span>
           <span className="mode-chip practice">PRACTICE</span>
         </div>
         <p>Reopen old files and sharpen your instincts. These local rounds never affect the leaderboard.</p>
@@ -73,7 +73,7 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
           <button onClick={() => onNavigate('credits')}>Sources, methodology &amp; portrait credits <ArrowRight size={14}/></button>
         </div>
       </aside>
-      <p className="local-note">Cold Case play stays on this device and is never submitted to the ranked service. Prototype data remains under publication review.</p>
+      <p className="local-note">Cold Cases stay in your browser: no detective name, Worker request or leaderboard submission. Prototype data remains under publication review.</p>
       {identity && <button className="friends-status" onClick={() => onNavigate('leaderboard')}><span><UserRoundCheck/><span><strong>@{identity.user.username}</strong><small>View your weekly standing</small></span></span><ArrowRight/></button>}
     </div>
   )

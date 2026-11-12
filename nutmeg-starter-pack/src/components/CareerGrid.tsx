@@ -8,7 +8,14 @@ export function CareerGrid({ clubs, revealedCount, revealAll = false }: { clubs:
         const sequence = index + 1
         const club = clubs[index]
         const revealed = revealAll || index < revealedCount
-        return <ClubCard key={club?.id || `empty-${sequence}`} club={club} sequence={sequence} revealed={revealed} newlyRevealed={!revealAll && sequence === revealedCount && sequence > 1} />
+        return <ClubCard
+          key={club?.id || `empty-${sequence}`}
+          club={club}
+          sequence={sequence}
+          revealed={revealed}
+          trailEnded={!club && index === clubs.length}
+          newlyRevealed={!revealAll && sequence === revealedCount && sequence > 1}
+        />
       })}
     </section>
   )

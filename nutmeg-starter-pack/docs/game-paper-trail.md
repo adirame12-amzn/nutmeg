@@ -1,6 +1,6 @@
-# Paper Trail — local Cold Case practice
+# Paper Trail — local Cold Cases practice
 
-Paper Trail is a replayable, unranked game inside the **Cold Case** practice desk. It never calls the ranked Worker, never writes to D1 and never contributes to the weekly leaderboard.
+Paper Trail is a replayable, unranked game inside the **Cold Cases** practice desk. It never requests a detective identity, calls the ranked Worker, writes to D1 or contributes to the weekly leaderboard.
 
 ## Rules
 
@@ -8,7 +8,7 @@ Paper Trail is a replayable, unranked game inside the **Cold Case** practice des
 - One senior club is visible at the start. Each incorrect player guess reveals the next available club, up to five clubs.
 - The player has six distinct guesses. A correct guess scores 100, 85, 70, 55, 40 or 25 practice points by attempt; a miss scores zero.
 - The result reveals the answer, nationality, portrait and complete available club trail.
-- The five fixed evidence slots use a three-card first row and a centred two-card second row. Missing later records remain visibly unavailable rather than stretching the layout.
+- The five fixed evidence slots use a three-card first row and a centred two-card second row. The first missing slot clearly marks where the verified career trail ends; later slots remain visually secondary rather than stretching the layout.
 
 ## Data and verification
 

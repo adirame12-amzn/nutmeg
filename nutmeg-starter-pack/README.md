@@ -2,13 +2,13 @@
 
 **Every player leaves clues.**
 
-Player Press is a mobile-first football case-solving game. **Daily Ranked** serves a shared server-validated Prime Suspect and weekly leaderboard; **Cold Case** is the local, unlimited practice desk for replayable Prime Suspect rounds and Paper Trail. The visual direction is a warm investigative football newspaper with high-energy orange and cobalt accents.
+Player Press is a mobile-first football case-solving game. **Ranked Case** serves a shared server-validated daily Prime Suspect and weekly leaderboard; **Cold Cases** is the local, unlimited practice desk for replayable Prime Suspect rounds and Paper Trail. The visual direction is a warm investigative football newspaper with high-energy orange and cobalt accents.
 
 ## Current implementation status
 
 Milestone A is playable and the shared Prime Suspect alpha is deployed with an account-owned Cloudflare Worker and D1 database:
 
-- Home with explicit Daily Ranked and Cold Case practice desks, Prime Suspect, Paper Trail, case-report, unique-name onboarding, and weekly leaderboard screens.
+- Home with explicit Ranked Case and Cold Cases practice desks, Prime Suspect, Paper Trail, case-report, unique-name onboarding, and weekly leaderboard screens.
 - One server-stored Prime Suspect per UTC date for everyone, created by a 00:00 UTC cron with an idempotent first-request fallback.
 - Browser-bound unique detective names without email/password login or recovery, and server-authoritative guesses and scores.
 - Weekly Monday–Sunday UTC table. Prime Suspect awards 100, 80, 65, 50, 35, or 20 points by successful guess; an unsolved case scores zero.
@@ -105,6 +105,6 @@ https://player-press-ranked.adirame12.workers.dev/api/health
 - `docs/`: product, design, data, and future backend specifications.
 - `worker/`: Cloudflare Worker routes, D1 migration, generated player seed, UTC scheduler, and ranked rule tests.
 
-For shared play, keep puzzle targets, attempt enforcement, and score calculation in the Cloudflare Worker/D1 backend before treating results as authoritative. Cold Case practice remains deliberately local and unranked. See the [product specification](docs/product-requirements.md), [architecture](docs/architecture.md), [data plan](docs/data-pipeline.md), [Prime Suspect rules](docs/game-lineup.md), [Paper Trail rules](docs/game-paper-trail.md), [legacy Mystery rules](docs/game-mystery.md), [design system](docs/design-system.md), and [roadmap](docs/roadmap.md).
+For shared play, keep puzzle targets, attempt enforcement, and score calculation in the Cloudflare Worker/D1 backend before treating results as authoritative. Cold Cases practice remains deliberately browser-only and unranked. See the [product specification](docs/product-requirements.md), [architecture](docs/architecture.md), [data plan](docs/data-pipeline.md), [Prime Suspect rules](docs/game-lineup.md), [Paper Trail rules](docs/game-paper-trail.md), [legacy Mystery rules](docs/game-mystery.md), [design system](docs/design-system.md), and [roadmap](docs/roadmap.md).
 
 Reference images: [mobile cards](design/mobile-card-layout.png) and [original editorial direction](design/mobile-editorial-reference.png). They are concept mockups, not production player-data truth or licensed player imagery.

@@ -1,18 +1,21 @@
-import { LockKeyhole, Minus } from 'lucide-react'
+import { CircleStop, LockKeyhole, Minus } from 'lucide-react'
 import type { ClubEvidence } from '../domain/paperTrail'
 
-export function ClubCard({ club, sequence, revealed, newlyRevealed = false }: {
+export function ClubCard({ club, sequence, revealed, trailEnded = false, newlyRevealed = false }: {
   club?: ClubEvidence
   sequence: number
   revealed: boolean
+  trailEnded?: boolean
   newlyRevealed?: boolean
 }) {
   if (!club) {
+    const endOfTrail = trailEnded
     return (
-      <article className={`club-card slot-${sequence} unavailable`} aria-label={`Club ${sequence} unavailable`}>
+      <article className={`club-card slot-${sequence} unavailable ${endOfTrail ? 'trail-end' : 'after-trail'}`} aria-label={endOfTrail ? `Club ${sequence}: verified career trail ends here` : `Club ${sequence}: no club after the verified career trail`}>
         <small>CLUB {String(sequence).padStart(2, '0')}</small>
-        <Minus aria-hidden="true" />
-        <strong>NO FURTHER<br/>RECORD</strong>
+        {endOfTrail ? <CircleStop aria-hidden="true" /> : <Minus aria-hidden="true" />}
+        <strong>{endOfTrail ? <>CAREER TRAIL <br/>ENDS HERE</> : <>NO CLUB <br/>IN THIS SLOT</>}</strong>
+        <span>{endOfTrail ? 'No further verified senior club in this source' : 'Trail already ended'}</span>
       </article>
     )
   }

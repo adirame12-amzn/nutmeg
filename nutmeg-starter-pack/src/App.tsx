@@ -18,6 +18,10 @@ function screenFromHash(): Screen {
   return screens.includes(value) ? value : 'home'
 }
 
+export function shouldRequestIdentity(screen: Screen, quickCase: boolean, apiEnabled: boolean, hasIdentity: boolean) {
+  return apiEnabled && !hasIdentity && (screen === 'leaderboard' || (screen === 'lineup' && !quickCase))
+}
+
 export function App() {
   const [screen, setScreen] = useState<Screen>(screenFromHash)
   const [result, setResult] = useState<ResultPayload | null>(null)
@@ -31,7 +35,7 @@ export function App() {
   }, [])
 
   const navigate = (next: Screen) => {
-    if (next === 'lineup') setQuickCase(false)
+    if (next === 'lineup' && screen !== 'result') setQuickCase(false)
     window.location.hash = next
     setScreen(next)
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -45,7 +49,7 @@ export function App() {
   }
 
   const showResult = (payload: ResultPayload) => { setResult(payload); navigate('result') }
-  const needsIdentity = rankedApiEnabled && !identity && (screen === 'lineup' || screen === 'leaderboard')
+  const needsIdentity = shouldRequestIdentity(screen, quickCase, rankedApiEnabled, Boolean(identity))
 
   return (
     <ScreenFrame screen={screen} onNavigate={navigate} noNav={screen === 'result'}>

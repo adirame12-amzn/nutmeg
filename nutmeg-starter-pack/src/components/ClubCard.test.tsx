@@ -13,4 +13,11 @@ describe('ClubCard', () => {
     expect(screen.getByRole('article', { name: 'Club 1: Test Club' }).querySelector('img'))
       .toHaveAttribute('src', '/nutmeg/clubs/test-club.webp')
   })
+
+  it('clearly explains when the verified career trail has ended', () => {
+    render(<ClubCard sequence={4} revealed={false} trailEnded />)
+
+    expect(screen.getByRole('article', { name: /verified career trail ends here/i })).toHaveTextContent('CAREER TRAIL ENDS HERE')
+    expect(screen.getByText('No further verified senior club in this source')).toBeInTheDocument()
+  })
 })

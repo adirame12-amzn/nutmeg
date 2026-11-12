@@ -11,14 +11,14 @@ describe('Home case desks', () => {
 
     render(<HomeScreen onNavigate={onNavigate} onOpenPracticeLineup={onOpenPracticeLineup} ranked identity={null} />)
 
-    expect(screen.getByRole('button', { name: /daily ranked/i })).toHaveAttribute('aria-pressed', 'true')
-    expect(screen.getByText('Today’s Dossier')).toBeInTheDocument()
-    expect(screen.queryByRole('heading', { name: 'Cold Case' })).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /ranked case/i })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByText('Today’s Investigation')).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Cold Cases' })).not.toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: /^cold case/i }))
-    expect(screen.getByRole('button', { name: /^cold case/i })).toHaveAttribute('aria-pressed', 'true')
-    expect(screen.getByRole('heading', { name: 'Cold Case' })).toBeInTheDocument()
-    expect(screen.queryByText('Today’s Dossier')).not.toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: /^cold cases/i }))
+    expect(screen.getByRole('button', { name: /^cold cases/i })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('heading', { name: 'Cold Cases' })).toBeInTheDocument()
+    expect(screen.queryByText('Today’s Investigation')).not.toBeInTheDocument()
     expect(screen.queryByText('Question the evidence.')).not.toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: /random player prime suspect/i }))
@@ -36,5 +36,12 @@ describe('Home case desks', () => {
     await user.click(screen.getByRole('button', { name: /daily case.*prime suspect/i }))
 
     expect(onNavigate).toHaveBeenCalledWith('lineup')
+  })
+
+  it('removes the redundant offline control while retaining the weekly table', () => {
+    render(<HomeScreen onNavigate={vi.fn()} onOpenPracticeLineup={vi.fn()} ranked={false} identity={null} />)
+
+    expect(screen.queryByText('Ranked desk offline')).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Open weekly leaderboard' })).toBeInTheDocument()
   })
 })
