@@ -17,5 +17,6 @@ describe('weekly championship stars', () => {
     expect(await screen.findByRole('heading', { name: 'The Star Cabinet' })).toBeInTheDocument()
     expect(screen.getAllByText('TouchlineFox')).toHaveLength(2)
     expect(screen.getByText(/leader earns a permanent championship star/i)).toBeInTheDocument()
+    expect(screen.getAllByLabelText('2 weekly championship badges')).toHaveLength(3)
   })
 })

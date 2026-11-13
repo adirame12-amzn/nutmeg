@@ -2,6 +2,12 @@ import { Crown, LoaderCircle, RefreshCw, Star, Trophy, Users } from 'lucide-reac
 import { useCallback, useEffect, useState } from 'react'
 import { getWeeklyLeaderboard, type RankedIdentity, type WeeklyLeaderboard } from '../api/ranked'
 
+function ChampionBadge({ stars, cabinet = false }: { stars: number; cabinet?: boolean }) {
+  if (stars < 1) return null
+  const title = `${stars} weekly championship ${stars === 1 ? 'badge' : 'badges'}`
+  return <span className={`champion-badge ${cabinet ? 'cabinet' : ''}`} aria-label={title} title={title}><Star/><b>{stars}</b></span>
+}
+
 export function LeaderboardScreen({ identity }: { identity: RankedIdentity }) {
   const [table, setTable] = useState<WeeklyLeaderboard | null>(null)
   const [error, setError] = useState('')
@@ -22,15 +28,15 @@ export function LeaderboardScreen({ identity }: { identity: RankedIdentity }) {
       {error && <div className="leader-state error"><span>{error}</span><button onClick={load}><RefreshCw size={15}/> Retry</button></div>}
       {!loading && !error && table && table.leaders.length === 0 && <div className="empty-leader"><Trophy/><h2>No closed cases yet.</h2><p>Be the first detective on this week’s board.</p></div>}
       {table && table.leaders.length > 0 && <ol className="leader-list">
-        {table.leaders.map(leader => <li className={leader.isCurrentUser ? 'you' : ''} key={leader.username}><span className="rank">{leader.rank <= 3 ? <Crown size={22}/> : leader.rank}</span><span><strong>{leader.username}</strong><small>{leader.solved} solved · {leader.played} played{leader.stars > 0 ? ` · ★ ${leader.stars}` : ''}</small></span><b>{leader.points}</b></li>)}
+        {table.leaders.map(leader => <li className={leader.isCurrentUser ? 'you' : ''} key={leader.username}><span className="rank">{leader.rank <= 3 ? <Crown size={22}/> : leader.rank}</span><span><span className="leader-name-line"><strong>{leader.username}</strong><ChampionBadge stars={leader.stars}/></span><small>{leader.solved} solved · {leader.played} played</small></span><b className="leader-points">{leader.points}</b></li>)}
       </ol>}
       {table && <section className="star-board" aria-labelledby="star-board-title">
         <div className="star-board-heading"><span><Star/></span><div><small>WEEKLY CHAMPIONS</small><h2 id="star-board-title">The Star Cabinet</h2></div></div>
         {table.starLeaders.length === 0
           ? <p className="star-empty">The first star will be awarded when this week closes.</p>
-          : <ol>{table.starLeaders.map(champion => <li className={champion.isCurrentUser ? 'you' : ''} key={champion.username}><span>{champion.rank}</span><strong>{champion.username}</strong><b><Star/> {champion.stars}</b></li>)}</ol>}
+          : <ol>{table.starLeaders.map(champion => <li className={champion.isCurrentUser ? 'you' : ''} key={champion.username}><span>{champion.rank}</span><strong>{champion.username}</strong><ChampionBadge stars={champion.stars} cabinet/></li>)}</ol>}
       </section>}
-      <div className="identity-ticket"><span>@{identity.user.username}</span><small>Your detective name is tied to this browser.</small></div>
+      <div className="identity-ticket"><span className="identity-name"><span>@{identity.user.username}</span>{table?.currentUser && <ChampionBadge stars={table.currentUser.stars}/>}</span><small>Your detective name is tied to this browser.</small></div>
     </div>
   )
 }
