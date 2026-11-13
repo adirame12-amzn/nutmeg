@@ -24,6 +24,7 @@ describe('ranked Prime Suspect result', () => {
       onQuickCase={vi.fn()}
       onNext={onNext}
       onHome={vi.fn()}
+      onBadges={vi.fn()}
     />)
 
     const next = await screen.findByRole('button', { name: /1\/5 complete next: paper trail/i })

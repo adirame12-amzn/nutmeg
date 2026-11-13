@@ -37,6 +37,7 @@ describe('ranked Paper Trail', () => {
       onPractice={vi.fn()}
       onNext={vi.fn()}
       onHome={vi.fn()}
+      onBadges={vi.fn()}
     />)
 
     expect(await screen.findByLabelText('Club 1: First FC')).toBeInTheDocument()

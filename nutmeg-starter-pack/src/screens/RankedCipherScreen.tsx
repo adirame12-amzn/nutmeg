@@ -2,10 +2,11 @@ import { ArrowRight, Fingerprint, Home, Lightbulb, LoaderCircle, LockKeyhole, Se
 import { useEffect, useState, type FormEvent } from 'react'
 import { getDailyCipher, openDailyCipherHint, startDailyCipher, submitDailyCipherGuess, type RankedCipherState, type RankedIdentity } from '../api/ranked'
 import { PlayerPortrait } from '../components/PlayerPortrait'
+import { AchievementNotice } from '../components/AchievementNotice'
 import { PracticeTimer } from '../components/PracticeTimer'
 import { useDeadlineTimer } from '../hooks/useDeadlineTimer'
 
-export function RankedCipherScreen({ identity, onNext, onHome }: { identity: RankedIdentity; onNext: () => void; onHome: () => void }) {
+export function RankedCipherScreen({ identity, onNext, onHome, onBadges }: { identity: RankedIdentity; onNext: () => void; onHome: () => void; onBadges: () => void }) {
   const [daily, setDaily] = useState<RankedCipherState | null>(null)
   const [guess, setGuess] = useState('')
   const [error, setError] = useState('')
@@ -25,7 +26,7 @@ export function RankedCipherScreen({ identity, onNext, onHome }: { identity: Ran
   if (error && !daily) return <section className="ranked-unavailable"><WifiOff/><h1>Today’s cipher is jammed.</h1><p>{error}</p></section>
   if (!daily) return <div className="ranked-loading"><LoaderCircle className="spin"/> Intercepting today’s name…</div>
   const complete = daily.status === 'won' || daily.status === 'lost'
-  if (complete && daily.answer) return <div className={`cipher-result ${daily.status}`}><div className="cipher-result-art"><PlayerPortrait player={daily.answer} size="hero"/></div><p className="result-stamp">{daily.status === 'won' ? 'CIPHER CRACKED' : 'CODE UNBROKEN'}</p><small>DAILY CIPHER · RANKED</small><h1>{daily.displayAnswer}</h1><p>{daily.status === 'won' ? 'Identity confirmed. Your points are on the weekly board.' : `The scrambled player was ${daily.answer.displayName}.`}</p><strong className="points">+{daily.score} pts</strong><div className="daily-result-actions"><button className="primary dark daily-next-action" onClick={onNext}><span><small>4/5 COMPLETE</small>Next: Overlap</span><ArrowRight/></button><button onClick={onHome}><Home/> Finish later / Return home</button></div></div>
+  if (complete && daily.answer) return <div className={`cipher-result ${daily.status}`}><div className="cipher-result-art"><PlayerPortrait player={daily.answer} size="hero"/></div><p className="result-stamp">{daily.status === 'won' ? 'CIPHER CRACKED' : 'CODE UNBROKEN'}</p><small>DAILY CIPHER · RANKED</small><h1>{daily.displayAnswer}</h1><p>{daily.status === 'won' ? 'Identity confirmed. Your points are on the weekly board.' : `The scrambled player was ${daily.answer.displayName}.`}</p><strong className="points">+{daily.score} pts</strong><AchievementNotice badgeIds={daily.newBadgeIds} onView={onBadges}/><div className="daily-result-actions"><button className="primary dark daily-next-action" onClick={onNext}><span><small>4/5 COMPLETE</small>Next: Overlap</span><ArrowRight/></button><button onClick={onHome}><Home/> Finish later / Return home</button></div></div>
   return <div className="game-page cipher-page">
     <div className="game-heading"><p className="eyebrow cipher">TODAY’S CIPHER</p><p className="ranked-pill">RANKED</p></div><h1>Unscramble the Name</h1><p className="game-intro">One shared name. Four attempts. Optional evidence unlocks after misses and costs 10 points to open.</p><PracticeTimer timeLeft={timeLeft}/>
     <section className="cipher-board"><div className="cipher-file"><Fingerprint/><span>INTERCEPTED NAME</span><small>{daily.date}</small></div><div className="cipher-tiles">{daily.scrambled.map((letter, index) => <span key={`${letter}-${index}`}>{letter}</span>)}</div><small>{daily.scrambled.length} LETTERS · SPACES REMOVED</small></section>

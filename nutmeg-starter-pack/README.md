@@ -12,6 +12,7 @@ Milestone A is playable and the shared ranked alpha is deployed with an account-
 - One server-stored puzzle per UTC date for Prime Suspect, Paper Trail, Redacted, Cipher and Overlap, created by a 00:00 UTC cron with an idempotent first-request fallback.
 - Browser-bound unique detective names without email/password login or recovery, and server-authoritative guesses and scores.
 - Weekly Monday–Sunday UTC table combining all five ranked cases. Scores, deadlines and optional-evidence deductions are calculated by the Worker; an unsolved case scores zero.
+- Fifteen configuration-driven football achievement badges covering matchday skill, streaks and game mastery. The Worker evaluates them only at case completion or cabinet access, stores each unlock once in D1, retroactively awards only what existing attempt history proves, and lets players feature one earned badge beside their leaderboard name.
 - Six-suspect Prime Suspect using 96 imported FC 27 snapshot records, accent-insensitive aliases, reviewed portraits, deterministic comparisons, age/OVR directions, stacked player cards, scoring, and replay.
 - Local and daily ranked Paper Trail with progressive senior-club reveals, six guesses, 87 eligible histories, clean-colour club crests and a complete case-report reveal. Ranked play keeps unrevealed clubs and the answer server-side.
 - Browser-only Redacted practice with accent-safe letter matching, six strikes, optional full-player guesses, evidence unlocks, local scoring and versioned local statistics.
@@ -110,7 +111,7 @@ https://player-press-ranked.adirame12.workers.dev/api/health
 - `src/components/`: reusable app chrome, search, and stacked guess cards.
 - `src/screens/`: home and game experiences.
 - `docs/`: product, design, data, and future backend specifications.
-- `worker/`: Cloudflare Worker routes, D1 migration, generated player seed, UTC scheduler, and ranked rule tests.
+- `worker/`: Cloudflare Worker routes, D1 migrations, generated player seed, UTC scheduler, ranked rules and deterministic achievement evaluation.
 
 For shared play, keep puzzle targets, attempt enforcement, and score calculation in the Cloudflare Worker/D1 backend before treating results as authoritative. Cold Cases practice remains deliberately browser-only and unranked. See the [product specification](docs/product-requirements.md), [architecture](docs/architecture.md), [data plan](docs/data-pipeline.md), [Prime Suspect rules](docs/game-lineup.md), [Paper Trail rules](docs/game-paper-trail.md), [Redacted rules](docs/game-redacted.md), [Cipher rules](docs/game-cipher.md), [The Overlap rules](docs/game-overlap.md), [The Wire preview](docs/game-the-wire.md), [legacy Mystery rules](docs/game-mystery.md), [design system](docs/design-system.md), and [roadmap](docs/roadmap.md).
 

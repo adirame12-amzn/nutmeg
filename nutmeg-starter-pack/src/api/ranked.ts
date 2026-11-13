@@ -53,6 +53,7 @@ export interface RankedDailyState {
   guessesUsed: number
   score: number
   answer?: Player
+  newBadgeIds?: string[]
 }
 
 export interface RankedPaperTrailState {
@@ -67,6 +68,7 @@ export interface RankedPaperTrailState {
   answer?: Player
   deadlineAt?: string
   durationSeconds?: number
+  newBadgeIds?: string[]
 }
 
 export interface RankedRedactedState {
@@ -83,6 +85,7 @@ export interface RankedRedactedState {
   displayAnswer?: string
   deadlineAt?: string
   durationSeconds?: number
+  newBadgeIds?: string[]
 }
 
 export interface RankedCipherState {
@@ -100,6 +103,7 @@ export interface RankedCipherState {
   displayAnswer?: string
   deadlineAt?: string
   durationSeconds?: number
+  newBadgeIds?: string[]
 }
 
 export interface RankedOverlapState {
@@ -114,6 +118,13 @@ export interface RankedOverlapState {
   verdicts?: boolean[]
   answer?: Player
   sourceSnapshot: string
+  newBadgeIds?: string[]
+}
+
+export interface AchievementCollection {
+  earned: Array<{ badgeId: string; earnedAt: string }>
+  progress: Record<string, number>
+  featuredBadgeId: string | null
 }
 
 export interface WeeklyLeader {
@@ -123,6 +134,7 @@ export interface WeeklyLeader {
   solved: number
   played: number
   stars: number
+  featuredBadgeId?: string | null
   isCurrentUser: boolean
 }
 
@@ -296,4 +308,12 @@ export async function submitDailyOverlapGuess(identity: RankedIdentity, playerId
 
 export function getWeeklyLeaderboard(identity: RankedIdentity) {
   return request<WeeklyLeaderboard>('/leaderboard/weekly', {}, identity)
+}
+
+export function getAchievements(identity: RankedIdentity) {
+  return request<AchievementCollection>('/achievements', {}, identity)
+}
+
+export function setFeaturedBadge(identity: RankedIdentity, badgeId: string | null) {
+  return request<{ featuredBadgeId: string | null }>('/achievements/featured', { method: 'POST', body: JSON.stringify({ badgeId }) }, identity)
 }

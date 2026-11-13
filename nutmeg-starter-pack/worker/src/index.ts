@@ -1,5 +1,6 @@
 import { compareRankedPlayers, normaliseUsername, previousWeekUtc, rankedCipherScore, rankedLineupScore, rankedOverlapScore, rankedPaperTrailScore, RANKED_GUESS_LIMIT, RANKED_TIMED_SECONDS, utcDate, validateUsername, weekStartUtc } from './rules'
 import type { AttemptRow, Env, PaperTrailPuzzleRow, PlayerRow, PuzzleRow, UserRow } from './types'
+import { ACHIEVEMENTS, syncAchievements } from './achievements'
 
 const DEFAULT_ORIGINS = [
   'http://127.0.0.1:5173', 'http://127.0.0.1:5174', 'http://127.0.0.1:5175', 'http://127.0.0.1:5176', 'http://127.0.0.1:5177',
@@ -33,6 +34,11 @@ const randomToken = () => {
 const sha256 = async (value: string) => {
   const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value))
   return [...new Uint8Array(digest)].map(byte => byte.toString(16).padStart(2, '0')).join('')
+}
+
+const withNewAchievements = async <T extends Record<string, unknown>>(env: Env, userId: string, state: T) => {
+  const collection = await syncAchievements(env.DB, userId)
+  return { ...state, newBadgeIds: collection.newlyEarned }
 }
 
 const bearer = (request: Request) => request.headers.get('authorization')?.match(/^Bearer (.+)$/)?.[1]
@@ -427,6 +433,24 @@ async function route(request: Request, env: Env) {
   if (!user) return json({ error: 'This browser is not registered. Choose a detective name first.' }, 401)
   if (request.method === 'GET' && path === '/me') return json({ user })
 
+  if (request.method === 'GET' && path === '/achievements') {
+    const collection = await syncAchievements(env.DB, user.id)
+    return json({ ...collection, newlyEarned: undefined, badges: ACHIEVEMENTS })
+  }
+
+  if (request.method === 'POST' && path === '/achievements/featured') {
+    const body = await request.json().catch(() => ({})) as { badgeId?: string | null }
+    if (body.badgeId && !ACHIEVEMENTS.some(badge => badge.id === body.badgeId)) return json({ error: 'Choose a recognised badge.' }, 400)
+    if (body.badgeId) {
+      const earned = await env.DB.prepare('SELECT 1 AS found FROM user_badges WHERE user_id = ? AND badge_id = ?').bind(user.id, body.badgeId).first()
+      if (!earned) return json({ error: 'Earn that badge before featuring it.' }, 409)
+    }
+    await env.DB.prepare(`INSERT INTO user_profiles (user_id, featured_badge_id, updated_at) VALUES (?, ?, ?)
+      ON CONFLICT(user_id) DO UPDATE SET featured_badge_id = excluded.featured_badge_id, updated_at = excluded.updated_at`)
+      .bind(user.id, body.badgeId || null, new Date().toISOString()).run()
+    return json({ featuredBadgeId: body.badgeId || null })
+  }
+
   if (request.method === 'GET' && path === '/daily/lineup') {
     const puzzle = await ensureDailyPuzzle(env)
     return json(await getAttemptState(env, user.id, puzzle))
@@ -472,7 +496,8 @@ async function route(request: Request, env: Env) {
       if (String(error).toLowerCase().includes('unique')) return json({ error: 'That guess was already recorded. Refreshing your case file.', state: await getAttemptState(env, user.id, puzzle) }, 409)
       throw error
     }
-    return json(await getAttemptState(env, user.id, puzzle))
+    const state = await getAttemptState(env, user.id, puzzle)
+    return json(status === 'playing' ? state : await withNewAchievements(env, user.id, state))
   }
 
   if (request.method === 'GET' && path === '/daily/paper-trail') {
@@ -518,7 +543,8 @@ async function route(request: Request, env: Env) {
       if (String(error).toLowerCase().includes('unique')) return json({ error: 'That guess was already recorded. Refreshing your case file.', state: await getPaperTrailAttemptState(env, user.id, puzzle) }, 409)
       throw error
     }
-    return json(await getPaperTrailAttemptState(env, user.id, puzzle))
+    const state = await getPaperTrailAttemptState(env, user.id, puzzle)
+    return json(status === 'playing' ? state : await withNewAchievements(env, user.id, state))
   }
 
   const wordMatch = path.match(/^\/daily\/(redacted|cipher)$/)
@@ -564,7 +590,8 @@ async function route(request: Request, env: Env) {
     const score = rankedCipherScore(attempts, correct, evidenceCount)
     await env.DB.prepare('UPDATE word_attempts SET status = ?, attempts_used = ?, score = ?, guesses_json = ?, completed_at = ? WHERE id = ? AND status = \'playing\'')
       .bind(status, attempts, score, JSON.stringify([...guesses, body.guess.trim()]), status === 'playing' ? null : new Date().toISOString(), attempt.id).run()
-    return json(await getWordState(env, user.id, puzzle))
+    const state = await getWordState(env, user.id, puzzle)
+    return json(status === 'playing' ? state : await withNewAchievements(env, user.id, state))
   }
 
   if (request.method === 'POST' && path === '/daily/redacted/letter') {
@@ -585,7 +612,8 @@ async function route(request: Request, env: Env) {
     const score = solved ? Math.max(10, 100 - wrong * 12 - evidenceCount * 10) : 0
     await env.DB.prepare('UPDATE word_attempts SET status = ?, attempts_used = ?, score = ?, guessed_letters = ?, completed_at = ? WHERE id = ? AND status = \'playing\'')
       .bind(status, wrong, score, JSON.stringify(nextGuessed), status === 'playing' ? null : new Date().toISOString(), attempt.id).run()
-    return json(await getWordState(env, user.id, puzzle))
+    const state = await getWordState(env, user.id, puzzle)
+    return json(status === 'playing' ? state : await withNewAchievements(env, user.id, state))
   }
 
   if (request.method === 'POST' && path === '/daily/redacted/evidence') {
@@ -615,7 +643,8 @@ async function route(request: Request, env: Env) {
     const guesses = JSON.parse(attempt.guesses_json) as string[]
     await env.DB.prepare('UPDATE word_attempts SET status = ?, attempts_used = ?, score = ?, guesses_json = ?, completed_at = ? WHERE id = ? AND status = \'playing\'')
       .bind(status, wrong, score, JSON.stringify([...guesses, body.playerId]), status === 'playing' ? null : new Date().toISOString(), attempt.id).run()
-    return json(await getWordState(env, user.id, puzzle))
+    const state = await getWordState(env, user.id, puzzle)
+    return json(status === 'playing' ? state : await withNewAchievements(env, user.id, state))
   }
 
   if (request.method === 'GET' && path === '/daily/overlap') {
@@ -647,7 +676,7 @@ async function route(request: Request, env: Env) {
     const score = rankedOverlapScore(matches)
     await env.DB.prepare("UPDATE overlap_attempts SET status = ?, selected_player_id = ?, matches = ?, score = ?, completed_at = ? WHERE id = ? AND status = 'playing'")
       .bind(matches === 3 ? 'won' : 'lost', player.id, matches, score, new Date().toISOString(), attempt.id).run()
-    return json(await getOverlapState(env, user.id, puzzle))
+    return json(await withNewAchievements(env, user.id, await getOverlapState(env, user.id, puzzle)))
   }
 
   if (request.method === 'GET' && path === '/leaderboard/weekly') {
@@ -676,14 +705,15 @@ async function route(request: Request, env: Env) {
       )
       SELECT u.id AS user_id, u.username, COALESCE(SUM(c.score), 0) AS points,
              SUM(CASE WHEN c.status = 'won' THEN 1 ELSE 0 END) AS solved,
-             COUNT(c.user_id) AS played, COALESCE(MAX(s.stars), 0) AS stars
+             COUNT(c.user_id) AS played, COALESCE(MAX(s.stars), 0) AS stars, MAX(up.featured_badge_id) AS featured_badge_id
       FROM users u
       LEFT JOIN scored_cases c ON c.user_id = u.id AND c.puzzle_date >= ? AND c.puzzle_date <= ?
       LEFT JOIN star_totals s ON s.user_id = u.id
+      LEFT JOIN user_profiles up ON up.user_id = u.id
       GROUP BY u.id, u.username
       ORDER BY points DESC, solved DESC, played ASC, u.created_at ASC
-    `).bind(start, today).all<{ user_id: string; username: string; points: number; solved: number; played: number; stars: number }>()
-    const leaders = (rows.results || []).map((row, index) => ({ rank: index + 1, username: row.username, points: Number(row.points), solved: Number(row.solved), played: Number(row.played), stars: Number(row.stars), isCurrentUser: row.user_id === user.id }))
+    `).bind(start, today).all<{ user_id: string; username: string; points: number; solved: number; played: number; stars: number; featured_badge_id: string | null }>()
+    const leaders = (rows.results || []).map((row, index) => ({ rank: index + 1, username: row.username, points: Number(row.points), solved: Number(row.solved), played: Number(row.played), stars: Number(row.stars), featuredBadgeId: row.featured_badge_id, isCurrentUser: row.user_id === user.id }))
     const starRows = await env.DB.prepare(`
       SELECT u.id AS user_id, u.username, COUNT(*) AS stars, MAX(w.week_start) AS latest_week
       FROM weekly_champions w JOIN users u ON u.id = w.user_id

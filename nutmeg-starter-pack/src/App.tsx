@@ -20,8 +20,9 @@ import { OverlapScreen } from './screens/OverlapScreen'
 import { markPracticeComplete } from './data/practiceProgress'
 import { DAILY_CASES, fallbackDailyStatus, nextDailyScreen, type DailyCaseStatus } from './domain/dailyJourney'
 import { RankedOverlapScreen } from './screens/RankedOverlapScreen'
+import { BadgeCollectionScreen } from './screens/BadgeCollectionScreen'
 
-const screens: Screen[] = ['home', 'lineup', 'mystery', 'paper-trail', 'ranked-paper-trail', 'redacted', 'ranked-redacted', 'cipher', 'ranked-cipher', 'overlap', 'ranked-overlap', 'wire-preview', 'leaderboard', 'credits', 'result']
+const screens: Screen[] = ['home', 'lineup', 'mystery', 'paper-trail', 'ranked-paper-trail', 'redacted', 'ranked-redacted', 'cipher', 'ranked-cipher', 'overlap', 'ranked-overlap', 'wire-preview', 'leaderboard', 'badges', 'credits', 'result']
 
 function screenFromHash(): Screen {
   const value = window.location.hash.replace('#', '') as Screen
@@ -29,7 +30,7 @@ function screenFromHash(): Screen {
 }
 
 export function shouldRequestIdentity(screen: Screen, quickCase: boolean, apiEnabled: boolean, hasIdentity: boolean) {
-  return apiEnabled && !hasIdentity && (screen === 'leaderboard' || screen === 'ranked-paper-trail' || screen === 'ranked-redacted' || screen === 'ranked-cipher' || screen === 'ranked-overlap' || (screen === 'lineup' && !quickCase))
+  return apiEnabled && !hasIdentity && (screen === 'leaderboard' || screen === 'badges' || screen === 'ranked-paper-trail' || screen === 'ranked-redacted' || screen === 'ranked-cipher' || screen === 'ranked-overlap' || (screen === 'lineup' && !quickCase))
 }
 
 export function App() {
@@ -82,30 +83,31 @@ export function App() {
     <ScreenFrame screen={screen} onNavigate={navigate} noNav={screen === 'result'}>
       {screen === 'home' && <HomeScreen onNavigate={navigate} onOpenPracticeLineup={openPracticeLineup} ranked={rankedApiEnabled} identity={identity} />}
       {needsIdentity && <UsernameOnboarding onComplete={setIdentity} />}
-      {screen === 'lineup' && !needsIdentity && (rankedApiEnabled && identity && !quickCase ? <RankedLineupScreen identity={identity} onQuickCase={() => setQuickCase(true)} onNext={() => continueDaily('lineup')} onHome={() => navigate('home')} /> : <LineupScreen onResult={showResult} />)}
+      {screen === 'lineup' && !needsIdentity && (rankedApiEnabled && identity && !quickCase ? <RankedLineupScreen identity={identity} onQuickCase={() => setQuickCase(true)} onNext={() => continueDaily('lineup')} onHome={() => navigate('home')} onBadges={() => navigate('badges')} /> : <LineupScreen onResult={showResult} />)}
       {screen === 'mystery' && <MysteryScreen onResult={showResult} />}
       {screen === 'paper-trail' && <PaperTrailScreen onResult={showResult} />}
       {screen === 'redacted' && <RedactedScreen onNavigate={navigate} />}
       {screen === 'ranked-redacted' && rankedApiEnabled && !needsIdentity && identity && (
-        <RankedRedactedScreen identity={identity} onNext={() => continueDaily('ranked-redacted')} onHome={() => navigate('home')}/>
+        <RankedRedactedScreen identity={identity} onNext={() => continueDaily('ranked-redacted')} onHome={() => navigate('home')} onBadges={() => navigate('badges')}/>
       )}
       {screen === 'ranked-redacted' && !rankedApiEnabled && (
         <RedactedScreen onNavigate={navigate}/>
       )}
       {screen === 'cipher' && <CipherScreen onNavigate={navigate} />}
       {screen === 'ranked-cipher' && rankedApiEnabled && !needsIdentity && identity && (
-        <RankedCipherScreen identity={identity} onNext={() => continueDaily('ranked-cipher')} onHome={() => navigate('home')}/>
+        <RankedCipherScreen identity={identity} onNext={() => continueDaily('ranked-cipher')} onHome={() => navigate('home')} onBadges={() => navigate('badges')}/>
       )}
       {screen === 'ranked-cipher' && !rankedApiEnabled && (
         <CipherScreen onNavigate={navigate}/>
       )}
       {screen === 'overlap' && <OverlapScreen onNavigate={navigate} />}
-      {screen === 'ranked-overlap' && rankedApiEnabled && !needsIdentity && identity && <RankedOverlapScreen identity={identity} onNext={() => continueDaily('ranked-overlap')} onHome={() => navigate('home')}/>}
+      {screen === 'ranked-overlap' && rankedApiEnabled && !needsIdentity && identity && <RankedOverlapScreen identity={identity} onNext={() => continueDaily('ranked-overlap')} onHome={() => navigate('home')} onBadges={() => navigate('badges')}/>}
       {screen === 'ranked-overlap' && !rankedApiEnabled && <OverlapScreen onNavigate={navigate}/>}
       {screen === 'wire-preview' && <WirePreviewScreen />}
-      {screen === 'ranked-paper-trail' && rankedApiEnabled && !needsIdentity && identity && <RankedPaperTrailScreen identity={identity} onPractice={() => navigate('paper-trail')} onNext={() => continueDaily('ranked-paper-trail')} onHome={() => navigate('home')} />}
+      {screen === 'ranked-paper-trail' && rankedApiEnabled && !needsIdentity && identity && <RankedPaperTrailScreen identity={identity} onPractice={() => navigate('paper-trail')} onNext={() => continueDaily('ranked-paper-trail')} onHome={() => navigate('home')} onBadges={() => navigate('badges')} />}
       {screen === 'ranked-paper-trail' && !rankedApiEnabled && <PaperTrailScreen onResult={showResult} />}
-      {screen === 'leaderboard' && !needsIdentity && (rankedApiEnabled && identity ? <LeaderboardScreen identity={identity} /> : <LeaderboardDemo />)}
+      {screen === 'leaderboard' && !needsIdentity && (rankedApiEnabled && identity ? <LeaderboardScreen identity={identity} onBadges={() => navigate('badges')} /> : <LeaderboardDemo />)}
+      {screen === 'badges' && !needsIdentity && rankedApiEnabled && identity && <BadgeCollectionScreen identity={identity} onBack={() => navigate('leaderboard')}/>}
       {screen === 'credits' && <CreditsScreen />}
       {screen === 'result' && <ResultScreen result={result} onNavigate={navigate} onNextDaily={() => continueDaily(result?.mode === 'lineup' ? 'lineup' : result?.mode === 'paper-trail' ? 'ranked-paper-trail' : undefined)} />}
     </ScreenFrame>

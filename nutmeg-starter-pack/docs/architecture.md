@@ -14,6 +14,7 @@
 - A user claims a case-insensitively unique detective name. A random bearer token stays in browser storage while D1 stores only its SHA-256 hash. No email, password, login screen, cross-device recovery, or recovery code is included.
 - A unique `(user_id, puzzle_id)` attempt and unique guess rows enforce one result per mode, browser identity and day. Prime Suspect points are 100/80/65/50/35/20; Paper Trail points are 100/85/70/55/40/25; Overlap is 0/10/40/100. A miss scores zero. The weekly query unions completed attempts from all five modes before aggregation.
 - Anonymous browser identities limit identity assurance and cannot stop determined users from creating multiple identities. Rate limiting and private friend groups remain future work.
+- Achievement evaluation is configuration-driven and runs after terminal ranked events or when the authenticated cabinet is opened, never on guesses that leave a case in progress. `user_badges` makes unlocks idempotent and `user_profiles` stores one optional featured badge. Existing attempt rows support conservative retroactive awards; seasonal and special-edition badges wait for explicit event metadata.
 
 ## Offline graph
 

@@ -2,6 +2,7 @@ import { ArrowRight, Home, LoaderCircle, X } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { getDailyOverlap, startDailyOverlap, submitDailyOverlapGuess, type RankedIdentity, type RankedOverlapState } from '../api/ranked'
 import { PlayerPortrait } from '../components/PlayerPortrait'
+import { AchievementNotice } from '../components/AchievementNotice'
 import { PlayerSearch } from '../components/PlayerSearch'
 import { PracticeTimer } from '../components/PracticeTimer'
 import { fc27Players } from '../data/fc27Players'
@@ -10,7 +11,7 @@ import type { Player } from '../domain/types'
 import { useDeadlineTimer } from '../hooks/useDeadlineTimer'
 import { EvidenceCard } from './OverlapScreen'
 
-export function RankedOverlapScreen({ identity, onNext, onHome }: { identity: RankedIdentity; onNext: () => void; onHome: () => void }) {
+export function RankedOverlapScreen({ identity, onNext, onHome, onBadges }: { identity: RankedIdentity; onNext: () => void; onHome: () => void; onBadges: () => void }) {
   const [daily, setDaily] = useState<RankedOverlapState | null>(null)
   const [selected, setSelected] = useState<Player | null>(null)
   const [busy, setBusy] = useState(false)
@@ -30,7 +31,7 @@ export function RankedOverlapScreen({ identity, onNext, onHome }: { identity: Ra
     {daily.selected && <div className="overlap-result-player"><PlayerPortrait player={daily.selected} size="hero"/><span><small>YOUR ONE SHOT</small><h1>{daily.selected.displayName}</h1></span></div>}
     <div className="overlap-evidence-grid result">{evidence.map((item, index) => <EvidenceCard key={item.id} evidence={item} verdict={daily.verdicts?.[index]}/>)}</div>
     <div className="overlap-score"><strong>{daily.matches}/3 CONNECTIONS</strong><b>{daily.score}</b><small>POINTS</small></div>
-    {daily.answer && <p className="overlap-reveal">Perfect fit: <strong>{daily.answer.displayName}</strong> · verified club snapshot {daily.sourceSnapshot}</p>}
+    {daily.answer && <p className="overlap-reveal">Perfect fit: <strong>{daily.answer.displayName}</strong> · verified club snapshot {daily.sourceSnapshot}</p>}<AchievementNotice badgeIds={daily.newBadgeIds} onView={onBadges}/>
     <div className="daily-result-actions"><button className="primary dark daily-next-action" onClick={onNext}><span><small>5/5 COMPLETE</small>Close today’s edition</span><ArrowRight/></button><button onClick={onHome}><Home/> Return home</button></div>
   </div>
 

@@ -3,12 +3,13 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { getDailyLineup, submitDailyGuess, type RankedDailyState, type RankedIdentity } from '../api/ranked'
 import { GuessCard } from '../components/GuessCard'
+import { AchievementNotice } from '../components/AchievementNotice'
 import { PlayerSearch } from '../components/PlayerSearch'
 import { fc27Players } from '../data/fc27Players'
 import { LINEUP_GUESS_LIMIT } from '../domain/game'
 import type { Player } from '../domain/types'
 
-export function RankedLineupScreen({ identity, onQuickCase, onNext, onHome }: { identity: RankedIdentity; onQuickCase: () => void; onNext: () => void; onHome: () => void }) {
+export function RankedLineupScreen({ identity, onQuickCase, onNext, onHome, onBadges }: { identity: RankedIdentity; onQuickCase: () => void; onNext: () => void; onHome: () => void; onBadges: () => void }) {
   const [daily, setDaily] = useState<RankedDailyState | null>(null)
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
@@ -67,7 +68,7 @@ export function RankedLineupScreen({ identity, onQuickCase, onNext, onHome }: { 
       {showReveal && answer && createPortal(
         <section className={`correct-reveal ${daily.status === 'lost' ? 'lost-reveal' : ''}`} role="dialog" aria-modal="true" aria-labelledby="ranked-revealed-name">
           <div className={`reveal-art ${answer.portraitCutoutEditorialUrl ? 'has-cutout' : ''}`} aria-hidden="true"><span className="reveal-paint"/>{portrait && <img src={portrait} alt=""/>}</div>
-          <div className="reveal-content"><p className="reveal-stamp">{daily.status === 'won' ? 'CASE CLOSED' : 'CASE UNSOLVED'}</p><h2 id="ranked-revealed-name">{answer.displayName}</h2><p className="reveal-message">{daily.status === 'won' ? 'Evidence confirmed. Your score is on the weekly table.' : 'Wrong suspect. No points this case—the file is now closed.'}</p><div className="reveal-stats"><span><b>{daily.guessesUsed}</b><small>suspects</small></span><span><b>+{daily.score}</b><small>points</small></span></div><button ref={revealButtonRef} className="reveal-primary daily-next-action" onClick={onNext}><span><small>1/5 COMPLETE</small>Next: Paper Trail</span><ArrowRight size={17}/></button><button className="reveal-secondary" onClick={onHome}><Home size={17}/> Finish later / Return home</button></div>
+          <div className="reveal-content"><p className="reveal-stamp">{daily.status === 'won' ? 'CASE CLOSED' : 'CASE UNSOLVED'}</p><h2 id="ranked-revealed-name">{answer.displayName}</h2><p className="reveal-message">{daily.status === 'won' ? 'Evidence confirmed. Your score is on the weekly table.' : 'Wrong suspect. No points this case—the file is now closed.'}</p><div className="reveal-stats"><span><b>{daily.guessesUsed}</b><small>suspects</small></span><span><b>+{daily.score}</b><small>points</small></span></div><AchievementNotice badgeIds={daily.newBadgeIds} onView={onBadges}/><button ref={revealButtonRef} className="reveal-primary daily-next-action" onClick={onNext}><span><small>1/5 COMPLETE</small>Next: Paper Trail</span><ArrowRight size={17}/></button><button className="reveal-secondary" onClick={onHome}><Home size={17}/> Finish later / Return home</button></div>
         </section>, document.body)}
     </div>
   )

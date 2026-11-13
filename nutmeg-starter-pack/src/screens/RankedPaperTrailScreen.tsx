@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { getDailyPaperTrail, startDailyPaperTrail, submitDailyPaperTrailGuess, type RankedIdentity, type RankedPaperTrailState } from '../api/ranked'
 import { CareerGrid } from '../components/CareerGrid'
+import { AchievementNotice } from '../components/AchievementNotice'
 import { PaperTrailGuessHistory } from '../components/PaperTrailGuessHistory'
 import { PlayerSearch } from '../components/PlayerSearch'
 import { PracticeTimer } from '../components/PracticeTimer'
@@ -11,11 +12,12 @@ import { PAPER_TRAIL_GUESS_LIMIT } from '../domain/paperTrail'
 import type { Player } from '../domain/types'
 import { useDeadlineTimer } from '../hooks/useDeadlineTimer'
 
-export function RankedPaperTrailScreen({ identity, onPractice, onNext, onHome }: {
+export function RankedPaperTrailScreen({ identity, onPractice, onNext, onHome, onBadges }: {
   identity: RankedIdentity
   onPractice: () => void
   onNext: () => void
   onHome: () => void
+  onBadges: () => void
 }) {
   const [daily, setDaily] = useState<RankedPaperTrailState | null>(null)
   const [error, setError] = useState('')
@@ -82,7 +84,7 @@ export function RankedPaperTrailScreen({ identity, onPractice, onNext, onHome }:
       {showReveal && answer && createPortal(
         <section className={`correct-reveal ${daily.status === 'lost' ? 'lost-reveal' : ''}`} role="dialog" aria-modal="true" aria-labelledby="ranked-trail-revealed-name">
           <div className={`reveal-art ${answer.portraitCutoutEditorialUrl ? 'has-cutout' : ''}`} aria-hidden="true"><span className="reveal-paint"/>{portrait && <img src={portrait} alt=""/>}</div>
-          <div className="reveal-content"><p className="reveal-stamp">{daily.status === 'won' ? 'TRAIL CLOSED' : 'TRAIL WENT COLD'}</p><h2 id="ranked-trail-revealed-name">{answer.displayName}</h2><p className="reveal-message">{daily.status === 'won' ? 'Career confirmed. Your score is on the weekly table.' : 'The complete career trail has now been released.'}</p><div className="reveal-stats"><span><b>{daily.guessesUsed}</b><small>suspects</small></span><span><b>+{daily.score}</b><small>points</small></span></div><button ref={revealButtonRef} className="reveal-primary daily-next-action" onClick={onNext}><span><small>2/5 COMPLETE</small>Next: Redacted</span><ArrowRight size={17}/></button><button className="reveal-secondary" onClick={onHome}><Home size={17}/> Finish later / Return home</button></div>
+          <div className="reveal-content"><p className="reveal-stamp">{daily.status === 'won' ? 'TRAIL CLOSED' : 'TRAIL WENT COLD'}</p><h2 id="ranked-trail-revealed-name">{answer.displayName}</h2><p className="reveal-message">{daily.status === 'won' ? 'Career confirmed. Your score is on the weekly table.' : 'The complete career trail has now been released.'}</p><div className="reveal-stats"><span><b>{daily.guessesUsed}</b><small>suspects</small></span><span><b>+{daily.score}</b><small>points</small></span></div><AchievementNotice badgeIds={daily.newBadgeIds} onView={onBadges}/><button ref={revealButtonRef} className="reveal-primary daily-next-action" onClick={onNext}><span><small>2/5 COMPLETE</small>Next: Redacted</span><ArrowRight size={17}/></button><button className="reveal-secondary" onClick={onHome}><Home size={17}/> Finish later / Return home</button></div>
         </section>, document.body)}
     </div>
   )

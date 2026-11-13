@@ -12,11 +12,12 @@ describe('weekly championship stars', () => {
       starLeaders: [{ rank: 1, username: 'TouchlineFox', stars: 2, latestWeek: '2026-11-02', isCurrentUser: true }],
     })
 
-    render(<LeaderboardScreen identity={{ user: { id: 'detective-1', username: 'TouchlineFox' }, token: 'browser-token' }} />)
+    render(<LeaderboardScreen identity={{ user: { id: 'detective-1', username: 'TouchlineFox' }, token: 'browser-token' }} onBadges={vi.fn()} />)
 
     expect(await screen.findByRole('heading', { name: 'The Star Cabinet' })).toBeInTheDocument()
     expect(screen.getAllByText('TouchlineFox')).toHaveLength(2)
     expect(screen.getByText(/leader earns a permanent championship star/i)).toBeInTheDocument()
     expect(screen.getAllByLabelText('2 weekly championship badges')).toHaveLength(3)
+    expect(screen.getByRole('button', { name: /your badge cabinet/i })).toBeInTheDocument()
   })
 })

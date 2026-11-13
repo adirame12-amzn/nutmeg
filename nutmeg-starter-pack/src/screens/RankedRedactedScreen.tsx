@@ -2,13 +2,14 @@ import { ArrowRight, Eye, FileLock2, Home, LoaderCircle, Search, ShieldCheck, Wi
 import { useEffect, useState } from 'react'
 import { getDailyRedacted, openDailyRedactedEvidence, startDailyRedacted, submitDailyRedactedGuess, submitDailyRedactedLetter, type RankedIdentity, type RankedRedactedState } from '../api/ranked'
 import { PracticeTimer } from '../components/PracticeTimer'
+import { AchievementNotice } from '../components/AchievementNotice'
 import { PlayerPortrait } from '../components/PlayerPortrait'
 import { PlayerSearch } from '../components/PlayerSearch'
 import { RedactedKeyboard } from '../components/RedactedKeyboard'
 import { fc27Players } from '../data/fc27Players'
 import { useDeadlineTimer } from '../hooks/useDeadlineTimer'
 
-export function RankedRedactedScreen({ identity, onNext, onHome }: { identity: RankedIdentity; onNext: () => void; onHome: () => void }) {
+export function RankedRedactedScreen({ identity, onNext, onHome, onBadges }: { identity: RankedIdentity; onNext: () => void; onHome: () => void; onBadges: () => void }) {
   const [daily, setDaily] = useState<RankedRedactedState | null>(null)
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
@@ -28,7 +29,7 @@ export function RankedRedactedScreen({ identity, onNext, onHome }: { identity: R
     <div className="redacted-result-art"><span/><PlayerPortrait player={daily.answer} size="hero"/></div>
     <p className="result-stamp">{daily.status === 'won' ? 'CASE SOLVED' : 'CASE CLOSED'}</p><small>DAILY REDACTED · RANKED</small>
     <h1>{daily.displayAnswer}</h1><p>{daily.status === 'won' ? 'Identity confirmed. The points are on the weekly board.' : `The concealed player was ${daily.answer.displayName}.`}</p>
-    <strong className="points">+{daily.score} pts</strong>
+    <strong className="points">+{daily.score} pts</strong><AchievementNotice badgeIds={daily.newBadgeIds} onView={onBadges}/>
     <div className="daily-result-actions"><button className="primary dark daily-next-action" onClick={onNext}><span><small>3/5 COMPLETE</small>Next: Cipher</span><ArrowRight/></button><button onClick={onHome}><Home/> Finish later / Return home</button></div>
   </div>
 
