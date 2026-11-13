@@ -62,7 +62,8 @@ h1,h2,.game-tile strong,.leader-list strong { font-family:Georgia,"Times New Rom
 .daily-edition-cta { position:relative;width:100%;min-height:151px;display:grid;grid-template-columns:63px minmax(0,1fr) 29px;grid-template-rows:1fr 35px;align-items:center;gap:6px 10px;margin-top:11px;padding:13px 12px 9px;overflow:hidden;text-align:left;border:1.8px solid var(--ink);border-radius:17px;background:linear-gradient(145deg,#f46a29 0 64%,#d7430b 100%);color:#fff;box-shadow:0 2px 0 #ffb38b inset,4px 6px 0 var(--ink),0 14px 25px #ef5a1b2b;cursor:pointer;isolation:isolate;transform:perspective(800px) rotateX(.35deg);transform-origin:50% 100%;transition:transform .18s ease,box-shadow .18s ease; }
 .daily-edition-cta::before { content:"";position:absolute;z-index:-1;inset:-35px -35px auto auto;width:150px;height:150px;border:15px solid #fff2;border-radius:50%; }
 .daily-edition-cta::after { content:"";position:absolute;right:-36px;top:-36px;width:118px;height:118px;border:12px solid #fff1;border-radius:50%;pointer-events:none; }
-.daily-edition-cta:active { transform:translateY(3px);box-shadow:1px 2px 0 var(--ink); }
+.daily-edition-cta:not(.complete):not(:disabled) { animation:daily-card-invite 3.1s ease-in-out infinite; }
+.daily-edition-cta:active { animation:none!important;transform:translateY(3px);box-shadow:1px 2px 0 var(--ink); }
 .daily-edition-cta.continue { background:linear-gradient(135deg,#3456cd 0 76%,#233ba2 76%); }
 .daily-edition-cta.complete { background:linear-gradient(135deg,#769f39 0 76%,#547521 76%); }
 .daily-case-mark { position:relative;width:56px;height:72px;display:grid;grid-template-rows:20px 1fr 13px;place-items:center;border:1.7px solid var(--ink);border-radius:5px;background:#fffaf0;color:var(--ink);box-shadow:4px 5px 0 #1d1d1b6b;transform:rotate(-3deg);animation:case-ticket-float 2.7s ease-in-out infinite; }.daily-case-mark::before { content:"";position:absolute;z-index:-1;inset:5px -6px -6px 5px;border:1.4px solid var(--ink);border-radius:5px;background:#f5c1a7;transform:rotate(5deg); }.daily-case-mark svg { width:15px;color:var(--orange-dark); }.daily-case-mark b { font:italic 900 28px/.9 Georgia,serif; }.daily-case-mark b svg { width:24px;color:#547521;stroke-width:3; }.daily-case-mark i { width:100%;padding-top:3px;text-align:center;border-top:1px dashed #1d1d1b60;font-size:6px;font-style:normal;font-weight:950;letter-spacing:.13em; }
@@ -71,6 +72,7 @@ h1,h2,.game-tile strong,.leader-list strong { font-family:Georgia,"Times New Rom
 @keyframes case-ticket-float { 50% { transform:translateY(-2px) rotate(-1deg);box-shadow:5px 7px 0 #1d1d1b5c; } }
 @keyframes progress-glow { 50% { filter:brightness(1.2);opacity:.75; } }
 @keyframes daily-arrow-nudge { 50% { transform:translateX(3px); } }
+@keyframes daily-card-invite { 0%,100% { transform:perspective(800px) rotateX(.35deg) translateY(0);box-shadow:0 2px 0 #ffb38b inset,4px 6px 0 var(--ink),0 14px 25px #ef5a1b2b; } 50% { transform:perspective(800px) rotateX(.7deg) translateY(-2px);box-shadow:0 2px 0 #ffb38b inset,5px 8px 0 var(--ink),0 18px 30px #ef5a1b35; } }
 .cold-cases-entry { width:100%;min-height:53px;display:flex;align-items:center;justify-content:space-between;margin-top:9px;padding:6px 10px;border:1.3px solid #33567e;border-radius:12px;background:linear-gradient(135deg,#eaf8ff,#cbe9f6);color:#203c58;box-shadow:0 1px 0 #fff inset,2px 3px 0 #31516e42;cursor:pointer; }.cold-cases-entry>span { display:flex;align-items:center;gap:8px;text-align:left; }.cold-cases-entry>span>svg { width:21px;color:#3e83aa; }.cold-cases-entry strong,.cold-cases-entry small { display:block; }.cold-cases-entry strong { font-size:10px; }.cold-cases-entry small { margin-top:2px;font-size:8px;color:#587187; }.cold-cases-entry>svg { width:17px; }
 .ranked-case-list { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px; }.ranked-case-list>.ranked-case { width:100%;min-height:131px;margin:0;display:block;padding:9px 8px 8px;background:#e9e5dd;box-shadow:3px 4px 0 #1d1d1b35; }.ranked-case-list>.paper-ranked-case { background:#e9e5dd;box-shadow:3px 4px 0 #1d1d1b35; }.paper-ranked-case .ticket-sheet { background:var(--ink); }.paper-ranked-case .ticket-sheet b { font-size:25px; }
 .ranked-case>.ticket-icon { width:35px;height:45px;margin-bottom:4px;filter:drop-shadow(2px 2px 0 var(--ink)); }
@@ -218,6 +220,7 @@ h1,h2,.game-tile strong,.leader-list strong { font-family:Georgia,"Times New Rom
 @keyframes result-pop { from { opacity:0;transform:scale(.45) rotate(-18deg); } to { opacity:1;transform:scale(1) rotate(-5deg); } }
 @keyframes points-pop { from { opacity:0;transform:scale(.65) rotate(3deg); } to { opacity:1;transform:scale(1) rotate(-1deg); } }
 @keyframes archive-card-deal { from { opacity:0;transform:translateY(16px) rotateY(-7deg) scale(.97); } to { opacity:1;transform:none; } }
+@keyframes file-arrow-invite { 0%,72%,100% { transform:translateX(0);box-shadow:0 0 0 0 #1d1d1b00; } 82% { transform:translateX(3px);box-shadow:0 0 0 4px #1d1d1b14; } 90% { transform:translateX(0); } }
 @keyframes reveal-page-in { from { opacity:0;transform:translateX(-50%) scale(.985); } to { opacity:1;transform:translateX(-50%) scale(1); } }
 @keyframes reveal-player-in { from { opacity:0;transform:translate(-50%,20px) scale(.96); } to { opacity:1;transform:translateX(-50%) scale(1); } }
 
@@ -295,17 +298,19 @@ h1,h2,.game-tile strong,.leader-list strong { font-family:Georgia,"Times New Rom
 .back-to-daily svg { width:25px;height:25px;padding:6px;border:1px solid #9eb4b4;border-radius:50%;background:#fffaf0;color:var(--ink);box-shadow:1px 2px 0 #819b9b24;transition:transform .18s ease; }
 .back-to-daily:active svg { transform:translateX(-2px); }
 .archive-games { grid-template-columns:repeat(6,minmax(0,1fr));padding-top:8px;perspective:900px; }
-.archive-game { --folder:#efb393;--paper-sheet:#fff2e8;min-height:148px;grid-column:span 2;overflow:visible;padding:17px 11px 11px;border-color:#1d1d1b70;background:var(--folder)!important;box-shadow:0 7px 13px #1d1d1b18,2px 3px 0 #1d1d1b2b;transform:rotateX(.45deg); }
-.archive-game::before { content:"";display:block;position:absolute;z-index:0;inset:8px 6px 6px;border:1px solid #1d1d1b35;border-radius:3px 10px 10px 5px;background:linear-gradient(145deg,#fffdf7,var(--paper-sheet));box-shadow:1px 2px 0 #1d1d1b18,inset 0 0 0 2px #ffffff8f;transform:rotate(-.5deg); }
+.archive-game { --folder:#efb393;--paper-sheet:#fff2e8;--file-tilt:-.45deg;min-height:148px;grid-column:span 2;overflow:visible;padding:17px 11px 11px;border-color:#1d1d1b70;background:var(--folder)!important;box-shadow:0 11px 18px #1d1d1b22,3px 5px 0 color-mix(in srgb,var(--folder) 70%,#50473f);transform:perspective(700px) rotateX(1.1deg) rotateZ(var(--file-tilt));animation:archive-card-deal .42s .06s cubic-bezier(.16,.82,.25,1); }
+.archive-game::before { content:"";display:block;position:absolute;z-index:0;inset:8px 6px 6px;border:1px solid #1d1d1b35;border-radius:3px 10px 10px 5px;background:linear-gradient(145deg,#fffdf7,var(--paper-sheet));box-shadow:2px 3px 0 #1d1d1b20,4px 5px 0 #ffffff80,inset 0 0 0 2px #ffffff8f;transform:rotate(-.65deg) translateY(-1px); }
 .archive-game::after { content:attr(data-file);display:block;position:absolute;z-index:0;left:-1px;right:auto;top:-9px;width:auto;height:auto;padding:5px 10px 4px;border:1px solid #1d1d1b55;border-bottom:0;border-radius:6px 9px 0 0;background:var(--folder)!important;color:#3f4544!important;font-size:6px;font-weight:950;letter-spacing:.1em; }
 .archive-game>* { position:relative;z-index:1; }
 .archive-game.suspect-archive { --folder:#efb393;--paper-sheet:#fff1e6; }
-.archive-game.trail-archive { --folder:#b7c7e8;--paper-sheet:#edf2ff; }
-.archive-game.redacted-archive { --folder:#c9c7c0;--paper-sheet:#f1efe9; }
-.archive-game.cipher-archive { --folder:#cbb9e5;--paper-sheet:#f5efff; }
-.archive-game.overlap-archive { --folder:#a9d4cb;--paper-sheet:#ebf8f4;min-height:148px; }
+.archive-game.trail-archive { --folder:#b7c7e8;--paper-sheet:#edf2ff;--file-tilt:.35deg; }
+.archive-game.redacted-archive { --folder:#c9c7c0;--paper-sheet:#f1efe9;--file-tilt:-.2deg; }
+.archive-game.cipher-archive { --folder:#cbb9e5;--paper-sheet:#f5efff;--file-tilt:.5deg; }
+.archive-game.overlap-archive { --folder:#a9d4cb;--paper-sheet:#ebf8f4;--file-tilt:-.35deg;min-height:148px; }
 .archive-game:nth-child(4) { grid-column:2/span 2; }.archive-game:nth-child(5) { grid-column:4/span 2; }
-.archive-game.completed { --folder:#c7dda9;--paper-sheet:#eff8e3;box-shadow:0 7px 13px #1d1d1b16,2px 3px 0 #6f993f55; }
+.archive-game>svg { animation:file-arrow-invite 2.35s ease-in-out infinite; }
+.archive-game:nth-child(2)>svg { animation-delay:.18s; }.archive-game:nth-child(3)>svg { animation-delay:.36s; }.archive-game:nth-child(4)>svg { animation-delay:.54s; }.archive-game:nth-child(5)>svg { animation-delay:.72s; }
+.archive-game:hover>svg { animation:none; }
 .archive-game.overlap-archive .ticket-sheet { background:var(--orange); }
 .archive-game em { color:#37342f; }
 .archive-game>.ticket-icon { margin-bottom:7px; }

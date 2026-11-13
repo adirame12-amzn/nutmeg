@@ -92,13 +92,13 @@ describe('Home case desks', () => {
     expect(screen.getByText('1/5 complete')).toBeInTheDocument()
   })
 
-  it('turns completed local files green without involving ranked state', async () => {
+  it('keeps each local file in its own colour after practice completion', async () => {
     localStorage.setItem('player-press-practice-completed-v1', JSON.stringify(['cipher']))
     const user = userEvent.setup()
     render(<HomeScreen onNavigate={vi.fn()} onOpenPracticeLineup={vi.fn()} ranked={false} identity={null} />)
     await user.click(screen.getByRole('button', { name: /open cold cases/i }))
 
-    expect(screen.getByRole('button', { name: /cipher/i })).toHaveClass('completed')
+    expect(screen.getByRole('button', { name: /cipher/i })).not.toHaveClass('completed')
     expect(screen.getByRole('button', { name: /paper trail/i })).not.toHaveClass('completed')
     localStorage.removeItem('player-press-practice-completed-v1')
   })

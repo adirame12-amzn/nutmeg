@@ -2,7 +2,6 @@ import { ArrowLeft, ArrowRight, CalendarCheck, Check, Clock3, Fingerprint, Snowf
 import { useEffect, useState } from 'react'
 import { getDailyCipher, getDailyLineup, getDailyOverlap, getDailyPaperTrail, getDailyRedacted, type RankedIdentity } from '../api/ranked'
 import type { Screen } from '../components/Chrome'
-import { loadPracticeCompletions, PRACTICE_PROGRESS_EVENT, type PracticeGame } from '../data/practiceProgress'
 import { completedDailyCount, DAILY_CASES, nextDailyScreen, type DailyCaseId, type DailyCaseStatus } from '../domain/dailyJourney'
 
 type CaseProgress = { status: 'checking' | 'open' | 'playing' | 'won' | 'lost'; score?: number }
@@ -35,15 +34,6 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
   const [redactedProgress, setRedactedProgress] = useState<CaseProgress>({ status: identity && ranked ? 'checking' : 'open' })
   const [cipherProgress, setCipherProgress] = useState<CaseProgress>({ status: identity && ranked ? 'checking' : 'open' })
   const [overlapProgress, setOverlapProgress] = useState<CaseProgress>({ status: identity && ranked ? 'checking' : 'open' })
-  const [practiceCompleted, setPracticeCompleted] = useState<Set<PracticeGame>>(loadPracticeCompletions)
-
-  useEffect(() => {
-    const refresh = () => setPracticeCompleted(loadPracticeCompletions())
-    window.addEventListener(PRACTICE_PROGRESS_EVENT, refresh)
-    window.addEventListener('storage', refresh)
-    return () => { window.removeEventListener(PRACTICE_PROGRESS_EVENT, refresh); window.removeEventListener('storage', refresh) }
-  }, [])
-
   useEffect(() => {
     if (!ranked || !identity) return
     Promise.allSettled([getDailyLineup(identity), getDailyPaperTrail(identity), getDailyRedacted(identity), getDailyCipher(identity), getDailyOverlap(identity)]).then(([lineup, trail, redacted, cipher, overlap]) => {
@@ -110,19 +100,19 @@ export function HomeScreen({ onNavigate, onOpenPracticeLineup, ranked, identity 
         </div>
         <p>Reopen old files and sharpen your instincts. These local rounds never affect the leaderboard.</p>
         <div className="archive-games">
-          <button className={`archive-game suspect-archive ${practiceCompleted.has('lineup') ? 'completed' : ''}`} data-file="FILE 1" onClick={onOpenPracticeLineup}>
+          <button className="archive-game suspect-archive" data-file="FILE 1" onClick={onOpenPracticeLineup}>
             <GameTicket /><span><strong>Prime Suspect</strong><em>Compare clues. Catch a new player every round.</em></span><ArrowRight />
           </button>
-          <button className={`archive-game trail-archive ${practiceCompleted.has('paper-trail') ? 'completed' : ''}`} data-file="FILE 2" onClick={() => onNavigate('paper-trail')}>
+          <button className="archive-game trail-archive" data-file="FILE 2" onClick={() => onNavigate('paper-trail')}>
             <GameTicket game="trail" /><span><strong>Paper Trail</strong><em>Club by club, hunt down the traveller.</em></span><ArrowRight />
           </button>
-          <button className={`archive-game redacted-archive ${practiceCompleted.has('redacted') ? 'completed' : ''}`} data-file="FILE 3" onClick={() => onNavigate('redacted')}>
+          <button className="archive-game redacted-archive" data-file="FILE 3" onClick={() => onNavigate('redacted')}>
             <GameTicket game="redacted" /><span><strong>Redacted</strong><em>Pick letters. Strip the ink. Name the player.</em></span><ArrowRight />
           </button>
-          <button className={`archive-game cipher-archive ${practiceCompleted.has('cipher') ? 'completed' : ''}`} data-file="FILE 4" onClick={() => onNavigate('cipher')}>
+          <button className="archive-game cipher-archive" data-file="FILE 4" onClick={() => onNavigate('cipher')}>
             <GameTicket game="cipher" /><span><strong>Cipher</strong><em>Unscramble the name before the trail goes cold.</em></span><ArrowRight />
           </button>
-          <button className={`archive-game overlap-archive ${practiceCompleted.has('overlap') ? 'completed' : ''}`} data-file="FILE 5" onClick={() => onNavigate('overlap')}>
+          <button className="archive-game overlap-archive" data-file="FILE 5" onClick={() => onNavigate('overlap')}>
             <GameTicket game="overlap" /><span><strong>The Overlap</strong><em>Two clubs. One country. One shot.</em></span><ArrowRight />
           </button>
         </div>
