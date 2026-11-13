@@ -20,3 +20,10 @@ export function nextDailyScreen(statuses: Partial<Record<DailyCaseId, DailyCaseS
 export function completedDailyCount(statuses: Partial<Record<DailyCaseId, DailyCaseStatus>>) {
   return DAILY_CASES.filter(item => ['won', 'lost'].includes(statuses[item.id] || 'not_started')).length
 }
+
+export function fallbackDailyStatus(caseScreen: Screen, after?: Screen): DailyCaseStatus {
+  if (!after) return 'not_started'
+  const caseIndex = DAILY_CASES.findIndex(item => item.screen === caseScreen)
+  const afterIndex = DAILY_CASES.findIndex(item => item.screen === after)
+  return caseIndex >= 0 && afterIndex >= caseIndex ? 'won' : 'not_started'
+}

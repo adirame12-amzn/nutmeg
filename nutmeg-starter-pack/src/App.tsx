@@ -18,7 +18,7 @@ import { RankedRedactedScreen } from './screens/RankedRedactedScreen'
 import { RankedCipherScreen } from './screens/RankedCipherScreen'
 import { OverlapScreen } from './screens/OverlapScreen'
 import { markPracticeComplete } from './data/practiceProgress'
-import { nextDailyScreen, type DailyCaseStatus } from './domain/dailyJourney'
+import { DAILY_CASES, fallbackDailyStatus, nextDailyScreen, type DailyCaseStatus } from './domain/dailyJourney'
 import { RankedOverlapScreen } from './screens/RankedOverlapScreen'
 
 const screens: Screen[] = ['home', 'lineup', 'mystery', 'paper-trail', 'ranked-paper-trail', 'redacted', 'ranked-redacted', 'cipher', 'ranked-cipher', 'overlap', 'ranked-overlap', 'wire-preview', 'leaderboard', 'credits', 'result']
@@ -66,10 +66,13 @@ export function App() {
   const continueDaily = async (after?: Screen) => {
     if (!identity || !rankedApiEnabled) { navigate('lineup'); return }
     try {
-      const [lineup, trail, redacted, cipher, overlap] = await Promise.all([
+      const results = await Promise.allSettled([
         getDailyLineup(identity), getDailyPaperTrail(identity), getDailyRedacted(identity), getDailyCipher(identity), getDailyOverlap(identity),
       ])
-      const statuses: Record<string, DailyCaseStatus> = { lineup: lineup.status, 'paper-trail': trail.status, redacted: redacted.status, cipher: cipher.status, overlap: overlap.status }
+      const statuses = Object.fromEntries(DAILY_CASES.map((item, index) => {
+        const result = results[index]
+        return [item.id, result.status === 'fulfilled' ? result.value.status : fallbackDailyStatus(item.screen, after)]
+      })) as Record<string, DailyCaseStatus>
       navigate(nextDailyScreen(statuses, after) || 'home')
     } catch { navigate('home') }
   }

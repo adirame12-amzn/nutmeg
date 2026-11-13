@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { completedDailyCount, nextDailyScreen } from './dailyJourney'
+import { completedDailyCount, fallbackDailyStatus, nextDailyScreen } from './dailyJourney'
 
 describe('daily edition journey', () => {
   it('starts at Prime Suspect and resumes the first unfinished case', () => {
@@ -15,5 +15,16 @@ describe('daily edition journey', () => {
 
   it('returns no destination when the edition is complete', () => {
     expect(nextDailyScreen({ lineup: 'won', 'paper-trail': 'lost', redacted: 'won', cipher: 'lost', overlap: 'won' })).toBeNull()
+  })
+
+  it('keeps moving forward when an individual status refresh fails', () => {
+    const statuses = {
+      lineup: fallbackDailyStatus('lineup', 'ranked-cipher'),
+      'paper-trail': fallbackDailyStatus('ranked-paper-trail', 'ranked-cipher'),
+      redacted: fallbackDailyStatus('ranked-redacted', 'ranked-cipher'),
+      cipher: fallbackDailyStatus('ranked-cipher', 'ranked-cipher'),
+      overlap: fallbackDailyStatus('ranked-overlap', 'ranked-cipher'),
+    } as const
+    expect(nextDailyScreen(statuses, 'ranked-cipher')).toBe('ranked-overlap')
   })
 })
